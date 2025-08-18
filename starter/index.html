@@ -1,0 +1,143 @@
+<!-- Declaración del tipo de documento HTML5 -->
+<!doctype html>
+<!-- Elemento raíz del documento con idioma español para accesibilidad -->
+<html lang="es">
+<head>
+  <!-- Codificación de caracteres UTF-8 para soporte de caracteres especiales -->
+  <meta charset="utf-8" />
+  <!-- Configuración de viewport para diseño responsivo en dispositivos móviles -->
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <!-- Título que aparece en la pestaña del navegador -->
+  <title>Zen Garden Lite — Starter</title>
+  <!-- Descripción meta para SEO y motores de búsqueda -->
+  <meta name="description" content="Desafío de estilos con CSS usando un HTML común para toda la clase." />
+  <!-- Enlace a la hoja de estilos CSS principal -->
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<!-- Inicio del cuerpo del documento -->
+<body>
+  <!-- Enlace de salto para accesibilidad, permite a lectores de pantalla saltar al contenido principal -->
+  <a class="skip" href="#intro">Saltar al contenido</a>
+  
+  <!-- Cabecera principal del sitio web -->
+  <header>
+    <!-- Contenedor para la marca/identidad del sitio -->
+    <div class="brand">
+      <!-- Logo del sitio con atributos de accesibilidad -->
+      <img src="assets/logo.svg" alt="Logo del sitio" width="56" height="56" />
+      <!-- Contenedor para el título y eslogan -->
+      <div>
+        <!-- Título principal del sitio (h1 único por página) -->
+        <h1>Zen Garden Lite</h1>
+        <!-- Eslogan o subtítulo descriptivo -->
+        <p class="tagline">Mismo HTML para todas y todos — CSS a tu estilo</p>
+      </div>
+    </div>
+  </header>
+
+  <!-- Navegación principal del sitio con etiqueta aria para accesibilidad -->
+  <nav aria-label="Navegación principal">
+    <!-- Lista no ordenada para los enlaces de navegación -->
+    <ul class="main-nav">
+      <!-- Elementos de lista con enlaces a diferentes secciones de la página -->
+      <li><a href="#intro">Inicio</a></li>
+      <li><a href="#temas">Temas</a></li>
+      <li><a href="#destacados">Artículos</a></li>
+      <li><a href="#contacto">Contacto</a></li>
+    </ul>
+  </nav>
+
+  <!-- Contenido principal del sitio web -->
+  <main id="contenido">
+    <!-- Sección de introducción con ID para navegación interna -->
+    <section id="intro">
+      <!-- Encabezado de nivel 2 para la sección -->
+      <h2>Introducción</h2>
+      <!-- Párrafos con información sobre el proyecto -->
+      <p>
+        Este documento HTML es común para toda la clase. Tu misión es crear un tema visual
+        únicamente con CSS. No puedes modificar este HTML (salvo cambiar el título de la página
+        si lo deseas), pero puedes usar cualquier selector válido de CSS.
+      </p>
+      <p>
+        Enfócate en tipografía, colores, espaciados y layout responsivo básico. Añade micro-interacciones
+        para hover/focus sin romper la accesibilidad.
+      </p>
+    </section>
+
+    <!-- Sección de temas sugeridos -->
+    <section id="temas">
+      <!-- Encabezado de la sección -->
+      <h2>Temas sugeridos</h2>
+      <!-- Lista no ordenada con opciones de temas -->
+      <ul>
+        <li>Marino / costero</li>
+        <li>Nocturno minimalista</li>
+        <li>Retro noventero</li>
+        <li>Fresco y natural</li>
+      </ul>
+    </section>
+
+    
+    <!-- Sección de artículos destacados -->
+    <section id="destacados">
+      <!-- Encabezado de la sección -->
+      <h2>Destacados</h2>
+      <!-- Primer artículo con encabezado h3 y contenido -->
+      <article>
+        <h3>Artículo 1</h3>
+        <p>Explora cómo los sistemas de rejillas y Flexbox ayudan a estructurar tarjetas.</p>
+      </article>
+      <!-- Segundo artículo -->
+      <article>
+        <h3>Artículo 2</h3>
+        <p>Define una escala tipográfica y jerarquiza títulos y párrafos.</p>
+      </article>
+      <!-- Tercer artículo -->
+      <article>
+        <h3>Artículo 3</h3>
+        <p>Prueba una paleta de color con variables CSS para tematizar rápido.</p>
+      </article>
+    </section>
+
+    <!-- Contenido complementario (barra lateral) con etiqueta aria descriptiva -->
+    <aside aria-label="Consejos de accesibilidad">
+      <!-- Encabezado de la sección aside -->
+      <h2>Tips rápidos</h2>
+      <!-- Lista no ordenada con consejos -->
+      <ul>
+        <!-- Elementos de lista con código inline usando la etiqueta <code> -->
+        <li>Usa <code>:focus-visible</code> para resaltar el enfoque del teclado.</li>
+        <li>Asegura contraste suficiente entre texto y fondo.</li>
+        <li>Evita tamaños de fuente extremos en móvil.</li>
+      </ul>
+    </aside>
+
+    <!-- Sección de contacto/suscripción -->
+    <section id="contacto">
+      <!-- Encabezado de la sección -->
+      <h2>Suscríbete</h2>
+      <!-- Formulario con método GET (en producción debería ser POST) -->
+      <form action="#" method="get">
+        <!-- Contenedor para el campo de entrada -->
+        <div class="field">
+          <!-- Etiqueta asociada al campo de email para accesibilidad -->
+          <label for="email">Correo electrónico</label>
+          <!-- Campo de entrada de email con validación HTML5 -->
+          <input type="email" id="email" name="email" placeholder="tu@correo.com" required />
+        </div>
+        <!-- Botón de envío del formulario -->
+        <button type="submit">Enviar</button>
+      </form>
+    </section>
+  </main>
+
+  <!-- Pie de página del sitio web -->
+  <footer>
+    <!-- Párrafo con información de copyright y enlace de navegación -->
+    <p>&copy; 2025 Clase de Desarrollo Web • <a href="#intro">Volver arriba</a></p>
+  </footer>
+<!-- Cierre del elemento body -->
+</body>
+<!-- Cierre del elemento html -->
+</html>
