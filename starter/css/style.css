@@ -10,10 +10,10 @@
    1) Variables de tema
    ===================== */
 :root {
-  --bg: #0e0f12;
-  --surface: #151821;
-  --text: #e7e9ee;
-  --muted: #a6adbb;
+  --bg: white;
+  --surface: #e7e9ee;
+  --text: #0e0f12;
+  --muted: #44474c;
   --primary: #5cc8ff;
   --accent: #ffba4a;
 
@@ -171,7 +171,7 @@ input[type="email"] {
   padding: 0.6rem 0.8rem;
   border-radius: 10px;
   border: 1px solid color-mix(in oklab, var(--muted) 50%, transparent);
-  background: #0f1218;
+  background: #e7e9ee;
   color: var(--text);
 }
 button[type="submit"] {
