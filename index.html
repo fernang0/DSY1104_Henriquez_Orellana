@@ -10,9 +10,42 @@
     <link rel="stylesheet" href="css/styles.css">
 </head>
 <body>
-    <header>
-        <h1>LevelUp</h1>
-    </header>
+    <header class="site-header">
+    <div class="container nav-bar">
+      <a class="brand" href="./" aria-label="Ir al inicio">
+        <div class="logo" aria-hidden="true"></div>
+        <span>MiTienda</span>
+      </a>
+
+      <nav class="primary-nav" aria-label="Principal">
+        <ul class="menu">
+          <li><a href="./" aria-current="page">Inicio</a></li>
+          <li><a href="./productos.html">Productos</a></li>
+          <li><a href="./blogs.html">Blogs</a></li>
+          <li><a href="./nosotros.html">Nosotros</a></li>
+          <li><a href="./contacto.html">Contacto</a></li>
+        </ul>
+      </nav>
+        <!-- Nota: el contador se puede actualizar con JS + aria-live -->
+        <button class="btn-icon" type="button" aria-label="Abrir carrito">
+          🛒 <span class="badge" id="cart-count" aria-live="polite">0</span>
+        </button>
+        <summary class="nav-toggle" role="button" aria-label="Abrir menú">☰</summary>
+      </div>
+
+      <!-- Menú móvil accesible con <details> -->
+      <details class="nav-drawer">
+        <summary class="sr-only">Abrir menú</summary>
+        <div class="drawer" role="navigation" aria-label="Menú móvil">
+          <ul class="menu">
+            <li><a href="./" aria-current="page">Inicio</a></li>
+            <li><a href="./productos.html">Productos</a></li>
+            <li><a href="./blogs.html">Blogs</a></li>
+            <li><a href="./contacto.html">Contacto</a></li>
+          </ul>
+        </div>
+      </details>
+    </div>    </header>
     <main>
         <!-- Contenido principal aquí -->
     </main>
