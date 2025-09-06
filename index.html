@@ -8,13 +8,29 @@
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="css/styles.css">
+    <!-- Importar módulos JavaScript -->
+    <script type="module" src="js/cart.js"></script>
+    <script type="module" src="js/productos_levelup.js"></script>
+    <script type="module" src="js/categorias_lavelup.js"></script>
+</head>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LevelUp</title>
+    <!-- Google Fonts: Roboto & Orbitron -->
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/styles.css">
 </head>
 <body>
     <header class="site-header">
     <div class="container nav-bar">
       <a class="brand" href="./" aria-label="Ir al inicio">
-        <div class="logo" aria-hidden="true"></div>
-        <span>LevelUp</span>
+        <div class="logo" aria-hidden="true">
+          <img src="images/logo.png" alt="" width="40" height="40">
+        </div>
+        <span class="brand-text">LevelUp</span>
       </a>
 
       <nav class="primary-nav" aria-label="Principal">
@@ -26,17 +42,23 @@
           <li><a href="./contacto.html">Contacto</a></li>
         </ul>
       </nav>
-        <!-- Nota: el contador se puede actualizar con JS + aria-live -->
-        <button class="btn-icon" type="button" aria-label="Abrir carrito">
-          🛒 <span class="badge" id="cart-count" aria-live="polite">0</span>
+
+      <div class="nav-actions">
+        <!-- Botón del carrito con contador -->
+        <button class="btn-icon cart-btn" type="button" aria-label="Abrir carrito">
+          <span class="cart-icon">🛒</span>
+          <span class="badge" id="cart-count" aria-live="polite">0</span>
         </button>
-        <summary class="nav-toggle" role="button" aria-label="Abrir menú">☰</summary>
+
+        <!-- Botón del menú móvil -->
+        <button class="nav-toggle" aria-label="Abrir menú" aria-expanded="false" aria-controls="mobile-menu">
+          <span class="hamburger-icon">☰</span>
+        </button>
       </div>
 
-      <!-- Menú móvil accesible con <details> -->
-      <details class="nav-drawer">
-        <summary class="sr-only">Abrir menú</summary>
-        <div class="drawer" role="navigation" aria-label="Menú móvil">
+      <!-- Menú móvil accesible -->
+      <div class="nav-drawer" id="mobile-menu" role="navigation" aria-label="Menú móvil">
+        <div class="drawer-content">
           <ul class="menu">
             <li><a href="./" aria-current="page">Inicio</a></li>
             <li><a href="./productos.html">Productos</a></li>
@@ -45,7 +67,7 @@
             <li><a href="./contacto.html">Contacto</a></li>
           </ul>
         </div>
-      </details>
+      </div>
     </div>    </header>
     <main>
         <!-- Contenido principal aquí -->
