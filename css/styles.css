@@ -13,38 +13,94 @@
       --primary-contrast:#ffffff;
       --accent:          #22c55e;
       --focus:           #22c55e;
+      
+      /* Sistema tipográfico */
+      --font-body: 'Roboto', system-ui, -apple-system, sans-serif;
+      --font-display: 'Orbitron', var(--font-body);
+      
+      /* Tamaños de fuente */
+      --text-xs: 0.75rem;   /* 12px */
+      --text-sm: 0.875rem;  /* 14px */
+      --text-base: 1rem;    /* 16px */
+      --text-lg: 1.125rem;  /* 18px */
+      --text-xl: 1.25rem;   /* 20px */
+      --text-2xl: 1.5rem;   /* 24px */
+      --text-3xl: 1.875rem; /* 30px */
+      --text-4xl: 2.25rem;  /* 36px */
+      
+      /* Line heights */
+      --leading-tight: 1.25;
+      --leading-normal: 1.5;
+      --leading-relaxed: 1.625;
     }
 
 /* Importar fuentes desde Google Fonts en el HTML */
 
 body {
-    font-family: 'Roboto', Arial, sans-serif;
-    font-size: 1rem;
+    font-family: var(--font-body);
+    font-size: var(--text-base);
+    font-weight: 400;
+    line-height: var(--leading-normal);
     color: #222;
     background: #fff;
     margin: 0;
     padding: 0;
 }
 
+/* Sistema de encabezados */
 h1, h2, h3, h4, h5, h6 {
-    font-family: 'Orbitron', 'Roboto', Arial, sans-serif;
+    font-family: var(--font-display);
     font-weight: 700;
+    line-height: var(--leading-tight);
     margin-top: 0;
     margin-bottom: 0.5em;
     color: #1a237e;
 }
 
-h1 { font-size: 2.5rem; }
-h2 { font-size: 2rem; }
-h3 { font-size: 1.5rem; }
-h4 { font-size: 1.25rem; }
-h5 { font-size: 1rem; }
-h6 { font-size: 0.875rem; }
+h1 { 
+    font-size: var(--text-4xl);
+    letter-spacing: -0.025em;
+}
+
+h2 { 
+    font-size: var(--text-3xl);
+    letter-spacing: -0.025em;
+}
+
+h3 { 
+    font-size: var(--text-2xl);
+}
+
+h4 { 
+    font-size: var(--text-xl);
+}
+
+h5 { 
+    font-size: var(--text-lg);
+    font-weight: 500;
+}
+
+h6 { 
+    font-size: var(--text-base);
+    font-weight: 500;
+}
+
+/* Otros elementos tipográficos */
+p {
+    margin-bottom: 1.5em;
+    line-height: var(--leading-relaxed);
+}
 
 small {
-    font-size: 0.8rem;
+    font-size: var(--text-sm);
     color: #666;
-    font-family: 'Roboto', Arial, sans-serif;
+    font-family: var(--font-body);
+}
+
+.lead {
+    font-size: var(--text-lg);
+    line-height: var(--leading-relaxed);
+    margin-bottom: 1.5em;
 }
 
 header, footer {
