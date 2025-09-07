@@ -416,6 +416,157 @@ main {
     margin: 0 auto;
 }
 
+/* Grid de productos */
+.products-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 2rem;
+    padding: 1rem;
+}
+
+/* Tarjeta de producto */
+.product-card {
+    background: var(--bg);
+    border-radius: 12px;
+    overflow: hidden;
+    transition: transform 0.2s ease;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+}
+
+.product-card:hover {
+    transform: translateY(-4px);
+}
+
+/* Imagen del producto */
+.product-image {
+    position: relative;
+    padding-top: 75%; /* Aspect ratio 4:3 */
+    overflow: hidden;
+    background: var(--surface);
+}
+
+.product-image img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    transition: transform 0.3s ease;
+    padding: 1rem;
+}
+
+.product-card:hover .product-image img {
+    transform: scale(1.05);
+}
+
+/* Contenido de la tarjeta */
+.product-content {
+    padding: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    flex: 1;
+}
+
+/* Badge de categoría */
+.category-badge {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    background: linear-gradient(45deg, var(--accent-blue), var(--accent-green));
+    color: var(--text);
+    padding: 0.5rem 1rem;
+    border-radius: 20px;
+    font-size: var(--text-sm);
+    font-weight: 500;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+/* Información del producto */
+.product-title {
+    font-size: var(--text-lg);
+    font-weight: 700;
+    color: var(--text);
+    margin: 0;
+}
+
+.product-price {
+    font-size: var(--text-xl);
+    font-weight: 700;
+    color: var(--accent-blue);
+    margin: 0;
+}
+
+/* Rating */
+.rating {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.stars {
+    color: #FFD700;
+}
+
+.rating-value {
+    color: var(--text-2);
+    font-size: var(--text-sm);
+}
+
+/* Botón añadir al carrito */
+.add-to-cart {
+    margin-top: auto;
+    background: linear-gradient(45deg, var(--accent-blue), var(--accent-green));
+    color: var(--text);
+    border: none;
+    padding: 0.75rem;
+    border-radius: 8px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: opacity 0.2s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+}
+
+.add-to-cart:hover {
+    opacity: 0.9;
+}
+
+.add-to-cart:focus-visible {
+    outline: none;
+    box-shadow: 0 0 0 3px var(--focus-ring-color);
+}
+
+.add-to-cart svg {
+    width: 20px;
+    height: 20px;
+}
+
+/* Notificación de añadido al carrito */
+.add-notification {
+    position: fixed;
+    bottom: 2rem;
+    right: 2rem;
+    background: var(--accent-green);
+    color: var(--text);
+    padding: 1rem 1.5rem;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    transform: translateY(100%);
+    opacity: 0;
+    transition: all 0.3s ease;
+}
+
+.add-notification.show {
+    transform: translateY(0);
+    opacity: 1;
+}
+
 /* Layout de productos */
 .products-container {
     display: grid;
