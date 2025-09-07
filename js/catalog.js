@@ -1,10 +1,12 @@
 import { PRODUCTS_LG, formatCLP } from './productos_levelup.js';
 import { CATEGORIES_LG } from './categorias_lavelup.js';
 import { ProductFilters } from './filters.js';
+import { ProductSearch } from './search.js';
 
 class ProductCatalog {
     constructor() {
         this.filters = new ProductFilters();
+        this.search = new ProductSearch(this);
         this.initializeCatalog();
     }
 
@@ -139,8 +141,8 @@ class ProductCatalog {
     }
 
     applyFilters() {
-        const filteredProducts = this.filters.applyFilters(PRODUCTS_LG);
-        this.renderProducts(filteredProducts);
+        // Dejar que la búsqueda maneje la actualización de la vista
+        this.search.updateResults();
     }
 }
 

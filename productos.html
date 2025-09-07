@@ -138,6 +138,27 @@
             <div class="products-grid">
                 <div class="products-header">
                     <h1>Nuestros Productos</h1>
+                    <div class="search-sort-container">
+                        <div class="search-container">
+                            <label for="search-products" class="sr-only">Buscar productos</label>
+                            <input type="search" 
+                                   id="search-products" 
+                                   placeholder="Buscar por nombre o código..."
+                                   aria-label="Buscar productos">
+                            <button type="button" id="search-button" aria-label="Buscar">
+                                🔍
+                            </button>
+                        </div>
+                        <div class="sort-container">
+                            <label for="sort-products">Ordenar por:</label>
+                            <select id="sort-products" aria-label="Ordenar productos">
+                                <option value="">Sin ordenar</option>
+                                <option value="price-asc">Precio: Menor a mayor</option>
+                                <option value="price-desc">Precio: Mayor a menor</option>
+                                <option value="rating-desc">Rating: Mayor a menor</option>
+                            </select>
+                        </div>
+                    </div>
                     <p class="results-count" aria-live="polite">
                         <!-- Se actualizará con JS -->
                     </p>
