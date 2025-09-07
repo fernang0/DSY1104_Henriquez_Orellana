@@ -1,4 +1,76 @@
 // productos_levelup.js
+
+// Helper para formatear moneda CLP
+export const formatCLP = (amount) => {
+    return new Intl.NumberFormat('es-CL', {
+        style: 'currency',
+        currency: 'CLP',
+        minimumFractionDigits: 0,
+        maximumFractionDigits: 0
+    }).format(amount);
+};
+
+// Validador de productos
+export const validateProduct = (product) => {
+    const errors = [];
+    
+    // Campos requeridos
+    const requiredFields = ['code', 'nombre', 'categoriaId', 'precioCLP', 'stock', 'descripcion', 'marca'];
+    requiredFields.forEach(field => {
+        if (!product[field]) {
+            errors.push(`El campo ${field} es requerido`);
+        }
+    });
+
+    // Validaciones específicas
+    if (product.precioCLP < 0) {
+        errors.push('El precio debe ser mayor o igual a 0');
+    }
+
+    if (!Number.isInteger(product.stock) || product.stock < 0) {
+        errors.push('El stock debe ser un número entero mayor o igual a 0');
+    }
+
+    if (product.rating && (product.rating < 0 || product.rating > 5)) {
+        errors.push('El rating debe estar entre 0 y 5');
+    }
+
+    // Validar que specs y tags sean arrays
+    if (product.specs && !Array.isArray(product.specs)) {
+        errors.push('specs debe ser un array');
+    }
+
+    if (product.tags && !Array.isArray(product.tags)) {
+        errors.push('tags debe ser un array');
+    }
+
+    return {
+        isValid: errors.length === 0,
+        errors
+    };
+};
+
+// Función para obtener productos por categoría
+export const getProductsByCategory = (categoryId) => {
+    return PRODUCTS_LG.filter(product => product.categoriaId === categoryId);
+};
+
+// Función para obtener un producto por código
+export const getProductByCode = (code) => {
+    return PRODUCTS_LG.find(product => product.code === code);
+};
+
+// Función para buscar productos por término
+export const searchProducts = (term) => {
+    const searchTerm = term.toLowerCase();
+    return PRODUCTS_LG.filter(product => 
+        product.nombre.toLowerCase().includes(searchTerm) ||
+        product.descripcion.toLowerCase().includes(searchTerm) ||
+        product.tags.some(tag => tag.toLowerCase().includes(searchTerm))
+    );
+};
+
+// Lista de productos con validación
 export const PRODUCTS_LG = [
   {
     code: "JM001", nombre: "Catan", categoriaId: "JM",
