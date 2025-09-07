@@ -78,7 +78,7 @@ export const PRODUCTS_LG = [
     specs: ["3-4 jugadores", "60-90 min"],
     descripcion: "Clásico de estrategia de colonización y comercio.",
     tags: ["familiar", "estrategia"],
-    imagen: "assets/products/jm001.jpg"
+    imagen: "images/products/jm001.jpg"
   },
   {
     code: "JM002", nombre: "Carcassonne", categoriaId: "JM",
@@ -86,7 +86,7 @@ export const PRODUCTS_LG = [
     specs: ["2-5 jugadores", "35 min"],
     descripcion: "Construcción de losetas en la campiña medieval.",
     tags: ["familiar", "colocación"],
-    imagen: "assets/products/jm002.jpg"
+    imagen: "images/products/jm002.jpg"
   },
   {
     code: "AC001", nombre: "Control Xbox Inalámbrico", categoriaId: "AC",
@@ -94,7 +94,7 @@ export const PRODUCTS_LG = [
     specs: ["Bluetooth", "USB-C", "Xbox/PC"],
     descripcion: "Comodidad mejorada con agarre texturizado y baja latencia.",
     tags: ["xbox", "pc"],
-    imagen: "assets/products/ac001.jpg"
+    imagen: "images/products/ac001.jpg"
   },
   {
     code: "AC002", nombre: "HyperX Cloud II", categoriaId: "AC",
@@ -102,7 +102,7 @@ export const PRODUCTS_LG = [
     specs: ["Sonido 7.1", "Micrófono desmontable"],
     descripcion: "Sonido envolvente y comodidad para largas sesiones.",
     tags: ["audio", "microfono"],
-    imagen: "assets/products/ac002.jpg"
+    imagen: "images/products/ac002.jpg"
   },
   {
     code: "CO001", nombre: "PlayStation 5", categoriaId: "CO",
@@ -110,7 +110,7 @@ export const PRODUCTS_LG = [
     specs: ["SSD ultra-rápido", "Ray Tracing"],
     descripcion: "Consola de nueva generación con tiempos de carga mínimos.",
     tags: ["ps5", "next-gen"],
-    imagen: "assets/products/co001.jpg"
+    imagen: "images/products/co001.jpg"
   },
   {
     code: "CG001", nombre: "PC Gamer ASUS ROG Strix", categoriaId: "CG",
@@ -118,7 +118,7 @@ export const PRODUCTS_LG = [
     specs: ["CPU Ryzen", "GPU RTX", "16GB RAM"],
     descripcion: "Rendimiento tope para juegos exigentes.",
     tags: ["asus", "rtx"],
-    imagen: "assets/products/cg001.jpg"
+    imagen: "images/products/cg001.jpg"
   },
   {
     code: "SG001", nombre: "Silla Gamer Secretlab Titan", categoriaId: "SG",
@@ -126,7 +126,7 @@ export const PRODUCTS_LG = [
     specs: ["Soporte lumbar", "Ajustes 4D"],
     descripcion: "Confort ergonómico para sesiones prolongadas.",
     tags: ["ergonomia"],
-    imagen: "assets/products/sg001.jpg"
+    imagen: "images/products/sg001.jpg"
   },
   {
     code: "MS001", nombre: "Logitech G502 HERO", categoriaId: "MS",
@@ -134,7 +134,7 @@ export const PRODUCTS_LG = [
     specs: ["Sensor 25K", "11 botones programables"],
     descripcion: "Precisión y personalización para FPS y MOBA.",
     tags: ["logitech", "fps"],
-    imagen: "assets/products/ms001.jpg"
+    imagen: "images/products/ms001.jpg"
   },
   {
     code: "MP001", nombre: "Razer Goliathus Extended", categoriaId: "MP",
@@ -142,7 +142,7 @@ export const PRODUCTS_LG = [
     specs: ["Superficie textil", "RGB"],
     descripcion: "Gran área de deslizamiento con iluminación personalizable.",
     tags: ["razer", "rgb"],
-    imagen: "assets/products/mp001.jpg"
+    imagen: "images/products/mp001.jpg"
   },
   {
     code: "PP001", nombre: "Polera Gamer Personalizada 'Level-Up'", categoriaId: "PP",
@@ -150,6 +150,6 @@ export const PRODUCTS_LG = [
     specs: ["Personalización gamer tag"],
     descripcion: "Camiseta cómoda con diseño personalizado.",
     tags: ["merch"],
-    imagen: "assets/products/pp001.jpg"
+    imagen: "images/products/pp001.jpg"
   }
 ];

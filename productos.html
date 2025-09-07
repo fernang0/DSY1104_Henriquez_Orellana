@@ -12,6 +12,7 @@
     <script type="module" src="js/cart.js"></script>
     <script type="module" src="js/productos_levelup.js"></script>
     <script type="module" src="js/categorias_lavelup.js"></script>
+    <script type="module" src="js/catalog.js"></script>
 </head>
 <html lang="es">
 <head>
@@ -71,8 +72,81 @@
     </div>
     </header>
     <main>
-        <!-- Contenido principal aquí -->
+        <div class="products-container">
+            <!-- Sidebar de filtros -->
+            <aside class="filters-sidebar">
+                <div class="filters-header">
+                    <h2>Filtros</h2>
+                    <button id="clear-filters" class="btn-clear" aria-label="Limpiar todos los filtros">
+                        Limpiar filtros
+                    </button>
+                </div>
 
+                <form class="filters-form" aria-label="Filtros de productos">
+                    <!-- Filtro por categoría -->
+                    <div class="filter-group">
+                        <label for="categoria">Categoría</label>
+                        <select id="categoria" data-filter="categoria" class="filter-select">
+                            <option value="">Todas las categorías</option>
+                            <!-- Se llenará con JS -->
+                        </select>
+                    </div>
+
+                    <!-- Filtro por precio -->
+                    <div class="filter-group">
+                        <fieldset class="price-range">
+                            <legend>Rango de precio</legend>
+                            <div class="price-inputs">
+                                <div>
+                                    <label for="precioMin">Mínimo</label>
+                                    <input type="number" id="precioMin" data-filter="precioMin" 
+                                           min="0" step="1000" placeholder="0">
+                                </div>
+                                <div>
+                                    <label for="precioMax">Máximo</label>
+                                    <input type="number" id="precioMax" data-filter="precioMax" 
+                                           min="0" step="1000" placeholder="Max">
+                                </div>
+                            </div>
+                        </fieldset>
+                    </div>
+
+                    <!-- Filtro por marca -->
+                    <div class="filter-group">
+                        <label for="marca">Marca</label>
+                        <select id="marca" data-filter="marca" class="filter-select">
+                            <option value="">Todas las marcas</option>
+                            <!-- Se llenará con JS -->
+                        </select>
+                    </div>
+
+                    <!-- Filtro por rating -->
+                    <div class="filter-group">
+                        <label for="rating">Rating mínimo</label>
+                        <select id="rating" data-filter="rating" class="filter-select">
+                            <option value="">Cualquier rating</option>
+                            <option value="4.5">⭐⭐⭐⭐½ (4.5+)</option>
+                            <option value="4">⭐⭐⭐⭐ (4.0+)</option>
+                            <option value="3.5">⭐⭐⭐½ (3.5+)</option>
+                            <option value="3">⭐⭐⭐ (3.0+)</option>
+                        </select>
+                    </div>
+                </form>
+            </aside>
+
+            <!-- Grid de productos -->
+            <div class="products-grid">
+                <div class="products-header">
+                    <h1>Nuestros Productos</h1>
+                    <p class="results-count" aria-live="polite">
+                        <!-- Se actualizará con JS -->
+                    </p>
+                </div>
+                <div class="products-list" role="list">
+                    <!-- Se llenará con JS -->
+                </div>
+            </div>
+        </div>
     </main>
     <footer>
         <small>&copy; 2025 LevelUp. Todos los derechos reservados.</small>
