@@ -12,6 +12,7 @@
     <script type="module" src="js/cart.js"></script>
     <script type="module" src="js/productos_levelup.js"></script>
     <script type="module" src="js/categorias_lavelup.js"></script>
+    <script type="module" src="js/search.js"></script>
     <script type="module" src="js/catalog.js"></script>
 </head>
 <html lang="es">
@@ -163,8 +164,16 @@
                         <!-- Se actualizará con JS -->
                     </p>
                 </div>
-                <div class="products-list" role="list">
+                                <div class="products-list" role="list">
                     <!-- Se llenará con JS -->
+                </div>
+                <div class="pagination-container" role="navigation" aria-label="Navegación de productos">
+                    <button id="load-more" class="btn-load-more">
+                        Ver más productos
+                    </button>
+                    <div id="pagination-info" class="pagination-info" aria-live="polite">
+                        <!-- Se actualizará con JS -->
+                    </div>
                 </div>
             </div>
         </div>

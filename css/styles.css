@@ -489,9 +489,28 @@ main {
 /* Grid de productos */
 .products-list {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    grid-template-columns: repeat(4, 1fr);
     gap: 2rem;
     padding: 1rem;
+}
+
+/* Responsive grid */
+@media screen and (max-width: 1200px) {
+    .products-list {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+
+@media screen and (max-width: 900px) {
+    .products-list {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media screen and (max-width: 600px) {
+    .products-list {
+        grid-template-columns: 1fr;
+    }
 }
 
 /* Tarjeta de producto */
@@ -724,7 +743,77 @@ main {
     width: 100%;
 }
 
+/* Paginación */
+.pagination-container {
+    margin-top: 2rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+}
 
+.btn-load-more {
+    background: linear-gradient(45deg, var(--accent-blue), var(--accent-green));
+    color: var(--text);
+    border: none;
+    padding: 1rem 2rem;
+    border-radius: 8px;
+    font-size: var(--text-base);
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.btn-load-more:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+
+.btn-load-more:active {
+    transform: translateY(0);
+}
+
+.pagination-info {
+    color: var(--text);
+    font-size: var(--text-sm);
+}
+
+
+
+/* Paginación */
+.pagination-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+    padding: 2rem 0;
+}
+
+.btn-load-more {
+    background: linear-gradient(45deg, var(--accent-blue), var(--accent-green));
+    color: var(--text);
+    border: none;
+    padding: 1rem 2rem;
+    border-radius: 8px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: opacity 0.2s;
+    font-size: var(--text-base);
+}
+
+.btn-load-more:hover {
+    opacity: 0.9;
+}
+
+.btn-load-more:focus-visible {
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(30, 144, 255, 0.3);
+}
+
+.pagination-info {
+    color: var(--text);
+    font-size: var(--text-sm);
+}
 
 /* Responsive */
 @media screen and (max-width: 768px) {

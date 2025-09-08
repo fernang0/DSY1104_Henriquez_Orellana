@@ -7,7 +7,12 @@ class ProductCatalog {
     constructor() {
         this.filters = new ProductFilters();
         this.search = new ProductSearch(this);
+        this.pageSize = 12;
+        this.currentPage = 1;
+        this.allProducts = PRODUCTS_LG;
+        this.filteredProducts = [];
         this.initializeCatalog();
+        this.initializePagination();
     }
 
     initializeCatalog() {
@@ -48,15 +53,67 @@ class ProductCatalog {
         });
     }
 
+    initializePagination() {
+        // Obtener elementos de paginación
+        this.loadMoreButton = document.getElementById('load-more');
+        this.paginationInfo = document.getElementById('pagination-info');
+        
+        // Agregar evento al botón "Ver más"
+        if (this.loadMoreButton) {
+            this.loadMoreButton.addEventListener('click', () => {
+                this.currentPage++;
+                this.renderCurrentPage();
+            });
+        }
+    }
+
     renderProducts(products) {
+        // Guardar productos filtrados y resetear paginación
+        this.filteredProducts = products;
+        this.currentPage = 1;
+        this.renderCurrentPage();
+    }
+
+    renderCurrentPage() {
         const container = document.querySelector('.products-list');
         if (!container) return;
-        
+
+        // Calcular productos a mostrar
+        const start = (this.currentPage - 1) * this.pageSize;
+        const end = this.currentPage * this.pageSize;
+        const currentPageProducts = this.filteredProducts.slice(0, end);
+
+        // Limpiar y renderizar productos
         container.innerHTML = '';
-        products.forEach(product => {
+        currentPageProducts.forEach(product => {
             const productElement = this.createProductCard(product);
             container.appendChild(productElement);
         });
+
+        // Actualizar controles de paginación
+        this.updatePaginationControls();
+    }
+    
+    updatePaginationControls() {
+        const totalProducts = this.filteredProducts.length;
+        const currentlyShowing = Math.min(this.currentPage * this.pageSize, totalProducts);
+        const hasMoreProducts = currentlyShowing < totalProducts;
+
+        // Actualizar botón "Ver más"
+        if (this.loadMoreButton) {
+            this.loadMoreButton.hidden = !hasMoreProducts;
+            if (hasMoreProducts) {
+                const remaining = totalProducts - currentlyShowing;
+                const nextBatch = Math.min(remaining, this.pageSize);
+                this.loadMoreButton.textContent = `Ver más (${nextBatch} productos)`;
+            }
+        }
+
+        // Actualizar información de paginación
+        if (this.paginationInfo) {
+            this.paginationInfo.textContent = 
+                `Mostrando ${currentlyShowing} de ${totalProducts} productos`;
+        }
     }
 
     createProductCard(product) {

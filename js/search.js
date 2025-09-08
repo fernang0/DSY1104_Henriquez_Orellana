@@ -116,14 +116,20 @@ export class ProductSearch {
             filteredProducts = sortProducts(filteredProducts, sortCriteria);
         }
         
-        // Actualizar la vista
+        // Actualizar la vista (resetear paginación)
         this.catalog.renderProducts(filteredProducts);
         
-        // Actualizar contador de resultados
+        // Actualizar contador de resultados en el filtro
         const resultsCount = document.querySelector('.results-count');
         if (resultsCount) {
             const plural = filteredProducts.length === 1 ? 'producto encontrado' : 'productos encontrados';
             resultsCount.textContent = `${filteredProducts.length} ${plural}`;
+        }
+        
+        // Hacer scroll al principio de la lista de productos
+        const productsList = document.querySelector('.products-list');
+        if (productsList) {
+            productsList.scrollIntoView({ behavior: 'smooth' });
         }
     }
 }
