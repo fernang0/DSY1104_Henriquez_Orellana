@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LevelUp</title>
+    <!-- Google Fonts: Roboto & Orbitron -->
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/styles.css">
+    <!-- Importar módulos JavaScript -->
+    <script type="module" src="js/cart.js"></script>
+    <script type="module" src="js/productos_levelup.js"></script>
+    <script type="module" src="js/categorias_lavelup.js"></script>
+    <script type="module" src="js/search.js"></script>
+    <script type="module" src="js/catalog.js"></script>
+</head>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LevelUp</title>
+    <!-- Google Fonts: Roboto & Orbitron -->
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+    <header class="site-header">
+    <div class="container nav-bar">
+      <a class="brand" href="./" aria-label="Ir al inicio">
+        <div class="logo" aria-hidden="true">
+          <img src="images/logo.png" alt="" width="40" height="40">
+        </div>
+        <span class="brand-text">LevelUp</span>
+      </a>
+
+      <nav class="primary-nav" aria-label="Principal">
+        <ul class="menu">
+          <li><a href="./" aria-current="page">Inicio</a></li>
+          <li><a href="./productos.html">Productos</a></li>
+          <li><a href="./blogs.html">Blogs</a></li>
+          <li><a href="./nosotros.html">Nosotros</a></li>
+          <li><a href="./contacto.html">Contacto</a></li>
+        </ul>
+      </nav>
+
+      <div class="nav-actions">
+        <!-- Botón del carrito con contador -->
+        <button class="btn-icon cart-btn" type="button" aria-label="Abrir carrito">
+          <span class="cart-icon">🛒</span>
+          <span class="badge" id="cart-count" aria-live="polite">0</span>
+        </button>
+
+        <!-- Botón del menú móvil -->
+        <button class="nav-toggle" aria-label="Abrir menú" aria-expanded="false" aria-controls="mobile-menu">
+          <span class="hamburger-icon">☰</span>
+        </button>
+      </div>
+
+      <!-- Menú móvil accesible -->
+      <div class="nav-drawer" id="mobile-menu" role="navigation" aria-label="Menú móvil">
+        <div class="drawer-content">
+          <ul class="menu">
+            <li><a href="./" aria-current="page">Inicio</a></li>
+            <li><a href="./productos.html">Productos</a></li>
+            <li><a href="./blogs.html">Blogs</a></li>
+            <li><a href="./nosotros.html">Nosotros</a></li>
+            <li><a href="./contacto.html">Contacto</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    </header>
+    <main>
+        <div class="products-container">
+            <!-- Sidebar de filtros -->
+            <aside class="filters-sidebar">
+                <div class="filters-header">
+                    <h2>Filtros</h2>
+                    <button id="clear-filters" class="btn-clear" aria-label="Limpiar todos los filtros">
+                        Limpiar filtros
+                    </button>
+                </div>
+
+                <form class="filters-form" aria-label="Filtros de productos">
+                    <!-- Filtro por categoría -->
+                    <div class="filter-group">
+                        <label for="categoria">Categoría</label>
+                        <select id="categoria" data-filter="categoria" class="filter-select">
+                            <option value="">Todas las categorías</option>
+                            <!-- Se llenará con JS -->
+                        </select>
+                    </div>
+
+                    <!-- Filtro por precio -->
+                    <div class="filter-group">
+                        <fieldset class="price-range">
+                            <legend>Rango de precio</legend>
+                            <div class="price-inputs">
+                                <div>
+                                    <label for="precioMin">Mínimo</label>
+                                    <input type="number" id="precioMin" data-filter="precioMin" 
+                                           min="0" step="1000" placeholder="0">
+                                </div>
+                                <div>
+                                    <label for="precioMax">Máximo</label>
+                                    <input type="number" id="precioMax" data-filter="precioMax" 
+                                           min="0" step="1000" placeholder="Max">
+                                </div>
+                            </div>
+                        </fieldset>
+                    </div>
+
+                    <!-- Filtro por marca -->
+                    <div class="filter-group">
+                        <label for="marca">Marca</label>
+                        <select id="marca" data-filter="marca" class="filter-select">
+                            <option value="">Todas las marcas</option>
+                            <!-- Se llenará con JS -->
+                        </select>
+                    </div>
+
+                    <!-- Filtro por rating -->
+                    <div class="filter-group">
+                        <label for="rating">Rating mínimo</label>
+                        <select id="rating" data-filter="rating" class="filter-select">
+                            <option value="">Cualquier rating</option>
+                            <option value="4.5">⭐⭐⭐⭐½ (4.5+)</option>
+                            <option value="4">⭐⭐⭐⭐ (4.0+)</option>
+                            <option value="3.5">⭐⭐⭐½ (3.5+)</option>
+                            <option value="3">⭐⭐⭐ (3.0+)</option>
+                        </select>
+                    </div>
+                </form>
+            </aside>
+
+            <!-- Grid de productos -->
+            <div class="products-grid">
+                <div class="products-header">
+                    <h1>Nuestros Productos</h1>
+                    <div class="search-sort-container">
+                        <div class="search-container">
+                            <label for="search-products" class="sr-only">Buscar productos</label>
+                            <input type="search" 
+                                   id="search-products" 
+                                   placeholder="Buscar por nombre o código..."
+                                   aria-label="Buscar productos">
+                            <button type="button" id="search-button" aria-label="Buscar">
+                                🔍
+                            </button>
+                        </div>
+                        <div class="sort-container">
+                            <label for="sort-products">Ordenar por:</label>
+                            <select id="sort-products" aria-label="Ordenar productos">
+                                <option value="">Sin ordenar</option>
+                                <option value="price-asc">Precio: Menor a mayor</option>
+                                <option value="price-desc">Precio: Mayor a menor</option>
+                                <option value="rating-desc">Rating: Mayor a menor</option>
+                            </select>
+                        </div>
+                    </div>
+                    <p class="results-count" aria-live="polite">
+                        <!-- Se actualizará con JS -->
+                    </p>
+                </div>
+                                <div class="products-list" role="list">
+                    <!-- Se llenará con JS -->
+                </div>
+                <div class="pagination-container" role="navigation" aria-label="Navegación de productos">
+                    <button id="load-more" class="btn-load-more">
+                        Ver más productos
+                    </button>
+                    <div id="pagination-info" class="pagination-info" aria-live="polite">
+                        <!-- Se actualizará con JS -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+    <footer>
+        <small>&copy; 2025 LevelUp. Todos los derechos reservados.</small>
+    </footer>
+</body>
+</html>
