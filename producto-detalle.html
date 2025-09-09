@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LevelUp - Detalle de Producto</title>
+    <!-- Google Fonts: Roboto & Orbitron -->
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/styles.css">
+    <!-- Importar módulos JavaScript -->
+    <script type="module" src="js/productos_levelup.js"></script>
+    <script type="module" src="js/cart.js"></script>
+    <script type="module" src="js/product-detail.js"></script>
+</head>
+<body>
+    <header class="site-header">
+        <div class="container nav-bar">
+            <a class="brand" href="./" aria-label="Ir al inicio">
+                <div class="logo" aria-hidden="true">
+                    <img src="images/logo.png" alt="" width="40" height="40">
+                </div>
+                <span class="brand-text">LevelUp</span>
+            </a>
+
+            <nav class="primary-nav" aria-label="Principal">
+                <ul class="menu">
+                    <li><a href="./">Inicio</a></li>
+                    <li><a href="./productos.html">Productos</a></li>
+                    <li><a href="./blogs.html">Blogs</a></li>
+                    <li><a href="./nosotros.html">Nosotros</a></li>
+                    <li><a href="./contacto.html">Contacto</a></li>
+                </ul>
+            </nav>
+
+            <div class="nav-actions">
+                <button class="btn-icon cart-btn" type="button" aria-label="Abrir carrito">
+                    <span class="cart-icon">🛒</span>
+                    <span class="badge" id="cart-count" aria-live="polite">0</span>
+                </button>
+
+                <button class="nav-toggle" aria-label="Abrir menú" aria-expanded="false" aria-controls="mobile-menu">
+                    <span class="hamburger-icon">☰</span>
+                </button>
+            </div>
+
+            <div class="nav-drawer" id="mobile-menu" role="navigation" aria-label="Menú móvil">
+                <div class="drawer-content">
+                    <ul class="menu">
+                        <li><a href="./">Inicio</a></li>
+                        <li><a href="./productos.html">Productos</a></li>
+                        <li><a href="./blogs.html">Blogs</a></li>
+                        <li><a href="./nosotros.html">Nosotros</a></li>
+                        <li><a href="./contacto.html">Contacto</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <div class="product-detail-container">
+            <div class="product-detail">
+                <div class="product-image-gallery">
+                    <div class="main-image">
+                        <img id="product-main-image" src="" alt="" loading="lazy">
+                    </div>
+                </div>
+
+                <div class="product-info">
+                    <div class="product-header">
+                        <span class="product-code"></span>
+                        <h1 class="product-title"></h1>
+                    </div>
+
+                    <div class="product-meta">
+                        <div class="product-brand">
+                            <span class="label">Marca:</span>
+                            <span class="value"></span>
+                        </div>
+                        <div class="product-rating">
+                            <div class="stars"></div>
+                            <span class="rating-value"></span>
+                        </div>
+                    </div>
+
+                    <div class="product-price">
+                        <span class="current-price"></span>
+                    </div>
+
+                    <div class="product-stock">
+                        <span class="stock-label">Stock disponible:</span>
+                        <span class="stock-value"></span>
+                    </div>
+
+                    <div class="product-description">
+                        <h2>Descripción</h2>
+                        <p></p>
+                    </div>
+
+                    <div class="product-specs">
+                        <h2>Especificaciones</h2>
+                        <ul class="specs-list"></ul>
+                    </div>
+
+                    <div class="product-tags">
+                        <h2>Tags</h2>
+                        <div class="tags-container"></div>
+                    </div>
+
+                    <div class="product-actions">
+                        <button id="add-to-cart" class="add-to-cart" type="button">
+                            Agregar al carrito
+                            <span class="cart-icon">🛒</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <small>&copy; 2025 LevelUp. Todos los derechos reservados.</small>
+    </footer>
+</body>
+</html>
