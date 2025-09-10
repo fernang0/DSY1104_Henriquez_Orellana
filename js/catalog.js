@@ -133,37 +133,40 @@ class ProductCatalog {
         const imgSrc = product.imagen || defaultImage;
 
         article.innerHTML = `
-            <div class="product-image">
-                <img src="${imgSrc}" 
-                     alt="Imagen de ${product.nombre}" 
-                     loading="lazy"
-                     onerror="this.onerror=null; this.src='${defaultImage}';">
-                <span class="category-badge">${nombreCategoria}</span>
-            </div>
-            <div class="product-content">
-                <h3 class="product-title" title="${product.nombre}">
-                    ${product.nombre}
-                </h3>
-                <div class="rating" title="${product.rating} de 5 estrellas">
-                    <span class="stars">${ratingStars}</span>
-                    <span class="rating-value">${product.rating.toFixed(1)}</span>
+            <a href="./producto-detalle.html?code=${product.code}" class="product-link">
+                <div class="product-image">
+                    <img src="${imgSrc}" 
+                         alt="Imagen de ${product.nombre}" 
+                         loading="lazy"
+                         onerror="this.onerror=null; this.src='${defaultImage}';">
+                    <span class="category-badge">${nombreCategoria}</span>
                 </div>
-                <p class="product-price">${formatCLP(product.precioCLP)}</p>
-                <button class="add-to-cart" 
-                        aria-label="Añadir ${product.nombre} al carrito"
-                        data-product-code="${product.code}">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                        <path d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"/>
-                    </svg>
-                    Añadir al carrito
-                </button>
-            </div>
+                <div class="product-content">
+                    <h3 class="product-title" title="${product.nombre}">
+                        ${product.nombre}
+                    </h3>
+                    <div class="rating" title="${product.rating} de 5 estrellas">
+                        <span class="stars">${ratingStars}</span>
+                        <span class="rating-value">${product.rating.toFixed(1)}</span>
+                    </div>
+                    <p class="product-price">${formatCLP(product.precioCLP)}</p>
+                    <button class="add-to-cart" 
+                            aria-label="Añadir ${product.nombre} al carrito"
+                            data-product-code="${product.code}">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"/>
+                        </svg>
+                        Añadir al carrito
+                    </button>
+                </div>
+            </a>
         `;
 
         // Event listener para añadir al carrito
         const addButton = article.querySelector('.add-to-cart');
         addButton.addEventListener('click', (e) => {
             e.preventDefault();
+            e.stopPropagation();
             window.cart.addItem(product);
             this.showAddNotification(product.nombre);
         });
