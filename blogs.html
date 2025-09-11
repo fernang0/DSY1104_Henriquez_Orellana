@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blogs - LevelUp</title>
+    <!-- Google Fonts: Roboto & Orbitron -->
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/styles.css">
+    <!-- Importar módulos JavaScript -->
+    <script src="js/auth.js"></script>
+    <script src="js/cart.js"></script>
+</head>
+<body>
+    <header class="site-header">
+        <div class="container nav-bar">
+            <a class="brand" href="./" aria-label="Ir al inicio">
+                <div class="logo" aria-hidden="true">
+                    <img src="images/logo.png" alt="" width="40" height="40">
+                </div>
+                <span class="brand-text">LevelUp</span>
+            </a>
+
+            <nav class="primary-nav" aria-label="Principal">
+                <ul class="menu">
+                    <li><a href="./">Inicio</a></li>
+                    <li><a href="./productos.html">Productos</a></li>
+                    <li><a href="./blogs.html" aria-current="page">Blogs</a></li>
+                    <li><a href="./nosotros.html">Nosotros</a></li>
+                    <li><a href="./contacto.html">Contacto</a></li>
+                </ul>
+            </nav>
+
+            <div class="nav-actions">
+                <!-- Información de usuario logueado -->
+                <div id="user-info" class="user-info" style="display: none;">
+                    <span id="user-greeting">Hola, Usuario</span>
+                    <span id="user-points" class="points-display">0 pts</span>
+                </div>
+
+                <!-- Botón de inicio de sesión -->
+                <a href="./login.html" class="nav-login-btn" aria-label="Iniciar sesión">
+                    <span class="user-icon">⚡</span>
+                    <span class="login-text">Iniciar Sesión</span>
+                </a>
+                
+                <!-- Botón del carrito con contador -->
+                <button class="btn-icon cart-btn" type="button" aria-label="Abrir carrito" id="cart-toggle">
+                    <span class="cart-icon">🛒</span>
+                    <span class="badge" id="cart-count" aria-live="polite">0</span>
+                </button>
+
+                <!-- Botón del menú móvil -->
+                <button class="nav-toggle" aria-label="Abrir menú" aria-expanded="false" aria-controls="mobile-menu">
+                    <span class="hamburger-icon">☰</span>
+                </button>
+            </div>
+
+            <!-- Menú móvil accesible -->
+            <div class="nav-drawer" id="mobile-menu" role="navigation" aria-label="Menú móvil">
+                <div class="drawer-content">
+                    <ul class="menu">
+                        <li><a href="./">Inicio</a></li>
+                        <li><a href="./productos.html">Productos</a></li>
+                        <li><a href="./blogs.html" aria-current="page">Blogs</a></li>
+                        <li><a href="./nosotros.html">Nosotros</a></li>
+                        <li><a href="./contacto.html">Contacto</a></li>
+                        <li><a href="./login.html" class="login-mobile">⚡ Iniciar Sesión</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main class="main-content">
+        <div class="container">
+            <section class="page-header">
+                <h1>Blog Gaming</h1>
+                <p>Las últimas noticias y tendencias del mundo gaming</p>
+            </section>
+
+            <section class="blog-content">
+                <div class="blog-grid">
+                    <article class="blog-post">
+                        <div class="post-image">
+                            <img src="images/hero-1.jpg" alt="Gaming Setup">
+                        </div>
+                        <div class="post-content">
+                            <h2>🎮 Setup Gaming Perfecto 2025</h2>
+                            <p class="post-meta">11 Sep 2025 • Por LevelUp Team</p>
+                            <p>Descubre los componentes esenciales para crear el setup gaming definitivo este año. Desde las mejores GPUs hasta periféricos profesionales.</p>
+                            <a href="#" class="read-more">Leer más →</a>
+                        </div>
+                    </article>
+
+                    <article class="blog-post">
+                        <div class="post-image">
+                            <img src="images/hero-2.jpg" alt="Gaming Trends">
+                        </div>
+                        <div class="post-content">
+                            <h2>🚀 Tendencias Gaming 2025</h2>
+                            <p class="post-meta">10 Sep 2025 • Por LevelUp Team</p>
+                            <p>Las tendencias que están marcando el futuro del gaming: IA, realidad virtual, cloud gaming y mucho más.</p>
+                            <a href="#" class="read-more">Leer más →</a>
+                        </div>
+                    </article>
+
+                    <article class="blog-post">
+                        <div class="post-image">
+                            <img src="images/hero-3.jpg" alt="Esports">
+                        </div>
+                        <div class="post-content">
+                            <h2>🏆 Esports en Chile</h2>
+                            <p class="post-meta">9 Sep 2025 • Por LevelUp Team</p>
+                            <p>El crecimiento de los deportes electrónicos en Chile y cómo puedes formar parte de esta revolución digital.</p>
+                            <a href="#" class="read-more">Leer más →</a>
+                        </div>
+                    </article>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2025 LevelUp. Todos los derechos reservados.</p>
+        </div>
+    </footer>
+</body>
+</html>

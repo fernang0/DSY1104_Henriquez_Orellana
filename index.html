@@ -9,19 +9,13 @@
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="css/styles.css">
     <!-- Importar módulos JavaScript -->
-    <script type="module" src="js/cart.js"></script>
-    <script type="module" src="js/productos_levelup.js"></script>
-    <script type="module" src="js/categorias_lavelup.js"></script>
-</head>
-<html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>LevelUp</title>
-    <!-- Google Fonts: Roboto & Orbitron -->
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="css/styles.css">
+    <script src="js/auth.js"></script>
+    <script src="js/gamification.js"></script>
+    <script src="js/cart.js"></script>
+    <script src="js/productos_levelup.js"></script>
+    <script src="js/categorias_lavelup.js"></script>
+    <script src="js/test-utils.js"></script>
+    <script src="js/hero-carousel.js"></script>
 </head>
 <body>
     <header class="site-header">
@@ -44,8 +38,20 @@
       </nav>
 
       <div class="nav-actions">
+        <!-- Información de usuario logueado -->
+        <div id="user-info" class="user-info" style="display: none;">
+          <span id="user-greeting">Hola, Usuario</span>
+          <span id="user-points" class="points-display">0 pts</span>
+        </div>
+
+        <!-- Botón de inicio de sesión -->
+        <a href="./login.html" class="nav-login-btn" aria-label="Iniciar sesión">
+          <span class="user-icon">⚡</span>
+          <span class="login-text">Iniciar Sesión</span>
+        </a>
+        
         <!-- Botón del carrito con contador -->
-        <button class="btn-icon cart-btn" type="button" aria-label="Abrir carrito">
+        <button class="btn-icon cart-btn" type="button" aria-label="Abrir carrito" id="cart-toggle">
           <span class="cart-icon">🛒</span>
           <span class="badge" id="cart-count" aria-live="polite">0</span>
         </button>
@@ -65,35 +71,93 @@
             <li><a href="./blogs.html">Blogs</a></li>
             <li><a href="./nosotros.html">Nosotros</a></li>
             <li><a href="./contacto.html">Contacto</a></li>
+            <li><a href="./login.html" class="login-mobile">⚡ Iniciar Sesión</a></li>
           </ul>
         </div>
       </div>
     </div>    </header>
     <main>
-       <!DOCTYPE html>
-<html lang="es">
-<head>
-	<meta charset="UTF-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title>Hero HTML</title>
-	<link rel="stylesheet" href="styles.css">
-</head>
-<body>
-	<div class="contenedor">
-		<div class="wrap">
-			<div class="box">
-				<h1>Tu siguiente partida comienza aquí.</h1>
-				<p>Descubre los últimos videojuegos, consolas y accesorios.</p>
-				<div class="botones">
-					<a href="./productos.html?cat=JM"  class="btn1">Explorar</a>
-				</div>
-			</div>
-		</div>
-	</div>
-	
-</body>
-</html>
+        <!-- Hero Carousel -->
+        <section class="hero-carousel">
+            <div class="carousel-container">
+                <div class="carousel-track" id="heroTrack">
+                    <div class="carousel-slide active" style="background-image: url('images/hero-1.jpg');">
+                        <div class="carousel-content">
+                            <h1>Tu siguiente partida comienza aquí</h1>
+                            <p>Descubre los últimos videojuegos, consolas y accesorios gaming</p>
+                            <div class="carousel-buttons">
+                                <a href="./productos.html?cat=JM" class="btn btn-primary btn-lg">Explorar Catálogo</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="carousel-slide" style="background-image: url('images/hero-2.jpg');">
+                        <div class="carousel-content">
+                            <h1>Potencia tu experiencia gaming</h1>
+                            <p>Las mejores consolas y accesorios para llevar tu juego al siguiente nivel</p>
+                            <div class="carousel-buttons">
+                                <a href="./productos.html?cat=CO" class="btn btn-primary btn-lg">Ver Consolas</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="carousel-slide" style="background-image: url('images/hero-3.jpg');">
+                        <div class="carousel-content">
+                            <h1>Equípate como un pro</h1>
+                            <p>Accesorios gaming de alta calidad para maximizar tu rendimiento</p>
+                            <div class="carousel-buttons">
+                                <a href="./productos.html?cat=AC" class="btn btn-primary btn-lg">Ver Accesorios</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="carousel-slide" style="background-image: url('images/hero-4.jpg');">
+                        <div class="carousel-content">
+                            <h1>Diversión sin límites</h1>
+                            <p>Juegos de mesa y entretenimiento para toda la familia</p>
+                            <div class="carousel-buttons">
+                                <a href="./productos.html?cat=JM" class="btn btn-primary btn-lg">Ver Juegos</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Controles del carousel -->
+                <button class="carousel-btn carousel-btn-prev" id="prevBtn" aria-label="Slide anterior">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <polyline points="15,18 9,12 15,6"></polyline>
+                    </svg>
+                </button>
+                <button class="carousel-btn carousel-btn-next" id="nextBtn" aria-label="Slide siguiente">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <polyline points="9,18 15,12 9,6"></polyline>
+                    </svg>
+                </button>
+                
+                <!-- Indicadores -->
+                <div class="carousel-dots" id="carouselDots">
+                    <button class="carousel-dot active" data-slide="0" aria-label="Ir al slide 1"></button>
+                    <button class="carousel-dot" data-slide="1" aria-label="Ir al slide 2"></button>
+                    <button class="carousel-dot" data-slide="2" aria-label="Ir al slide 3"></button>
+                    <button class="carousel-dot" data-slide="3" aria-label="Ir al slide 4"></button>
+                </div>
+            </div>
+        </section>
    
+        <!-- Sección de acceso rápido -->
+        <section class="login-banner" id="loginBanner">
+            <div class="container">
+                <div class="login-banner-content">
+                    <div class="login-info">
+                        <h2>🎮 ¡Únete a la comunidad gaming!</h2>
+                        <p>Registrate para obtener puntos, descuentos exclusivos y acceso a contenido premium</p>
+                    </div>
+                    <div class="login-actions">
+                        <a href="./login.html" class="btn btn-primary">Iniciar Sesión</a>
+                        <a href="./registro.html" class="btn btn-outline">Registrarse</a>
+                        <button class="btn-close" id="closeBanner" aria-label="Cerrar banner de inicio de sesión">×</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
         <!-- Contenido principal aquí -->
       <section class="categories">
         <div class="container">
@@ -153,8 +217,133 @@
         </div>
       </section>
     </main>
+    
+    <!-- Carrito lateral -->
+    <div id="cart-sidebar" class="cart-sidebar">
+        <div class="cart-header">
+            <h3>Mi Carrito</h3>
+            <button class="cart-close" id="cart-close" aria-label="Cerrar carrito">✕</button>
+        </div>
+        <div class="cart-content" id="cart-content">
+            <!-- Contenido del carrito se carga dinámicamente -->
+        </div>
+    </div>
+    
+    <!-- Menú de usuario desplegable -->
+    <div id="user-dropdown" class="user-dropdown" style="display: none;">
+        <a href="perfil.html">Mi Perfil</a>
+        <a href="#" id="logout-btn">Cerrar Sesión</a>
+    </div>
+    
     <footer>
         <small>&copy; 2025 LevelUp. Todos los derechos reservados.</small>
     </footer>
+
+    <script>
+        // Inicialización del sistema cuando carga la página
+        document.addEventListener('DOMContentLoaded', function() {
+            initializeApp();
+        });
+
+        function initializeApp() {
+            // Inicializar sistemas
+            const authSystem = new AuthSystem();
+            const gamificationSystem = new GamificationSystem();
+            const cartSystem = new CartSystem();
+            
+            // Verificar si hay usuario logueado
+            const currentUser = authSystem.getCurrentUser();
+            updateUserInterface(currentUser, gamificationSystem);
+            
+            // Configurar eventos del carrito
+            setupCartEvents(cartSystem);
+            
+            // Configurar eventos de autenticación
+            setupAuthEvents(authSystem);
+        }
+
+        function updateUserInterface(user, gamificationSystem) {
+            const authMenuItem = document.getElementById('auth-menu-item');
+            const authLink = document.getElementById('auth-link');
+            const userInfo = document.getElementById('user-info');
+            const userGreeting = document.getElementById('user-greeting');
+            const userPoints = document.getElementById('user-points');
+
+            if (user) {
+                // Usuario logueado
+                authLink.textContent = user.firstName || 'Mi Cuenta';
+                authLink.href = 'perfil.html';
+                
+                // Mostrar información del usuario
+                userInfo.style.display = 'block';
+                userGreeting.textContent = `Hola, ${user.firstName || 'Usuario'}`;
+                
+                // Mostrar puntos si están disponibles
+                const gameData = gamificationSystem.getUserGameData(user.email);
+                userPoints.textContent = `${gameData.points} pts`;
+                
+                // Añadir menú desplegable
+                authLink.addEventListener('click', function(e) {
+                    if (e.target.getAttribute('href') === 'perfil.html') {
+                        e.preventDefault();
+                        toggleUserDropdown();
+                    }
+                });
+            } else {
+                // Usuario no logueado
+                authLink.textContent = 'Iniciar Sesión';
+                authLink.href = 'login.html';
+                userInfo.style.display = 'none';
+            }
+        }
+
+        function setupCartEvents(cartSystem) {
+            const cartToggle = document.getElementById('cart-toggle');
+            const cartSidebar = document.getElementById('cart-sidebar');
+            const cartClose = document.getElementById('cart-close');
+            
+            // Abrir carrito
+            cartToggle.addEventListener('click', function() {
+                cartSidebar.classList.add('active');
+                cartSystem.renderCart();
+            });
+            
+            // Cerrar carrito
+            cartClose.addEventListener('click', function() {
+                cartSidebar.classList.remove('active');
+            });
+            
+            // Cerrar carrito al hacer clic fuera
+            cartSidebar.addEventListener('click', function(e) {
+                if (e.target === cartSidebar) {
+                    cartSidebar.classList.remove('active');
+                }
+            });
+            
+            // Actualizar contador del carrito
+            cartSystem.updateCartCount();
+        }
+
+        function setupAuthEvents(authSystem) {
+            const logoutBtn = document.getElementById('logout-btn');
+            
+            if (logoutBtn) {
+                logoutBtn.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    authSystem.logout();
+                    window.location.reload();
+                });
+            }
+        }
+
+        function toggleUserDropdown() {
+            const dropdown = document.getElementById('user-dropdown');
+            dropdown.style.display = dropdown.style.display === 'none' ? 'block' : 'none';
+        }
+    </script>
+    
+    <!-- Scripts -->
+    <script src="js/cart.js"></script>
+    <script src="js/login-banner.js"></script>
 </body>
 </html>
