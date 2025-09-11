@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LevelUp - Blog Gaming</title>
+    <!-- Google Fonts: Roboto & Orbitron -->
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+    <header class="site-header">
+        <div class="container nav-bar">
+            <a class="brand" href="./" aria-label="Ir al inicio">
+                <div class="logo" aria-hidden="true">
+                    <img src="images/logo.png" alt="" width="40" height="40">
+                </div>
+                <span class="brand-text">LevelUp</span>
+            </a>
+
+            <nav class="primary-nav" aria-label="Principal">
+                <ul class="menu">
+                    <li><a href="./">Inicio</a></li>
+                    <li><a href="./productos.html">Productos</a></li>
+                    <li><a href="./blogs.html" aria-current="page">Blogs</a></li>
+                    <li><a href="./nosotros.html">Nosotros</a></li>
+                    <li><a href="./contacto.html">Contacto</a></li>
+                </ul>
+            </nav>
+
+            <div class="nav-actions">
+                <button class="btn-icon cart-btn" type="button" aria-label="Abrir carrito">
+                    <span class="cart-icon">🛒</span>
+                    <span class="badge" id="cart-count" aria-live="polite">0</span>
+                </button>
+
+                <button class="nav-toggle" aria-label="Abrir menú" aria-expanded="false" aria-controls="mobile-menu">
+                    <span class="hamburger-icon">☰</span>
+                </button>
+            </div>
+
+            <div class="nav-drawer" id="mobile-menu" role="navigation" aria-label="Menú móvil">
+                <div class="drawer-content">
+                    <ul class="menu">
+                        <li><a href="./">Inicio</a></li>
+                        <li><a href="./productos.html">Productos</a></li>
+                        <li><a href="./blogs.html" aria-current="page">Blogs</a></li>
+                        <li><a href="./nosotros.html">Nosotros</a></li>
+                        <li><a href="./contacto.html">Contacto</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <section class="blog-section">
+            <div class="container">
+                <h1 class="section-title">Noticias y Guías Gaming</h1>
+                
+                <div class="blog-grid">
+                    <!-- Artículo 1 -->
+                    <article class="blog-card">
+                        <a href="blog-detalle.html?id=1" class="blog-link">
+                            <div class="blog-image">
+                                <img src="images/products/default.jpg" 
+                                     alt="Setup gaming perfecto" 
+                                     loading="lazy">
+                                <span class="blog-category">Guía</span>
+                            </div>
+                            <div class="blog-content">
+                                <h2 class="blog-title">Cómo Crear el Setup Gaming Perfecto</h2>
+                                <time class="blog-date" datetime="2025-09-10">10 de Septiembre, 2025</time>
+                                <p class="blog-excerpt">
+                                    Descubre los elementos esenciales para armar tu espacio gaming ideal, 
+                                    desde la elección de la silla hasta la configuración de tu PC.
+                                </p>
+                                <span class="read-more">Leer más</span>
+                            </div>
+                        </a>
+                    </article>
+
+                    <!-- Artículo 2 -->
+                    <article class="blog-card">
+                        <a href="blog-detalle.html?id=2" class="blog-link">
+                            <div class="blog-image">
+                                <img src="images/products/default.jpg" 
+                                     alt="Juegos competitivos" 
+                                     loading="lazy">
+                                <span class="blog-category">E-Sports</span>
+                            </div>
+                            <div class="blog-content">
+                                <h2 class="blog-title">Mejora tu Rendimiento en Juegos Competitivos</h2>
+                                <time class="blog-date" datetime="2025-09-09">9 de Septiembre, 2025</time>
+                                <p class="blog-excerpt">
+                                    Tips y estrategias avanzadas para mejorar tu gameplay en títulos competitivos. 
+                                    Aprende de los pros.
+                                </p>
+                                <span class="read-more">Leer más</span>
+                            </div>
+                        </a>
+                    </article>
+
+                    <!-- Artículo 3 -->
+                    <article class="blog-card">
+                        <a href="blog-detalle.html?id=3" class="blog-link">
+                            <div class="blog-image">
+                                <img src="images/products/default.jpg" 
+                                     alt="Novedades gaming 2025" 
+                                     loading="lazy">
+                                <span class="blog-category">Noticias</span>
+                            </div>
+                            <div class="blog-content">
+                                <h2 class="blog-title">Las Novedades Gaming Más Esperadas de 2025</h2>
+                                <time class="blog-date" datetime="2025-09-08">8 de Septiembre, 2025</time>
+                                <p class="blog-excerpt">
+                                    Un vistazo a los próximos lanzamientos de juegos y hardware que 
+                                    revolucionarán la industria este año.
+                                </p>
+                                <span class="read-more">Leer más</span>
+                            </div>
+                        </a>
+                    </article>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <small>&copy; 2025 LevelUp. Todos los derechos reservados.</small>
+    </footer>
+
+    <script type="module" src="js/cart.js"></script>
+</body>
+</html>
