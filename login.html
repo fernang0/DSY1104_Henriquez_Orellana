@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LevelUp - Iniciar Sesión</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;700&display=swap" rel="stylesheet">
+    <script src="js/auth.js"></script>
+    <script src="js/gamification.js"></script>
+</head>
+<body>
+    <header class="site-header">
+        <div class="container nav-bar">
+            <a class="brand" href="./" aria-label="Ir al inicio">
+                <div class="logo" aria-hidden="true">
+                    <img src="images/logo.png" alt="" width="40" height="40">
+                </div>
+                <span class="brand-text">LevelUp</span>
+            </a>
+            <nav class="primary-nav" aria-label="Principal">
+                <ul class="menu">
+                    <li><a href="./">Inicio</a></li>
+                    <li><a href="./productos.html">Productos</a></li>
+                    <li><a href="./blogs.html">Blogs</a></li>
+                    <li><a href="./nosotros.html">Nosotros</a></li>
+                    <li><a href="./contacto.html">Contacto</a></li>
+                </ul>
+            </nav>
+            
+            <div class="nav-actions">
+                <!-- Botón del carrito con contador -->
+                <button class="btn-icon cart-btn" type="button" aria-label="Abrir carrito" id="cart-toggle">
+                    <span class="cart-icon">🛒</span>
+                    <span class="badge" id="cart-count" aria-live="polite">0</span>
+                </button>
+            </div>
+        </div>
+    </header>
+    
+    <main class="auth-main">
+        <div class="auth-container">
+            <div class="auth-card">
+                <h1>Bienvenido a LevelUp</h1>
+                                <h1>🎮 Inicia Sesión</h1>
+                <p class="auth-subtitle">Accede a tu cuenta y continúa tu aventura gaming</p>
+                
+                <div id="auth-messages" aria-live="polite"></div>
+                
+                <form id="login-form" class="auth-form" novalidate>
+                    <div class="form-group">
+                        <label for="email">Correo electrónico</label>
+                        <input type="email" id="email" name="email" required
+                               aria-describedby="email-help" autocomplete="email">
+                        <small id="email-help" class="form-help">Ingresa tu email registrado</small>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="password">Contraseña</label>
+                        <div class="password-field">
+                            <input type="password" id="password" name="password" required
+                                   aria-describedby="password-help" autocomplete="current-password">
+                            <button type="button" class="toggle-password" aria-label="Mostrar contraseña">
+                                👁️
+                            </button>
+                        </div>
+                        <small id="password-help" class="form-help">Tu contraseña de 4-10 caracteres</small>
+                    </div>
+                    
+                    <div class="form-group checkbox-group">
+                        <label class="checkbox-label">
+                            <input type="checkbox" id="remember" name="remember">
+                            <span class="checkmark"></span>
+                            Recordar sesión
+                        </label>
+                    </div>
+                    
+                    <button type="submit" class="btn btn-primary btn-lg btn-full">
+                        🎮 Iniciar sesión
+                    </button>
+                </form>
+                
+                <div class="auth-footer">
+                    <p>¿No tienes cuenta? <a href="registro.html">Registrarse</a></p>
+                    <p><a href="#" id="forgot-password">¿Olvidaste tu contraseña?</a></p>
+                </div>
+                
+                <div class="quick-access">
+                    <h3>Cuentas de prueba</h3>
+                    <p class="demo-info">Para probar el sistema puedes usar:</p>
+                    <div class="demo-accounts">
+                        <button type="button" class="btn btn-secondary btn-sm demo-login" data-email="admin@duoc.cl" data-password="admin123">
+                            👑 Admin Demo
+                        </button>
+                        <button type="button" class="btn btn-secondary btn-sm demo-login" data-email="estudiante@duoc.cl" data-password="pass123">
+                            🎓 Estudiante Demo
+                        </button>
+                        <button type="button" class="btn btn-secondary btn-sm demo-login" data-email="gamer@gmail.com" data-password="game456">
+                            🎮 Gamer Demo
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+    
+    <footer>
+        <small>&copy; 2025 LevelUp. Todos los derechos reservados.</small>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Inicializar sistema de autenticación
+            const authSystem = new AuthSystem();
+            
+            // Toggle password visibility
+            const togglePassword = document.querySelector('.toggle-password');
+            const passwordInput = document.getElementById('password');
+            
+            togglePassword.addEventListener('click', function() {
+                const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
+                passwordInput.setAttribute('type', type);
+                this.textContent = type === 'password' ? '👁️' : '🙈';
+                this.setAttribute('aria-label', type === 'password' ? 'Mostrar contraseña' : 'Ocultar contraseña');
+            });
+            
+            // Demo login buttons
+            const demoButtons = document.querySelectorAll('.demo-login');
+            demoButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    const email = this.dataset.email;
+                    const password = this.dataset.password;
+                    
+                    document.getElementById('email').value = email;
+                    document.getElementById('password').value = password;
+                    
+                    // Optional: Auto-submit after filling
+                    // document.getElementById('login-form').dispatchEvent(new Event('submit'));
+                });
+            });
+            
+            // Forgot password functionality
+            document.getElementById('forgot-password').addEventListener('click', function(e) {
+                e.preventDefault();
+                const email = document.getElementById('email').value;
+                
+                if (!email) {
+                    alert('Por favor ingresa tu email primero');
+                    document.getElementById('email').focus();
+                    return;
+                }
+                
+                // Simulate password recovery
+                const messagesDiv = document.getElementById('auth-messages');
+                messagesDiv.innerHTML = `
+                    <div class="message info">
+                        📧 Se ha enviado un link de recuperación a ${email}
+                        <br><small>En un sistema real, esto enviaría un email.</small>
+                    </div>
+                `;
+            });
+            
+            // Login form submission
+            const loginForm = document.getElementById('login-form');
+            loginForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                const formData = new FormData(loginForm);
+                const email = formData.get('email');
+                const password = formData.get('password');
+                const remember = formData.get('remember') === 'on';
+                
+                const messagesDiv = document.getElementById('auth-messages');
+                
+                try {
+                    const result = authSystem.login(email, password, remember);
+                    
+                    if (result.success) {
+                        messagesDiv.innerHTML = `
+                            <div class="message success">
+                                ¡Inicio de sesión exitoso! Redirigiendo...
+                            </div>
+                        `;
+                        
+                        setTimeout(() => {
+                            window.location.href = 'index.html';
+                        }, 1500);
+                    } else {
+                        messagesDiv.innerHTML = `
+                            <div class="message error">
+                                ${result.message}
+                            </div>
+                        `;
+                    }
+                } catch (error) {
+                    messagesDiv.innerHTML = `
+                        <div class="message error">
+                            Error en el inicio de sesión: ${error.message}
+                        </div>
+                    `;
+                }
+            });
+        });
+    </script>
+    <script src="js/cart.js"></script>
+</body>
+</html>

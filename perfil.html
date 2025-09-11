@@ -1,0 +1,425 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LevelUp - Mi Perfil</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;700&display=swap" rel="stylesheet">
+    <script src="js/auth.js"></script>
+    <script src="js/gamification.js"></script>
+    <script src="js/cart.js"></script>
+</head>
+<body>
+    <header class="site-header">
+        <div class="container nav-bar">
+            <a class="brand" href="./" aria-label="Ir al inicio">
+                <div class="logo" aria-hidden="true">
+                    <img src="images/logo.png" alt="" width="40" height="40">
+                </div>
+                <span class="brand-text">LevelUp</span>
+            </a>
+            <nav class="primary-nav" aria-label="Principal">
+                <ul class="menu">
+                    <li><a href="./">Inicio</a></li>
+                    <li><a href="./productos.html">Productos</a></li>
+                    <li><a href="./blogs.html">Blogs</a></li>
+                    <li><a href="./nosotros.html">Nosotros</a></li>
+                    <li><a href="./contacto.html">Contacto</a></li>
+                </ul>
+            </nav>
+            
+            <!-- Carrito -->
+            <button class="cart-toggle" id="cart-toggle" aria-label="Abrir carrito">
+                🛒
+                <span class="cart-count" id="cart-count">0</span>
+            </button>
+        </div>
+    </header>
+    
+    <!-- Menú de usuario desplegable -->
+    <div id="user-dropdown" class="user-dropdown" style="display: none;">
+        <a href="perfil.html">Mi Perfil</a>
+        <a href="#" id="logout-btn">Cerrar Sesión</a>
+    </div>
+    
+    <!-- Carrito lateral -->
+    <div id="cart-sidebar" class="cart-sidebar">
+        <div class="cart-header">
+            <h3>Mi Carrito</h3>
+            <button class="cart-close" id="cart-close" aria-label="Cerrar carrito">✕</button>
+        </div>
+        <div class="cart-content" id="cart-content">
+            <!-- Contenido del carrito se carga dinámicamente -->
+        </div>
+    </div>
+    
+    <main class="profile-main">
+        <div class="container">
+            <div class="profile-header animate-fade-in">
+                <h1 class="text-gradient">🎮 Mi Perfil Gaming</h1>
+                <div id="profile-messages" aria-live="polite"></div>
+            </div>
+            
+            <div class="profile-grid">
+                <!-- Información de usuario -->
+                <section class="profile-card user-info">
+                    <h2>Información Personal</h2>
+                    <form id="profile-form" class="profile-form">
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="firstName">Nombre</label>
+                                <input type="text" id="firstName" name="firstName" maxlength="50" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="lastName">Apellido</label>
+                                <input type="text" id="lastName" name="lastName" maxlength="50" required>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="email">Email</label>
+                            <input type="email" id="email" name="email" readonly>
+                            <small class="form-help">El email no se puede cambiar</small>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="phone">Teléfono</label>
+                            <input type="tel" id="phone" name="phone" minlength="8" maxlength="15">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="birthDate">Fecha de nacimiento</label>
+                            <input type="date" id="birthDate" name="birthDate" readonly>
+                            <small class="form-help">La fecha de nacimiento no se puede cambiar</small>
+                        </div>
+                        
+                        <div class="form-group checkbox-group">
+                            <label class="checkbox-label">
+                                <input type="checkbox" id="newsletter" name="newsletter">
+                                <span class="checkmark"></span>
+                                Recibir ofertas por email
+                            </label>
+                        </div>
+                        
+                        <button type="submit" class="btn btn-gradient btn-lg">💾 Guardar cambios</button>
+                    </form>
+                </section>
+                
+                <!-- Información de nivel y puntos -->
+                <section class="profile-card gamification-info">
+                    <h2>🎮 Estado del Jugador</h2>
+                    <div class="level-display">
+                        <div class="level-badge">
+                            <span class="level-number" id="user-level">1</span>
+                            <span class="level-label">Nivel</span>
+                        </div>
+                        <div class="level-info">
+                            <h3 id="level-name">Noob</h3>
+                            <div class="points-info">
+                                <span id="current-points">0</span> puntos LevelUp
+                            </div>
+                            <div class="progress-bar">
+                                <div class="progress-fill" id="level-progress" style="width: 0%"></div>
+                            </div>
+                            <small id="points-to-next">0 puntos para siguiente nivel</small>
+                        </div>
+                    </div>
+                    
+                    <div class="referral-section">
+                        <h4>Código de Referido</h4>
+                        <div class="referral-code-display">
+                            <code id="my-referral-code">LOADING...</code>
+                            <button class="btn-secondary btn-small" id="copy-referral" aria-label="Copiar código">
+                                📋 Copiar
+                            </button>
+                        </div>
+                        <small>Comparte tu código y gana 50 puntos por cada amigo registrado</small>
+                    </div>
+                    
+                    <div class="rewards-section">
+                        <h4>Canjear Puntos</h4>
+                        <div class="rewards-list" id="rewards-list">
+                            <!-- Recompensas se cargan dinámicamente -->
+                        </div>
+                    </div>
+                </section>
+                
+                <!-- Historial de pedidos -->
+                <section class="profile-card order-history">
+                    <h2>📦 Historial de Pedidos</h2>
+                    <div id="orders-list">
+                        <div class="empty-state">
+                            <p>Aún no has realizado ningún pedido</p>
+                            <a href="productos.html" class="btn-primary">Explorar productos</a>
+                        </div>
+                    </div>
+                </section>
+                
+                <!-- Cambiar contraseña -->
+                <section class="profile-card password-change">
+                    <h2>🔒 Cambiar Contraseña</h2>
+                    <form id="password-form" class="profile-form">
+                        <div class="form-group">
+                            <label for="currentPassword">Contraseña actual</label>
+                            <input type="password" id="currentPassword" name="currentPassword" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="newPassword">Nueva contraseña</label>
+                            <input type="password" id="newPassword" name="newPassword" 
+                                   minlength="4" maxlength="10" required>
+                            <small class="form-help">Entre 4 y 10 caracteres</small>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="confirmPassword">Confirmar nueva contraseña</label>
+                            <input type="password" id="confirmPassword" name="confirmPassword" 
+                                   minlength="4" maxlength="10" required>
+                        </div>
+                        
+                        <button type="submit" class="btn-primary">Cambiar contraseña</button>
+                    </form>
+                </section>
+                
+                <!-- Configuraciones -->
+                <section class="profile-card settings">
+                    <h2>⚙️ Configuraciones</h2>
+                    <div class="settings-list">
+                        <div class="setting-item">
+                            <label class="checkbox-label">
+                                <input type="checkbox" id="notifications" checked>
+                                <span class="checkmark"></span>
+                                Notificaciones push
+                            </label>
+                        </div>
+                        
+                        <div class="setting-item">
+                            <label class="checkbox-label">
+                                <input type="checkbox" id="darkMode">
+                                <span class="checkmark"></span>
+                                Modo oscuro
+                            </label>
+                        </div>
+                        
+                        <div class="setting-item">
+                            <label for="language">Idioma</label>
+                            <select id="language" name="language">
+                                <option value="es" selected>Español</option>
+                                <option value="en">English</option>
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <div class="danger-zone">
+                        <h4>Zona de peligro</h4>
+                        <button class="btn-danger" id="delete-account">
+                            🗑️ Eliminar cuenta
+                        </button>
+                        <small>Esta acción no se puede deshacer</small>
+                    </div>
+                </section>
+            </div>
+        </div>
+    </main>
+    
+    <footer>
+        <small>&copy; 2025 LevelUp. Todos los derechos reservados.</small>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Verificar autenticación
+            const authSystem = new AuthSystem();
+            const user = authSystem.getCurrentUser();
+            
+            if (!user) {
+                window.location.href = 'login.html';
+                return;
+            }
+            
+            // Cargar datos del usuario
+            loadUserProfile(user);
+            
+            // Configurar eventos
+            setupEventListeners();
+            
+            // Cargar sistema de gamificación
+            const gamificationSystem = new GamificationSystem();
+            loadGamificationData(user, gamificationSystem);
+        });
+        
+        function loadUserProfile(user) {
+            document.getElementById('firstName').value = user.firstName || '';
+            document.getElementById('lastName').value = user.lastName || '';
+            document.getElementById('email').value = user.email || '';
+            document.getElementById('phone').value = user.phone || '';
+            document.getElementById('birthDate').value = user.birthDate || '';
+            document.getElementById('newsletter').checked = user.newsletter || false;
+            
+            // Actualizar nombre en header
+            document.getElementById('user-name').textContent = user.firstName || 'Usuario';
+        }
+        
+        function loadGamificationData(user, gamificationSystem) {
+            const gameData = gamificationSystem.getUserGameData(user.email);
+            
+            // Actualizar información de nivel
+            document.getElementById('current-points').textContent = gameData.points;
+            document.getElementById('user-level').textContent = gameData.level;
+            document.getElementById('level-name').textContent = gamificationSystem.getLevelName(gameData.level);
+            
+            // Calcular progreso al siguiente nivel
+            const currentLevelThreshold = gamificationSystem.getLevelThreshold(gameData.level);
+            const nextLevelThreshold = gamificationSystem.getLevelThreshold(gameData.level + 1);
+            const pointsToNext = nextLevelThreshold - gameData.points;
+            const progressPercent = ((gameData.points - currentLevelThreshold) / (nextLevelThreshold - currentLevelThreshold)) * 100;
+            
+            document.getElementById('points-to-next').textContent = `${pointsToNext} puntos para siguiente nivel`;
+            document.getElementById('level-progress').style.width = `${Math.max(0, Math.min(100, progressPercent))}%`;
+            
+            // Mostrar código de referido
+            document.getElementById('my-referral-code').textContent = gameData.referralCode;
+            
+            // Cargar recompensas disponibles
+            loadAvailableRewards(gameData.points, gamificationSystem);
+        }
+        
+        function loadAvailableRewards(points, gamificationSystem) {
+            const rewardsList = document.getElementById('rewards-list');
+            const rewards = [
+                { name: '5% descuento', cost: 100, description: 'En tu próxima compra' },
+                { name: '10% descuento', cost: 250, description: 'En tu próxima compra' },
+                { name: 'Envío gratis', cost: 150, description: 'En cualquier pedido' },
+                { name: '20% descuento', cost: 500, description: 'En tu próxima compra' },
+                { name: 'Producto gratis', cost: 1000, description: 'Mousepad LevelUp' }
+            ];
+            
+            rewardsList.innerHTML = rewards.map(reward => `
+                <div class="reward-item ${points >= reward.cost ? 'available' : 'unavailable'}">
+                    <div class="reward-info">
+                        <h5>${reward.name}</h5>
+                        <small>${reward.description}</small>
+                        <span class="reward-cost">${reward.cost} puntos</span>
+                    </div>
+                    <button class="btn-secondary btn-small ${points >= reward.cost ? '' : 'disabled'}" 
+                            ${points >= reward.cost ? `onclick="redeemReward('${reward.name}', ${reward.cost})"` : 'disabled'}>
+                        ${points >= reward.cost ? 'Canjear' : 'Insuficiente'}
+                    </button>
+                </div>
+            `).join('');
+        }
+        
+        function setupEventListeners() {
+            // Guardar perfil
+            document.getElementById('profile-form').addEventListener('submit', function(e) {
+                e.preventDefault();
+                saveProfile();
+            });
+            
+            // Cambiar contraseña
+            document.getElementById('password-form').addEventListener('submit', function(e) {
+                e.preventDefault();
+                changePassword();
+            });
+            
+            // Copiar código de referido
+            document.getElementById('copy-referral').addEventListener('click', function() {
+                const code = document.getElementById('my-referral-code').textContent;
+                navigator.clipboard.writeText(code).then(() => {
+                    showMessage('Código copiado al portapapeles', 'success');
+                });
+            });
+            
+            // Menu de usuario
+            document.getElementById('user-menu-toggle').addEventListener('click', function(e) {
+                e.preventDefault();
+                const dropdown = document.getElementById('user-dropdown');
+                dropdown.style.display = dropdown.style.display === 'none' ? 'block' : 'none';
+            });
+            
+            // Cerrar sesión
+            document.getElementById('logout-btn').addEventListener('click', function(e) {
+                e.preventDefault();
+                const authSystem = new AuthSystem();
+                authSystem.logout();
+                window.location.href = 'index.html';
+            });
+            
+            // Eliminar cuenta
+            document.getElementById('delete-account').addEventListener('click', function() {
+                if (confirm('¿Estás seguro? Esta acción no se puede deshacer.')) {
+                    const authSystem = new AuthSystem();
+                    authSystem.deleteAccount();
+                    window.location.href = 'index.html';
+                }
+            });
+        }
+        
+        function saveProfile() {
+            const authSystem = new AuthSystem();
+            const formData = new FormData(document.getElementById('profile-form'));
+            
+            const updatedData = {
+                firstName: formData.get('firstName'),
+                lastName: formData.get('lastName'),
+                phone: formData.get('phone'),
+                newsletter: formData.get('newsletter') === 'on'
+            };
+            
+            if (authSystem.updateProfile(updatedData)) {
+                showMessage('Perfil actualizado correctamente', 'success');
+            } else {
+                showMessage('Error al actualizar el perfil', 'error');
+            }
+        }
+        
+        function changePassword() {
+            const authSystem = new AuthSystem();
+            const currentPassword = document.getElementById('currentPassword').value;
+            const newPassword = document.getElementById('newPassword').value;
+            const confirmPassword = document.getElementById('confirmPassword').value;
+            
+            if (newPassword !== confirmPassword) {
+                showMessage('Las contraseñas no coinciden', 'error');
+                return;
+            }
+            
+            if (authSystem.changePassword(currentPassword, newPassword)) {
+                showMessage('Contraseña cambiada correctamente', 'success');
+                document.getElementById('password-form').reset();
+            } else {
+                showMessage('Contraseña actual incorrecta', 'error');
+            }
+        }
+        
+        function redeemReward(rewardName, cost) {
+            const gamificationSystem = new GamificationSystem();
+            const authSystem = new AuthSystem();
+            const user = authSystem.getCurrentUser();
+            
+            if (gamificationSystem.redeemReward(user.email, cost, rewardName)) {
+                showMessage(`¡Recompensa canjeada! ${rewardName}`, 'success');
+                
+                // Recargar datos de gamificación
+                setTimeout(() => {
+                    loadGamificationData(user, gamificationSystem);
+                }, 1000);
+            } else {
+                showMessage('No tienes suficientes puntos', 'error');
+            }
+        }
+        
+        function showMessage(message, type) {
+            const messagesDiv = document.getElementById('profile-messages');
+            messagesDiv.innerHTML = `<div class="message ${type}">${message}</div>`;
+            
+            setTimeout(() => {
+                messagesDiv.innerHTML = '';
+            }, 5000);
+        }
+    </script>
+    <script src="js/cart.js"></script>
+</body>
+</html>

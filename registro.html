@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LevelUp - Registro</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;700&display=swap" rel="stylesheet">
+    <script src="js/auth.js"></script>
+    <script src="js/gamification.js"></script>
+</head>
+<body>
+    <header class="site-header">
+        <div class="container nav-bar">
+            <a class="brand" href="./" aria-label="Ir al inicio">
+                <div class="logo" aria-hidden="true">
+                    <img src="images/logo.png" alt="" width="40" height="40">
+                </div>
+                <span class="brand-text">LevelUp</span>
+            </a>
+            <nav class="primary-nav" aria-label="Principal">
+                <ul class="menu">
+                    <li><a href="./">Inicio</a></li>
+                    <li><a href="./productos.html">Productos</a></li>
+                    <li><a href="./blogs.html">Blogs</a></li>
+                    <li><a href="./nosotros.html">Nosotros</a></li>
+                    <li><a href="./contacto.html">Contacto</a></li>
+                </ul>
+            </nav>
+            
+            <div class="nav-actions">
+                <!-- Botón del carrito con contador -->
+                <button class="btn-icon cart-btn" type="button" aria-label="Abrir carrito" id="cart-toggle">
+                    <span class="cart-icon">🛒</span>
+                    <span class="badge" id="cart-count" aria-live="polite">0</span>
+                </button>
+            </div>
+        </div>
+    </header>
+    
+    <main class="auth-main">
+        <div class="auth-container">
+            <div class="auth-card">
+                <h1>🚀 Únete a LevelUp</h1>
+                <p class="auth-subtitle">Crea tu cuenta y comienza a ganar puntos en el mundo gaming</p>
+                
+                <div id="auth-messages" aria-live="polite"></div>
+                
+                <form id="register-form" class="auth-form" novalidate>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="firstName">Nombre *</label>
+                            <input type="text" id="firstName" name="firstName" required maxlength="50" 
+                                   aria-describedby="firstName-help">
+                            <small id="firstName-help" class="form-help">Máximo 50 caracteres</small>
+                        </div>
+                        <div class="form-group">
+                            <label for="lastName">Apellido *</label>
+                            <input type="text" id="lastName" name="lastName" required maxlength="50"
+                                   aria-describedby="lastName-help">
+                            <small id="lastName-help" class="form-help">Máximo 50 caracteres</small>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="email">Correo electrónico *</label>
+                        <input type="email" id="email" name="email" required maxlength="100"
+                               aria-describedby="email-help">
+                        <small id="email-help" class="form-help">
+                            Solo @duoc.cl, @profesor.duoc.cl o @gmail.com (máx. 100 caracteres)
+                        </small>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="birthDate">Fecha de nacimiento *</label>
+                        <input type="date" id="birthDate" name="birthDate" required
+                               aria-describedby="birthDate-help">
+                        <small id="birthDate-help" class="form-help">Debes ser mayor de 18 años</small>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="phone">Teléfono</label>
+                        <input type="tel" id="phone" name="phone" minlength="8" maxlength="15"
+                               aria-describedby="phone-help">
+                        <small id="phone-help" class="form-help">Opcional (8-15 caracteres)</small>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="password">Contraseña *</label>
+                        <input type="password" id="password" name="password" required 
+                               minlength="4" maxlength="10" aria-describedby="password-help">
+                        <small id="password-help" class="form-help">Entre 4 y 10 caracteres</small>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="referralCode">Código de referido</label>
+                        <input type="text" id="referral-code" name="referralCode" 
+                               pattern="[a-zA-Z0-9]{6,10}" maxlength="10"
+                               aria-describedby="referral-help">
+                        <small id="referral-help" class="form-help">
+                            Opcional - Alfanumérico de 6-10 caracteres (+100 puntos)
+                        </small>
+                        <div id="referral-feedback" aria-live="polite"></div>
+                    </div>
+                    
+                    <div class="form-group checkbox-group">
+                        <label class="checkbox-label">
+                            <input type="checkbox" id="terms" name="terms" required>
+                            <span class="checkmark"></span>
+                            Acepto los <a href="#" target="_blank">términos y condiciones</a> *
+                        </label>
+                    </div>
+                    
+                    <div class="form-group checkbox-group">
+                        <label class="checkbox-label">
+                            <input type="checkbox" id="newsletter" name="newsletter">
+                            <span class="checkmark"></span>
+                            Quiero recibir ofertas y novedades por email
+                        </label>
+                    </div>
+                    
+                    <button type="submit" class="btn btn-primary btn-lg btn-full">
+                        🚀 Crear cuenta
+                    </button>
+                </form>
+                
+                <div class="auth-footer">
+                    <p>¿Ya tienes cuenta? <a href="login.html">Iniciar sesión</a></p>
+                </div>
+                
+                <div class="benefits-info">
+                    <h3>Beneficios de ser miembro</h3>
+                    <ul>
+                        <li>🎮 Puntos LevelUp en cada compra</li>
+                        <li>💎 Acceso a ofertas exclusivas</li>
+                        <li>🏆 Sistema de niveles y recompensas</li>
+                        <li>📧 Estudiantes Duoc: 20% de descuento</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </main>
+    
+    <footer>
+        <small>&copy; 2025 LevelUp. Todos los derechos reservados.</small>
+    </footer>
+
+    <script>
+        // Validación en tiempo real
+        document.addEventListener('DOMContentLoaded', function() {
+            const form = document.getElementById('register-form');
+            const inputs = form.querySelectorAll('input[required]');
+            
+            // Inicializar sistemas
+            const authSystem = new AuthSystem();
+            const gamificationSystem = new GamificationSystem();
+            
+            // Validación de edad en tiempo real
+            const birthDateInput = document.getElementById('birthDate');
+            birthDateInput.addEventListener('change', function() {
+                const birthDate = new Date(this.value);
+                const today = new Date();
+                const age = today.getFullYear() - birthDate.getFullYear();
+                const monthDiff = today.getMonth() - birthDate.getMonth();
+                
+                let actualAge = age;
+                if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < birthDate.getDate())) {
+                    actualAge--;
+                }
+                
+                const helpText = document.getElementById('birthDate-help');
+                if (actualAge < 18) {
+                    helpText.textContent = 'Debes ser mayor de 18 años';
+                    helpText.style.color = 'var(--error)';
+                    this.setCustomValidity('Debes ser mayor de 18 años');
+                } else {
+                    helpText.textContent = `Edad: ${actualAge} años ✓`;
+                    helpText.style.color = 'var(--success)';
+                    this.setCustomValidity('');
+                }
+            });
+            
+            // Validación de email en tiempo real
+            const emailInput = document.getElementById('email');
+            emailInput.addEventListener('blur', function() {
+                const email = this.value.toLowerCase();
+                const domain = email.split('@')[1];
+                const validDomains = ['duoc.cl', 'profesor.duoc.cl', 'gmail.com'];
+                const helpText = document.getElementById('email-help');
+                
+                if (email && !validDomains.includes(domain)) {
+                    helpText.textContent = 'Solo se permiten emails de duoc.cl, profesor.duoc.cl o gmail.com';
+                    helpText.style.color = 'var(--error)';
+                    this.setCustomValidity('Dominio de email no permitido');
+                } else if (email && validDomains.includes(domain)) {
+                    const isDuoc = domain.includes('duoc.cl');
+                    helpText.textContent = isDuoc ? 'Email válido - ¡Tendrás 20% de descuento! ✓' : 'Email válido ✓';
+                    helpText.style.color = 'var(--success)';
+                    this.setCustomValidity('');
+                }
+            });
+            
+            // Validación de código de referido
+            const referralInput = document.getElementById('referral-code');
+            const referralFeedback = document.getElementById('referral-feedback');
+            
+            referralInput.addEventListener('input', function() {
+                const code = this.value.trim();
+                if (code.length === 0) {
+                    referralFeedback.innerHTML = '';
+                    return;
+                }
+                
+                if (gamificationSystem.validateReferralCode(code)) {
+                    referralFeedback.innerHTML = '<span style="color: var(--success);">✓ Código válido (+100 puntos)</span>';
+                } else {
+                    referralFeedback.innerHTML = '<span style="color: var(--error);">✗ Código inválido</span>';
+                }
+            });
+            
+            // Envío del formulario
+            form.addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                const formData = new FormData(form);
+                const userData = {
+                    firstName: formData.get('firstName'),
+                    lastName: formData.get('lastName'),
+                    email: formData.get('email'),
+                    birthDate: formData.get('birthDate'),
+                    phone: formData.get('phone'),
+                    password: formData.get('password'),
+                    referralCode: formData.get('referralCode'),
+                    terms: formData.get('terms') === 'on',
+                    newsletter: formData.get('newsletter') === 'on'
+                };
+                
+                const messagesDiv = document.getElementById('auth-messages');
+                
+                try {
+                    const result = authSystem.register(userData);
+                    
+                    if (result.success) {
+                        messagesDiv.innerHTML = `
+                            <div class="message success">
+                                ¡Registro exitoso! Redirigiendo al inicio de sesión...
+                            </div>
+                        `;
+                        
+                        setTimeout(() => {
+                            window.location.href = 'login.html';
+                        }, 2000);
+                    } else {
+                        messagesDiv.innerHTML = `
+                            <div class="message error">
+                                ${result.message}
+                            </div>
+                        `;
+                    }
+                } catch (error) {
+                    messagesDiv.innerHTML = `
+                        <div class="message error">
+                            Error en el registro: ${error.message}
+                        </div>
+                    `;
+                }
+            });
+        });
+    </script>
+    <script src="js/cart.js"></script>
+</body>
+</html>
