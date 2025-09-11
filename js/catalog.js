@@ -18,11 +18,30 @@ class ProductCatalog {
     initializeCatalog() {
         this.populateCategories();
         this.populateBrands();
-        this.renderProducts(PRODUCTS_LG);
-
-        // Re-aplicar filtros si hay parámetros en la URL
+        
+        // Verificar si hay parámetros en la URL y aplicar filtros iniciales
         if (window.location.search) {
-            this.applyFilters();
+            const params = new URLSearchParams(window.location.search);
+            const categoria = params.get('categoria');
+            
+            // Actualizar el selector de categoría
+            if (categoria) {
+                const categoriaSelect = document.querySelector('#categoria');
+                if (categoriaSelect) {
+                    categoriaSelect.value = categoria;
+                }
+            }
+            
+            // Aplicar filtros y renderizar productos filtrados
+            let filteredProducts = [...PRODUCTS_LG];
+            if (categoria) {
+                filteredProducts = filteredProducts.filter(product => product.categoriaId === categoria);
+            }
+            
+            this.renderProducts(filteredProducts);
+        } else {
+            // Si no hay parámetros, mostrar todos los productos
+            this.renderProducts(PRODUCTS_LG);
         }
     }
 

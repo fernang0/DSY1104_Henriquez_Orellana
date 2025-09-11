@@ -25,6 +25,11 @@ export class ProductFilters {
         
         // Actualizar UI con valores de URL
         this.updateUI();
+        
+        // Si hay algún filtro en la URL, aplicarlos inmediatamente
+        if (Object.values(this.filters).some(value => value !== '')) {
+            this.applyFilters();
+        }
     }
 
     // Actualizar URL con estado de filtros
