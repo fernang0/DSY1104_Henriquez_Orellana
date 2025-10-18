@@ -1,0 +1,58 @@
+/* Variables globales y configuración */
+:root {
+  /* Colores primarios profesionales */
+  --primary: #00d4ff;           /* Cyan tech principal */
+  --primary-dark: #00a8cc;      /* Cyan oscuro */
+  --primary-light: #33ddff;     /* Cyan claro */
+  --primary-glow: rgba(0, 212, 255, 0.3);
+  
+  --accent: #ff6b35;            /* Naranja energético */
+  --accent-dark: #e55a2b;       
+  --accent-light: #ff8c5a;      
+  --accent-glow: rgba(255, 107, 53, 0.3);
+  
+  --secondary: #8b5cf6;         /* Púrpura tech */
+  --secondary-dark: #7c3aed;    
+  --secondary-light: #a78bfa;   
+  --secondary-glow: rgba(139, 92, 246, 0.3);
+  
+  --success: #10b981;           /* Verde éxito */
+  --warning: #f59e0b;           /* Amarillo advertencia */
+  --error: #ef4444;             /* Rojo error */
+  --info: #3b82f6;              /* Azul información */
+  
+  /* Fondos y superficies mejorados */
+  --background: #0a0e16;        /* Fondo principal muy oscuro */
+  --background-alt: #151922;    /* Fondo alternativo */
+  --surface: #1a1f2e;          /* Superficie de componentes */
+  --surface-elevated: #252b3d;  /* Superficie elevada */
+  --surface-glass: rgba(26, 31, 46, 0.8); /* Efecto cristal */
+
+  /* Tipografía profesional */
+  --font-heading: 'Orbitron', 'SF Pro Display', system-ui, sans-serif;
+  --font-body: 'Inter', 'Roboto', system-ui, sans-serif;
+  --font-mono: 'JetBrains Mono', 'SF Mono', 'Consolas', monospace;
+
+  /* Otros valores globales */
+  --radius-sm: 0.25rem;
+  --radius-md: 0.375rem;
+  --radius-lg: 0.5rem;
+  --radius-xl: 0.75rem;
+  --radius-2xl: 1rem;
+  --radius-3xl: 1.5rem;
+  --radius-full: 9999px;
+
+  /* Transiciones */
+  --transition-fast: 0.15s cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-normal: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-slow: 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+
+  /* Z-index layers */
+  --z-dropdown: 1000;
+  --z-sticky: 1020;
+  --z-fixed: 1030;
+  --z-modal-backdrop: 1040;
+  --z-modal: 1050;
+  --z-popover: 1060;
+  --z-tooltip: 1070;
+}

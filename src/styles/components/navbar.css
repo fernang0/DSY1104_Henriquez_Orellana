@@ -1,0 +1,85 @@
+/* Estilos específicos para la navegación */
+.navbar-logo {
+  transition: transform 0.3s ease;
+  filter: drop-shadow(0 0 8px var(--primary-glow));
+}
+
+.navbar-brand:hover .navbar-logo {
+  transform: scale(1.1) rotate(-5deg);
+}
+
+.navbar-gaming {
+  background: var(--surface-glass);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+}
+
+.navbar-gaming .navbar-brand {
+  font-family: var(--font-heading);
+  font-size: 1.5rem;
+  font-weight: 700;
+  background: linear-gradient(45deg, var(--primary), var(--accent));
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.navbar-gaming .nav-link {
+  font-weight: 500;
+  padding: 0.5rem 1rem;
+  margin: 0 0.25rem;
+  border-radius: 8px;
+  transition: all 0.3s ease;
+}
+
+.navbar-gaming .nav-link:hover {
+  background: rgba(255, 255, 255, 0.1);
+  transform: translateY(-2px);
+}
+
+.navbar-gaming .btn {
+  padding: 0.5rem 1.5rem;
+  border-radius: 8px;
+  font-weight: 600;
+}
+
+.navbar-gaming .btn-outline-primary {
+  color: var(--primary);
+  border-color: var(--primary);
+  background: transparent;
+}
+
+.navbar-gaming .btn-outline-primary:hover {
+  background: var(--primary);
+  color: white;
+  border-color: var(--primary);
+  transform: translateY(-2px);
+}
+
+.navbar-gaming .btn-primary {
+  background: var(--primary);
+  border-color: var(--primary);
+}
+
+.navbar-gaming .btn-primary:hover {
+  background: var(--primary-light);
+  border-color: var(--primary-light);
+  transform: translateY(-2px);
+  box-shadow: 0 0 20px var(--primary-glow);
+}
+
+/* Estilos del toggle para móvil */
+.navbar-gaming .navbar-toggler {
+  border-color: rgba(255, 255, 255, 0.1);
+  padding: 0.5rem;
+}
+
+.navbar-gaming .navbar-toggler:focus {
+  box-shadow: 0 0 0 3px var(--primary-glow);
+}
+
+.navbar-gaming .navbar-toggler-icon {
+  background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='rgba(255, 255, 255, 0.7)' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e");
+}
