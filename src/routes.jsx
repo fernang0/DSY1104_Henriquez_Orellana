@@ -5,6 +5,7 @@ import BlogPage from './pages/BlogPage'
 import BlogPost from './components/Blog/BlogPost'
 import AboutPage from './pages/AboutPage'
 import ContactPage from './pages/ContactPage'
+import { Login, Register } from './components/Auth'
 
 
 export const router = createBrowserRouter([
@@ -33,5 +34,14 @@ export const router = createBrowserRouter([
         element: <ContactPage />
       }
     ]
+  },
+  // Rutas de autenticación (fuera del layout principal)
+  {
+    path: '/login',
+    element: <Login />
+  },
+  {
+    path: '/registro',
+    element: <Register />
   }
 ])

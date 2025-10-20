@@ -4,7 +4,7 @@
  * Integrado con Bootstrap para un diseño responsive
  */
 
-/* Variables CSS Gaming (compatibles con el tema original) */
+/* Contenedor principal del carousel */
 .heroCarousel {
   --primary: #00d4ff;
   --primary-dark: #0099cc;
@@ -23,10 +23,6 @@
   --transition-normal: 0.3s ease;
   --font-heading: 'Orbitron', monospace;
   --font-body: 'Roboto', sans-serif;
-}
-
-/* Contenedor principal del carousel */
-.heroCarousel {
   position: relative;
   width: 100%;
   height: 70vh;
