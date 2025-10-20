@@ -1,0 +1,436 @@
+/* BlogPost.module.css - Estilos para artículo individual */
+
+/* Variables específicas del post */
+.blogPostContainer {
+  --post-bg: #1a1f2e;
+  --post-accent: #00d4ff;
+  --post-text: #e2e8f0;
+  --post-muted: #94a3b8;
+  --post-border: #2d3748;
+  --post-shadow: rgba(0, 212, 255, 0.1);
+}
+
+/* Loading */
+.loading {
+  min-height: 60vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Not Found */
+.notFound {
+  min-height: 60vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Header del Post */
+.postHeader {
+  background: linear-gradient(135deg, var(--post-bg) 0%, #252b3d 100%);
+  padding: 4rem 0 2rem;
+  position: relative;
+}
+
+.postHeader::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: 
+    radial-gradient(circle at 20% 80%, rgba(0, 212, 255, 0.1) 0%, transparent 50%),
+    radial-gradient(circle at 80% 20%, rgba(255, 107, 107, 0.1) 0%, transparent 50%);
+  pointer-events: none;
+}
+
+/* Breadcrumb */
+.breadcrumb {
+  margin-bottom: 2rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.breadcrumbLink {
+  color: var(--post-accent) !important;
+  text-decoration: none;
+  padding: 0;
+  border: none;
+  background: none;
+  font-size: 0.9rem;
+  transition: all 0.3s ease;
+}
+
+.breadcrumbLink:hover {
+  color: #fff !important;
+  transform: translateX(-2px);
+}
+
+.breadcrumbSeparator {
+  color: var(--post-muted);
+  font-weight: bold;
+}
+
+.breadcrumbCurrent {
+  color: var(--post-text);
+  font-size: 0.9rem;
+}
+
+/* Título del Post */
+.postTitle {
+  font-size: clamp(2rem, 5vw, 3.5rem);
+  font-weight: 800;
+  color: #fff;
+  margin-bottom: 2rem;
+  line-height: 1.2;
+  background: linear-gradient(135deg, #fff 0%, var(--post-accent) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* Meta información */
+.postMeta {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin-bottom: 2rem;
+  padding: 1.5rem;
+  background: rgba(45, 55, 72, 0.5);
+  border-radius: 12px;
+  border: 1px solid var(--post-border);
+}
+
+.authorSection {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.authorAvatar {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  border: 2px solid var(--post-accent);
+  object-fit: cover;
+}
+
+.postStats {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.stat {
+  color: var(--post-muted);
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: color 0.3s ease;
+}
+
+.stat:hover {
+  color: var(--post-accent);
+}
+
+/* Tags del Post */
+.postTags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-bottom: 2rem;
+}
+
+.tag {
+  background: linear-gradient(135deg, var(--post-accent) 0%, #0ea5e9 100%);
+  color: #fff;
+  padding: 0.4rem 0.8rem;
+  border-radius: 20px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  text-decoration: none;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  border: none;
+}
+
+.tag:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 15px rgba(0, 212, 255, 0.3);
+}
+
+/* Imagen destacada */
+.featuredImage {
+  padding: 2rem 0;
+  background: var(--post-bg);
+}
+
+.postImage {
+  width: 100%;
+  height: 400px;
+  object-fit: cover;
+  border-radius: 16px;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+  transition: transform 0.3s ease;
+}
+
+.postImage:hover {
+  transform: scale(1.02);
+}
+
+/* Contenido del Post */
+.postContent {
+  padding: 4rem 0;
+  background: var(--post-bg);
+}
+
+.postExcerpt {
+  margin-bottom: 3rem;
+  padding: 2rem;
+  background: linear-gradient(135deg, rgba(0, 212, 255, 0.1) 0%, rgba(45, 55, 72, 0.5) 100%);
+  border-radius: 12px;
+  border-left: 4px solid var(--post-accent);
+}
+
+.postExcerpt p {
+  color: var(--post-text);
+  font-size: 1.2rem;
+  line-height: 1.6;
+  margin: 0;
+}
+
+/* Cuerpo del Post */
+.postBody {
+  color: var(--post-text);
+  font-size: 1.1rem;
+  line-height: 1.8;
+}
+
+.postBody h2 {
+  color: #fff;
+  font-size: 2rem;
+  font-weight: 700;
+  margin: 3rem 0 1.5rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 2px solid var(--post-accent);
+}
+
+.postBody h3 {
+  color: #fff;
+  font-size: 1.5rem;
+  font-weight: 600;
+  margin: 2rem 0 1rem;
+}
+
+.postBody p {
+  margin-bottom: 1.5rem;
+  text-align: justify;
+}
+
+.postBody ul, .postBody ol {
+  margin: 1.5rem 0;
+  padding-left: 2rem;
+}
+
+.postBody li {
+  margin-bottom: 0.5rem;
+  color: var(--post-text);
+}
+
+.postBody ul li::marker {
+  color: var(--post-accent);
+}
+
+/* Rating Box */
+.postBody :global(.rating-box) {
+  background: linear-gradient(135deg, rgba(0, 212, 255, 0.15) 0%, rgba(255, 107, 107, 0.15) 100%);
+  padding: 2rem;
+  border-radius: 12px;
+  border: 1px solid var(--post-border);
+  margin: 2rem 0;
+  text-align: center;
+}
+
+.postBody :global(.rating-box h3) {
+  color: var(--post-accent);
+  font-size: 1.8rem;
+  margin-bottom: 1rem;
+}
+
+/* Acciones del Post */
+.postActions {
+  margin: 4rem 0;
+  padding: 2rem;
+  background: rgba(45, 55, 72, 0.3);
+  border-radius: 12px;
+  text-align: center;
+}
+
+.actionButtons {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.actionBtn {
+  background: linear-gradient(135deg, var(--post-accent) 0%, #0ea5e9 100%);
+  color: #fff;
+  border: none;
+  padding: 0.8rem 1.5rem;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-size: 0.9rem;
+}
+
+.actionBtn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(0, 212, 255, 0.3);
+}
+
+/* Artículos Relacionados */
+.relatedPosts {
+  padding: 4rem 0;
+  background: linear-gradient(135deg, #1a1f2e 0%, #252b3d 100%);
+}
+
+.sectionTitle {
+  color: #fff;
+  font-size: 2.5rem;
+  font-weight: 700;
+  text-align: center;
+  margin-bottom: 3rem;
+  background: linear-gradient(135deg, #fff 0%, var(--post-accent) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.relatedPostCard {
+  background: rgba(45, 55, 72, 0.5);
+  border-radius: 12px;
+  overflow: hidden;
+  border: 1px solid var(--post-border);
+  transition: all 0.3s ease;
+  height: 100%;
+}
+
+.relatedPostCard:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 15px 35px rgba(0, 212, 255, 0.2);
+  border-color: var(--post-accent);
+}
+
+.relatedPostImage {
+  width: 100%;
+  height: 150px;
+  object-fit: cover;
+  transition: transform 0.3s ease;
+}
+
+.relatedPostCard:hover .relatedPostImage {
+  transform: scale(1.1);
+}
+
+.relatedPostContent {
+  padding: 1.5rem;
+}
+
+.relatedPostCategory {
+  background: var(--post-accent);
+  color: #fff;
+  padding: 0.3rem 0.8rem;
+  border-radius: 20px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  display: inline-block;
+  margin-bottom: 1rem;
+}
+
+.relatedPostTitle {
+  margin-bottom: 1rem;
+}
+
+.relatedPostTitle a {
+  color: #fff;
+  text-decoration: none;
+  font-size: 1.1rem;
+  font-weight: 600;
+  line-height: 1.4;
+  transition: color 0.3s ease;
+}
+
+.relatedPostTitle a:hover {
+  color: var(--post-accent);
+}
+
+.relatedPostExcerpt {
+  color: var(--post-muted);
+  font-size: 0.9rem;
+  line-height: 1.5;
+  margin-bottom: 1rem;
+}
+
+.relatedPostMeta {
+  color: var(--post-muted);
+  font-size: 0.8rem;
+}
+
+/* Navegación del Post */
+.postNavigation {
+  padding: 3rem 0;
+  background: var(--post-bg);
+  border-top: 1px solid var(--post-border);
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .postHeader {
+    padding: 2rem 0 1rem;
+  }
+  
+  .postMeta {
+    flex-direction: column;
+    align-items: flex-start;
+    text-align: left;
+  }
+  
+  .postStats {
+    width: 100%;
+    justify-content: flex-start;
+  }
+  
+  .actionButtons {
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .actionBtn {
+    width: 100%;
+    max-width: 250px;
+  }
+}
+
+@media (max-width: 576px) {
+  .postContent {
+    padding: 2rem 0;
+  }
+  
+  .relatedPosts {
+    padding: 2rem 0;
+  }
+  
+  .postBody {
+    font-size: 1rem;
+  }
+  
+  .postBody h2 {
+    font-size: 1.5rem;
+  }
+}

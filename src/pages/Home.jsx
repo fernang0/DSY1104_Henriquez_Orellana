@@ -1,8 +1,13 @@
 import { Container, Row, Col, Card, Button } from 'react-bootstrap'
+import HeroCarousel from '../components/HeroCarousel'
 
 function Home() {
   return (
-    <Container>
+    <div>
+      {/* Hero Carousel Gaming */}
+      <HeroCarousel />
+      
+      <Container>
       <Row className="py-5">
         <Col md={6} className="mb-4">
           <h1>Bienvenido a LevelUp</h1>
@@ -65,6 +70,7 @@ function Home() {
         </Col>
       </Row>
     </Container>
+    </div>
   )
 }
 

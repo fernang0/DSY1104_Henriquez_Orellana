@@ -1,0 +1,656 @@
+/* About.module.css - Estilos para la sección Nosotros */
+
+/* Variables específicas para About */
+.aboutContainer {
+  --about-primary: #00d4ff;
+  --about-secondary: #ff6b6b;
+  --about-bg: #1a1f2e;
+  --about-card-bg: #252b3d;
+  --about-text: #e2e8f0;
+  --about-muted: #94a3b8;
+  --about-border: #2d3748;
+  --about-shadow: rgba(0, 212, 255, 0.1);
+  --about-gradient: linear-gradient(135deg, var(--about-primary) 0%, var(--about-secondary) 100%);
+}
+
+/* Container principal */
+.aboutContainer {
+  background: var(--about-bg);
+  min-height: 100vh;
+}
+
+/* Hero Section */
+.heroSection {
+  background: linear-gradient(135deg, var(--about-bg) 0%, #252b3d 100%);
+  padding: 6rem 0 4rem;
+  position: relative;
+  overflow: hidden;
+}
+
+.heroSection::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: 
+    radial-gradient(circle at 20% 80%, rgba(0, 212, 255, 0.1) 0%, transparent 50%),
+    radial-gradient(circle at 80% 20%, rgba(255, 107, 107, 0.1) 0%, transparent 50%);
+  pointer-events: none;
+}
+
+.heroContent {
+  position: relative;
+  z-index: 2;
+  text-align: center;
+}
+
+.heroTitle {
+  font-size: clamp(2.5rem, 6vw, 4rem);
+  font-weight: 800;
+  margin-bottom: 1.5rem;
+  background: var(--about-gradient);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  text-shadow: 0 0 30px rgba(0, 212, 255, 0.3);
+}
+
+.heroSubtitle {
+  font-size: 1.3rem;
+  color: var(--about-text);
+  margin-bottom: 2rem;
+  max-width: 600px;
+  margin-left: auto;
+  margin-right: auto;
+  line-height: 1.6;
+}
+
+.heroStats {
+  display: flex;
+  justify-content: center;
+  gap: 3rem;
+  flex-wrap: wrap;
+  margin-top: 3rem;
+}
+
+.heroStat {
+  text-align: center;
+}
+
+.heroStatNumber {
+  font-size: 2.5rem;
+  font-weight: 800;
+  background: var(--about-gradient);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  display: block;
+}
+
+.heroStatLabel {
+  color: var(--about-muted);
+  font-size: 0.9rem;
+  margin-top: 0.5rem;
+}
+
+/* Sections */
+.section {
+  padding: 5rem 0;
+  position: relative;
+}
+
+.sectionTitle {
+  font-size: 2.5rem;
+  font-weight: 700;
+  text-align: center;
+  margin-bottom: 3rem;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+}
+
+.sectionTitle::after {
+  content: '';
+  height: 3px;
+  width: 100px;
+  background: var(--about-gradient);
+  border-radius: 3px;
+  position: absolute;
+  bottom: -10px;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+/* Historia Timeline */
+.historyContent {
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+.historyText {
+  background: rgba(37, 43, 61, 0.8);
+  padding: 3rem;
+  border-radius: 20px;
+  border-left: 5px solid var(--about-primary);
+  margin-bottom: 4rem;
+  text-align: center;
+}
+
+.historyText p {
+  font-size: 1.2rem;
+  line-height: 1.8;
+  color: var(--about-text);
+  margin: 0;
+}
+
+.timeline {
+  position: relative;
+  padding-left: 2rem;
+}
+
+.timeline::before {
+  content: '';
+  position: absolute;
+  left: 20px;
+  top: 0;
+  bottom: 0;
+  width: 3px;
+  background: var(--about-gradient);
+  border-radius: 3px;
+}
+
+.timelineItem {
+  position: relative;
+  padding-bottom: 3rem;
+  padding-left: 3rem;
+}
+
+.timelineItem::before {
+  content: '';
+  position: absolute;
+  left: -8px;
+  top: 0;
+  width: 20px;
+  height: 20px;
+  background: var(--about-primary);
+  border-radius: 50%;
+  border: 3px solid var(--about-bg);
+  box-shadow: 0 0 20px rgba(0, 212, 255, 0.5);
+}
+
+.timelineDate {
+  background: var(--about-gradient);
+  color: #fff;
+  padding: 0.5rem 1rem;
+  border-radius: 20px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  display: inline-block;
+  margin-bottom: 1rem;
+}
+
+.timelineTitle {
+  color: #fff;
+  font-size: 1.3rem;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.timelineDescription {
+  color: var(--about-muted);
+  line-height: 1.6;
+}
+
+/* Mission & Vision */
+.missionVisionGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+  gap: 3rem;
+  margin-top: 2rem;
+}
+
+.missionCard, .visionCard {
+  background: rgba(37, 43, 61, 0.8);
+  padding: 3rem;
+  border-radius: 20px;
+  border: 1px solid var(--about-border);
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.missionCard::before, .visionCard::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 5px;
+  background: var(--about-gradient);
+}
+
+.missionCard:hover, .visionCard:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 20px 40px rgba(0, 212, 255, 0.2);
+  border-color: var(--about-primary);
+}
+
+.cardTitle {
+  font-size: 1.8rem;
+  font-weight: 700;
+  color: #fff;
+  margin-bottom: 1.5rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.cardContent {
+  font-size: 1.1rem;
+  line-height: 1.7;
+  color: var(--about-text);
+  margin-bottom: 2rem;
+}
+
+.objectivesList, .goalsList {
+  list-style: none;
+  padding: 0;
+}
+
+.objectivesList li, .goalsList li {
+  background: rgba(45, 55, 72, 0.5);
+  padding: 1rem 1.5rem;
+  margin-bottom: 0.5rem;
+  border-radius: 10px;
+  border-left: 3px solid var(--about-primary);
+  color: var(--about-text);
+  transition: all 0.3s ease;
+}
+
+.objectivesList li:hover, .goalsList li:hover {
+  background: rgba(45, 55, 72, 0.8);
+  transform: translateX(5px);
+}
+
+/* Values Grid */
+.valuesGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 2rem;
+  margin-top: 2rem;
+}
+
+.valueCard {
+  background: rgba(37, 43, 61, 0.8);
+  padding: 2.5rem;
+  border-radius: 20px;
+  border: 1px solid var(--about-border);
+  text-align: center;
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.valueCard::before {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: conic-gradient(from 0deg, transparent, var(--about-primary), transparent);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  animation: rotate 4s linear infinite;
+}
+
+.valueCard:hover::before {
+  opacity: 0.1;
+}
+
+.valueCard:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 20px 40px rgba(0, 212, 255, 0.3);
+  border-color: var(--about-primary);
+}
+
+.valueIcon {
+  font-size: 3rem;
+  margin-bottom: 1rem;
+  display: block;
+}
+
+.valueTitle {
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: #fff;
+  margin-bottom: 1rem;
+}
+
+.valueDescription {
+  color: var(--about-text);
+  margin-bottom: 1.5rem;
+  font-weight: 600;
+}
+
+.valueDetails {
+  color: var(--about-muted);
+  font-size: 0.9rem;
+  line-height: 1.6;
+}
+
+@keyframes rotate {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+/* Stats Grid */
+.statsGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 2rem;
+  margin-top: 2rem;
+}
+
+.statCard {
+  background: rgba(37, 43, 61, 0.8);
+  padding: 2rem;
+  border-radius: 15px;
+  border: 1px solid var(--about-border);
+  text-align: center;
+  transition: all 0.3s ease;
+}
+
+.statCard:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 15px 30px rgba(0, 212, 255, 0.2);
+  border-color: var(--about-primary);
+}
+
+.statIcon {
+  font-size: 2.5rem;
+  margin-bottom: 1rem;
+  display: block;
+}
+
+.statNumber {
+  font-size: 2.2rem;
+  font-weight: 800;
+  background: var(--about-gradient);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  display: block;
+  margin-bottom: 0.5rem;
+}
+
+.statLabel {
+  color: #fff;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+}
+
+.statDescription {
+  color: var(--about-muted);
+  font-size: 0.9rem;
+}
+
+/* Team Grid */
+.teamGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 2rem;
+  margin-top: 2rem;
+}
+
+.teamCard {
+  background: rgba(37, 43, 61, 0.8);
+  padding: 2rem;
+  border-radius: 20px;
+  border: 1px solid var(--about-border);
+  text-align: center;
+  transition: all 0.3s ease;
+}
+
+.teamCard:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 20px 40px rgba(0, 212, 255, 0.3);
+  border-color: var(--about-primary);
+}
+
+.teamAvatar {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  border: 4px solid var(--about-primary);
+  margin: 0 auto 1.5rem;
+  object-fit: cover;
+  transition: all 0.3s ease;
+}
+
+.teamCard:hover .teamAvatar {
+  transform: scale(1.1);
+  box-shadow: 0 0 30px rgba(0, 212, 255, 0.5);
+}
+
+.teamName {
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: #fff;
+  margin-bottom: 0.5rem;
+}
+
+.teamPosition {
+  color: var(--about-primary);
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+}
+
+.teamSpecialty {
+  color: var(--about-muted);
+  font-size: 0.9rem;
+  margin-bottom: 1rem;
+}
+
+.teamDescription {
+  color: var(--about-text);
+  font-size: 0.9rem;
+  line-height: 1.5;
+  margin-bottom: 1.5rem;
+}
+
+.teamSocial {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+}
+
+.socialLink {
+  color: var(--about-muted);
+  font-size: 1.2rem;
+  transition: all 0.3s ease;
+  text-decoration: none;
+}
+
+.socialLink:hover {
+  color: var(--about-primary);
+  transform: translateY(-2px);
+}
+
+/* Achievements */
+.achievementsGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 2rem;
+  margin-top: 2rem;
+}
+
+.achievementCard {
+  background: rgba(37, 43, 61, 0.8);
+  padding: 2.5rem;
+  border-radius: 20px;
+  border: 1px solid var(--about-border);
+  text-align: center;
+  transition: all 0.3s ease;
+  position: relative;
+}
+
+.achievementCard::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: var(--about-gradient);
+  border-radius: 20px 20px 0 0;
+}
+
+.achievementCard:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 15px 35px rgba(255, 215, 0, 0.2);
+}
+
+.achievementIcon {
+  font-size: 3rem;
+  margin-bottom: 1rem;
+  display: block;
+}
+
+.achievementTitle {
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: #fff;
+  margin-bottom: 0.5rem;
+}
+
+.achievementOrg {
+  color: var(--about-primary);
+  font-weight: 600;
+  margin-bottom: 1rem;
+}
+
+.achievementDescription {
+  color: var(--about-text);
+  font-size: 0.9rem;
+  line-height: 1.5;
+}
+
+/* Partners */
+.partnersGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 1.5rem;
+  margin-top: 2rem;
+}
+
+.partnerCard {
+  background: rgba(37, 43, 61, 0.6);
+  padding: 2rem;
+  border-radius: 15px;
+  border: 1px solid var(--about-border);
+  text-align: center;
+  transition: all 0.3s ease;
+}
+
+.partnerCard:hover {
+  background: rgba(37, 43, 61, 0.9);
+  transform: translateY(-3px);
+  box-shadow: 0 10px 25px rgba(0, 212, 255, 0.2);
+}
+
+.partnerLogo {
+  font-size: 2.5rem;
+  margin-bottom: 1rem;
+  display: block;
+}
+
+.partnerName {
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: #fff;
+  margin-bottom: 0.5rem;
+}
+
+.partnerCategory {
+  color: var(--about-primary);
+  font-size: 0.9rem;
+  font-weight: 600;
+  margin-bottom: 1rem;
+}
+
+.partnerDescription {
+  color: var(--about-muted);
+  font-size: 0.8rem;
+  line-height: 1.4;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .heroSection {
+    padding: 4rem 0 2rem;
+  }
+  
+  .heroStats {
+    gap: 2rem;
+  }
+  
+  .section {
+    padding: 3rem 0;
+  }
+  
+  .missionVisionGrid {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+  }
+  
+  .valuesGrid {
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  }
+  
+  .statsGrid {
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  }
+  
+  .timeline {
+    padding-left: 1rem;
+  }
+  
+  .timelineItem {
+    padding-left: 2rem;
+  }
+}
+
+@media (max-width: 576px) {
+  .heroTitle {
+    font-size: 2rem;
+  }
+  
+  .heroSubtitle {
+    font-size: 1.1rem;
+  }
+  
+  .sectionTitle {
+    font-size: 1.8rem;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+  
+  .valuesGrid,
+  .statsGrid,
+  .teamGrid {
+    grid-template-columns: 1fr;
+  }
+  
+  .missionCard,
+  .visionCard {
+    padding: 2rem;
+  }
+}
