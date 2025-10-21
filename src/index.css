@@ -3,6 +3,9 @@
 @import './styles/variables.css';
 @import './styles/components/navbar.css';
 
+@import './styles/components/products.css';
+@import './styles/components/product-detail.css';
+
 /* Estilos base */
 body {
   font-family: var(--font-body);

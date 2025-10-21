@@ -6,7 +6,8 @@ import BlogPost from './components/Blog/BlogPost'
 import AboutPage from './pages/AboutPage'
 import ContactPage from './pages/ContactPage'
 import { Login, Register } from './components/Auth'
-
+import Products from './pages/Products'
+import ProductDetail from './pages/ProductDetail'
 
 export const router = createBrowserRouter([
   {
@@ -32,6 +33,14 @@ export const router = createBrowserRouter([
       {
         path: 'contacto',
         element: <ContactPage />
+      },
+      {
+        path: 'productos',
+        element: <Products />
+      },
+      {
+        path: 'productos/:productId',
+        element: <ProductDetail />
       }
     ]
   },
