@@ -11,11 +11,9 @@ import styles from './HeroCarousel.module.css';
 const HeroCarousel = () => {
   const {
     currentSlide,
-    isPlaying,
     nextSlide,
     prevSlide,
     goToSlide,
-    toggleAutoPlay,
     carouselHandlers
   } = useCarousel(carouselSlides.length);
 
@@ -109,16 +107,6 @@ const HeroCarousel = () => {
             />
           ))}
         </div>
-
-        {/* Control de auto-play (play/pause) */}
-        <button
-          className={`${styles.playPauseBtn} btn btn-outline-light`}
-          onClick={toggleAutoPlay}
-          aria-label={isPlaying ? 'Pausar auto-play' : 'Reproducir auto-play'}
-          type="button"
-        >
-          {isPlaying ? '⏸️' : '▶️'}
-        </button>
       </div>
     </section>
   );
