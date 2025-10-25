@@ -163,7 +163,7 @@ function Products() {
 
             <Row className="g-4">
               {displayProducts.map(product => (
-                <Col key={product.code} xs={12} sm={6} lg={4} xl={3}>
+                <Col key={product.code} xs={12} sm={6} lg={4}>
                   <ProductCard product={product} />
                 </Col>
               ))}

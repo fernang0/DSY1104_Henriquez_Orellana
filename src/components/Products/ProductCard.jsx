@@ -26,9 +26,17 @@ function ProductCard({ product }) {
           }}
         />
         <div className="product-overlay">
-          <span className="product-category">{CATEGORIES[product.categoriaId]}</span>
           {product.stock < 10 && (
-            <span className="stock-warning">¡Últimas unidades!</span>
+            <span className="stock-warning" style={{ 
+              backgroundColor: '#ffd43b',
+              color: '#1a1a1a',
+              padding: '4px 8px',
+              borderRadius: '4px',
+              fontSize: '0.8rem',
+              fontWeight: '500'
+            }}>
+              ¡Últimas unidades!
+            </span>
           )}
         </div>
       </div>

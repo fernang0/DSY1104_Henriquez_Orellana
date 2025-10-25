@@ -6,7 +6,7 @@ export const carouselSlides = [
     title: 'Tu siguiente partida comienza aquí',
     description: 'Descubre los últimos videojuegos, consolas y accesorios gaming',
     buttonText: 'Explorar Catálogo',
-    buttonLink: './productos.html?cat=JM',
+    buttonLink: './productos?cat=JM',
     gradient: 'linear-gradient(135deg, rgba(0, 0, 0, 0.7) 0%, rgba(0, 0, 0, 0.3) 50%, rgba(0, 212, 255, 0.1) 100%)'
   },
   {
@@ -15,7 +15,7 @@ export const carouselSlides = [
     title: 'Potencia tu experiencia gaming',
     description: 'Las mejores consolas y accesorios para llevar tu juego al siguiente nivel',
     buttonText: 'Ver Consolas',
-    buttonLink: './productos.html?cat=CO',
+    buttonLink: './productos?cat=CO',
     gradient: 'linear-gradient(135deg, rgba(0, 0, 0, 0.7) 0%, rgba(0, 0, 0, 0.3) 50%, rgba(57, 255, 20, 0.1) 100%)'
   },
   {
@@ -24,7 +24,7 @@ export const carouselSlides = [
     title: 'Equípate como un pro',
     description: 'Accesorios gaming de alta calidad para maximizar tu rendimiento',
     buttonText: 'Ver Accesorios',
-    buttonLink: './productos.html?cat=AC',
+    buttonLink: './productos?cat=AC',
     gradient: 'linear-gradient(135deg, rgba(0, 0, 0, 0.7) 0%, rgba(0, 0, 0, 0.3) 50%, rgba(255, 0, 150, 0.1) 100%)'
   },
   {
@@ -33,7 +33,7 @@ export const carouselSlides = [
     title: 'Diversión sin límites',
     description: 'Juegos de mesa y entretenimiento para toda la familia',
     buttonText: 'Ver Juegos',
-    buttonLink: './productos.html?cat=JM',
+    buttonLink: './productos?cat=JM',
     gradient: 'linear-gradient(135deg, rgba(0, 0, 0, 0.7) 0%, rgba(0, 0, 0, 0.3) 50%, rgba(255, 165, 0, 0.1) 100%)'
   }
 ];
