@@ -1,8 +1,11 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import Layout from './components/Layout'
 import Home from './pages/Home'
+import Products from './pages/Products'
+import Blog from './pages/BlogPage'
+import About from './pages/AboutPage'
+import Contact from './pages/ContactPage'
 import { CartProvider } from './context/CartContext'
-
 
 function App() {
   return (

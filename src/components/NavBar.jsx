@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from 'react';
-import { Container, Nav, Navbar, Dropdown } from 'react-bootstrap';
+import { Container, Nav, Navbar } from 'react-bootstrap';
 import { Link, useNavigate } from 'react-router-dom';
-import { CartButton } from './Cart';
+import { CartButton } from './Cart/index.js';
 
 function NavBar() {
   const navigate = useNavigate();
   const [user, setUser] = useState(null);
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
 
   // Verificar estado de autenticación
   useEffect(() => {
@@ -40,7 +41,25 @@ function NavBar() {
     localStorage.removeItem('userData');
     localStorage.removeItem('rememberMe');
     setUser(null);
+    setIsDropdownOpen(false);
     navigate('/', { replace: true });
+  };
+
+  // Cerrar el menú cuando se hace clic fuera de él
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (isDropdownOpen && !event.target.closest('.dropdown')) {
+        setIsDropdownOpen(false);
+      }
+    };
+
+    document.addEventListener('click', handleClickOutside);
+    return () => document.removeEventListener('click', handleClickOutside);
+  }, [isDropdownOpen]);
+
+  const handleMenuClick = (event) => {
+    event.preventDefault();
+    setIsDropdownOpen(!isDropdownOpen);
   };
 
   return (
@@ -66,19 +85,22 @@ function NavBar() {
             
             {user ? (
               // Usuario logueado - mostrar menú de usuario
-              <Dropdown align="end">
-                <Dropdown.Toggle 
+              <div className="dropdown">
+                <button 
+                  type="button"
                   variant="outline-primary" 
                   id="user-dropdown"
-                  className="d-flex align-items-center"
+                  className="d-flex align-items-center dropdown-toggle btn btn-outline-primary"
+                  data-testid="user-menu"
+                  onClick={handleMenuClick}
                 >
                   <span className="me-2">{user.avatar}</span>
                   {user.name}
                   {user.isStudent && <span className="ms-1 badge bg-warning">20%</span>}
-                </Dropdown.Toggle>
+                </button>
 
-                <Dropdown.Menu className="dropdown-menu-dark">
-                  <Dropdown.Header>
+                <div className={`dropdown-menu dropdown-menu-dark ${isDropdownOpen ? 'show' : ''}`}>
+                  <div className="dropdown-header">
                     <strong>{user.name}</strong>
                     <br />
                     <small className="text-muted">{user.email}</small>
@@ -86,38 +108,42 @@ function NavBar() {
                     <small className="text-info">
                       Nivel {user.level} • {user.points} puntos
                     </small>
-                  </Dropdown.Header>
+                  </div>
                   
-                  <Dropdown.Divider />
+                  <div className="dropdown-divider"></div>
                   
-                  <Dropdown.Item as={Link} to="/perfil">
+                  <Link to="/perfil" className="dropdown-item">
                     👤 Mi Perfil
-                  </Dropdown.Item>
+                  </Link>
                   
-                  <Dropdown.Item as={Link} to="/mis-juegos">
+                  <Link to="/mis-juegos" className="dropdown-item">
                     🎮 Mis Juegos
-                  </Dropdown.Item>
+                  </Link>
                   
-                  <Dropdown.Item as={Link} to="/puntos">
+                  <Link to="/puntos" className="dropdown-item">
                     🏆 Mis Puntos ({user.points})
-                  </Dropdown.Item>
+                  </Link>
                   
                   {user.permissions?.includes('admin') && (
                     <>
-                      <Dropdown.Divider />
-                      <Dropdown.Item as={Link} to="/admin">
+                      <div className="dropdown-divider"></div>
+                      <Link to="/admin" className="dropdown-item">
                         🛡️ Panel Admin
-                      </Dropdown.Item>
+                      </Link>
                     </>
                   )}
                   
-                  <Dropdown.Divider />
+                  <div className="dropdown-divider"></div>
                   
-                  <Dropdown.Item onClick={handleLogout} className="text-danger">
+                  <button 
+                    onClick={handleLogout} 
+                    className="dropdown-item text-danger"
+                    data-testid="logout-button"
+                  >
                     🚪 Cerrar Sesión
-                  </Dropdown.Item>
-                </Dropdown.Menu>
-              </Dropdown>
+                  </button>
+                </div>
+              </div>
             ) : (
               // Usuario no logueado - mostrar botones de autenticación
               <>
