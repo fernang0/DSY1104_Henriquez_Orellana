@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Container, Nav, Navbar, Dropdown } from 'react-bootstrap';
 import { Link, useNavigate } from 'react-router-dom';
+import { CartButton } from './Cart';
 
 function NavBar() {
   const navigate = useNavigate();
@@ -59,7 +60,10 @@ function NavBar() {
             <Nav.Link as={Link} to="/contacto" className="hover-lift">Contacto</Nav.Link>
           </Nav>
           
-          <Nav>
+          <Nav className="d-flex align-items-center">
+            {/* Botón del carrito */}
+            <CartButton className="me-3" />
+            
             {user ? (
               // Usuario logueado - mostrar menú de usuario
               <Dropdown align="end">
