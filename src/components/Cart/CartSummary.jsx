@@ -1,4 +1,5 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 import { useCart } from '../../context/CartContext';
 import { cartConfig } from '../../data/cartData';
 import styles from './Cart.module.css';
@@ -9,9 +10,17 @@ import styles from './Cart.module.css';
  */
 const CartSummary = ({ onClearCart, onClose }) => {
   const { totals, formatCLP, isEmpty, itemCount } = useCart();
+  const navigate = useNavigate();
 
   // No mostrar si el carrito está vacío
   if (isEmpty) return null;
+
+  const handleCheckout = () => {
+    // Cerrar el sidebar del carrito
+    if (onClose) onClose();
+    // Navegar a la página de checkout
+    navigate('/checkout');
+  };
 
   return (
     <div className={styles.cartSummary}>
@@ -70,14 +79,10 @@ const CartSummary = ({ onClearCart, onClose }) => {
         {/* Botón proceder al checkout */}
         <button 
           className={`${styles.cartBtn} ${styles.primary}`}
-          onClick={() => {
-            // Aquí iría la lógica de checkout
-            console.log('🛒 Proceder al checkout con:', totals);
-            alert(`Checkout con total: ${formatCLP(totals.total)}\n(Funcionalidad en desarrollo)`);
-          }}
+          onClick={handleCheckout}
           type="button"
         >
-          Proceder al Pago ({formatCLP(totals.total)})
+          🛒 Proceder al Pago ({formatCLP(totals.total)})
         </button>
 
         {/* Botón continuar comprando */}

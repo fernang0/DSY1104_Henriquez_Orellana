@@ -2,9 +2,22 @@ import { useState } from 'react'
 import { Card, Button } from 'react-bootstrap'
 import { Link } from 'react-router-dom'
 import { formatPrice, CATEGORIES } from '../../data/products'
+import { useCartActions } from '../../hooks/useCartActions'
 
 function ProductCard({ product }) {
   const [showDetails, setShowDetails] = useState(false);
+  const { addToCart, formatCLP } = useCartActions();
+  
+  // Manejar adición al carrito
+  const handleAddToCart = async (e) => {
+    e.preventDefault();
+    const result = await addToCart(product, 1);
+    if (result.success) {
+      alert(`${product.nombre} agregado al carrito`);
+    } else {
+      alert(`Error: ${result.error}`);
+    }
+  };
   
   const renderRating = (rating) => {
     const stars = '⭐'.repeat(Math.floor(rating))
@@ -65,8 +78,9 @@ function ProductCard({ product }) {
               variant="primary" 
               className="flex-grow-1"
               disabled={product.stock === 0}
+              onClick={handleAddToCart}
             >
-              {product.stock === 0 ? 'Sin Stock' : 'Agregar al carrito'}
+              {product.stock === 0 ? 'Sin Stock' : '🛒 Agregar al carrito'}
             </Button>
             <Button 
               variant="outline-secondary"

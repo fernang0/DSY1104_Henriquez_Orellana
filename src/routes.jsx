@@ -8,6 +8,7 @@ import ContactPage from './pages/ContactPage'
 import { Login, Register } from './components/Auth'
 import Products from './pages/Products'
 import ProductDetail from './pages/ProductDetail'
+import Checkout from './pages/Checkout'
 
 export const router = createBrowserRouter([
   {
@@ -41,6 +42,10 @@ export const router = createBrowserRouter([
       {
         path: 'productos/:productId',
         element: <ProductDetail />
+      },
+      {
+        path: 'checkout',
+        element: <Checkout />
       }
     ]
   },

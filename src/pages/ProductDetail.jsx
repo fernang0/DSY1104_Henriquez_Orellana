@@ -2,14 +2,27 @@ import { useParams, useNavigate } from 'react-router-dom'
 import { Container, Row, Col, Button, Badge } from 'react-bootstrap'
 import { PRODUCTS_LG, CATEGORIES, formatPrice } from '../data/products'
 import { useState } from 'react'
+import { useCartActions } from '../hooks/useCartActions'
 import '../styles/components/product-detail.css'
 
 function ProductDetail() {
   const { productId } = useParams()
   const navigate = useNavigate()
   const [quantity, setQuantity] = useState(1)
+  const { addToCart } = useCartActions()
 
   const product = PRODUCTS_LG.find(p => p.code === productId)
+
+  // Manejar adición al carrito
+  const handleAddToCart = async (e) => {
+    e.preventDefault();
+    const result = await addToCart(product, quantity);
+    if (result.success) {
+      alert(`${quantity} x ${product.nombre} agregado al carrito`);
+    } else {
+      alert(`Error: ${result.error}`);
+    }
+  };
 
   if (!product) {
     return (
@@ -107,8 +120,9 @@ function ProductDetail() {
                 size="lg" 
                 className="w-100"
                 disabled={product.stock === 0}
+                onClick={handleAddToCart}
               >
-                {product.stock === 0 ? 'Sin Stock' : 'Agregar al Carrito'}
+                {product.stock === 0 ? 'Sin Stock' : '🛒 Agregar al Carrito'}
               </Button>
               
               <div className="additional-info">
