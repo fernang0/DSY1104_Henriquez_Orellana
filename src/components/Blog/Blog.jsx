@@ -290,8 +290,11 @@ const PostCard = ({ post, featured = false }) => {
               }}
             />
             <div>
-              <div className="text-white small">{post.author}</div>
-              <div className="text-muted small">{formatDate(post.publishedAt)}</div>
+              <div className="text-white small fw-bold">{post.author}</div>
+              <div className="text-light small" style={{ 
+                color: '#ffffff !important',
+                textShadow: '0 1px 3px rgba(0, 0, 0, 0.8)'
+              }}>{formatDate(post.publishedAt)}</div>
             </div>
           </div>
           <div className={styles.postStats}>
