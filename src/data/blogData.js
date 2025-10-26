@@ -19,7 +19,7 @@ export const blogPosts = [
       <p>Auriculares con tecnología 7.1 surround para una experiencia inmersiva completa.</p>
     `,
     author: "LevelUp Team",
-    authorImage: "images/avatar-levelup.jpg",
+    authorImage: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=50&h=50&fit=crop&crop=face",
     publishedAt: "2025-01-15",
     readTime: "8 min",
     tags: ["Setup", "Hardware", "Gaming"],
@@ -48,7 +48,7 @@ export const blogPosts = [
       <p>Los deportes electrónicos continúan creciendo con nuevos formatos y audiencias globales.</p>
     `,
     author: "Ana García",
-    authorImage: "images/avatar-ana.jpg",
+    authorImage: "https://images.unsplash.com/photo-1494790108755-2616b612b786?w=50&h=50&fit=crop&crop=face",
     publishedAt: "2025-01-10",
     readTime: "6 min",
     tags: ["Tendencias", "Futuro", "Tecnología"],
@@ -77,7 +77,7 @@ export const blogPosts = [
       <p>Herramientas para monitorear FPS, latencia y temperatura durante las partidas.</p>
     `,
     author: "Carlos Mendez",
-    authorImage: "images/avatar-carlos.jpg",
+    authorImage: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=50&h=50&fit=crop&crop=face",
     publishedAt: "2025-01-05",
     readTime: "12 min",
     tags: ["Competitivo", "Optimización", "Performance"],
@@ -106,7 +106,7 @@ export const blogPosts = [
       <p>Mecánicas de juego frescas que desafían las convenciones tradicionales.</p>
     `,
     author: "María López",
-    authorImage: "images/avatar-maria.jpg",
+    authorImage: "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=50&h=50&fit=crop&crop=face",
     publishedAt: "2024-12-28",
     readTime: "7 min",
     tags: ["Indie", "Reseñas", "Gaming"],
@@ -135,7 +135,7 @@ export const blogPosts = [
       <p>Mantén seguros tus métodos de pago y evita fraudes en compras de juegos y microtransacciones.</p>
     `,
     author: "Roberto Silva",
-    authorImage: "images/avatar-roberto.jpg",
+    authorImage: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=50&h=50&fit=crop&crop=face",
     publishedAt: "2024-12-20",
     readTime: "5 min",
     tags: ["Seguridad", "Gaming", "Protección"],
@@ -164,7 +164,7 @@ export const blogPosts = [
       <p>OBS Studio, configuraciones óptimas y overlays personalizados para tu marca.</p>
     `,
     author: "Diana Torres",
-    authorImage: "images/avatar-diana.jpg",
+    authorImage: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=50&h=50&fit=crop&crop=face",
     publishedAt: "2024-12-15",
     readTime: "10 min",
     tags: ["Streaming", "Content Creation", "Gaming"],
