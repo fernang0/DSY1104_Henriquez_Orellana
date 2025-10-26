@@ -70,6 +70,57 @@
   box-shadow: 0 0 20px var(--primary-glow);
 }
 
+/* Estilos del dropdown personalizado */
+.navbar-gaming .dropdown-menu {
+  display: none;
+  position: absolute;
+  right: 0;
+  background: var(--surface-glass);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 8px;
+  margin-top: 0.5rem;
+  min-width: 200px;
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.2);
+}
+
+.navbar-gaming .dropdown-menu.show {
+  display: block;
+}
+
+.navbar-gaming .dropdown-header {
+  padding: 1rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.navbar-gaming .dropdown-divider {
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  margin: 0.5rem 0;
+}
+
+.navbar-gaming .dropdown-item {
+  padding: 0.5rem 1rem;
+  color: var(--text-primary);
+  text-decoration: none;
+  display: block;
+  width: 100%;
+  text-align: left;
+  background: none;
+  border: none;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.navbar-gaming .dropdown-item:hover {
+  background: rgba(255, 255, 255, 0.1);
+  transform: translateX(5px);
+}
+
+.navbar-gaming .dropdown-item.text-danger:hover {
+  background: rgba(255, 59, 48, 0.2);
+}
+
 /* Estilos del toggle para móvil */
 .navbar-gaming .navbar-toggler {
   border-color: rgba(255, 255, 255, 0.1);
