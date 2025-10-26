@@ -40,7 +40,7 @@ export const carouselSlides = [
 
 // Configuración del carousel (basada en el JS original)
 export const carouselConfig = {
-  autoPlayDelay: 7000, // 7 segundos
+  autoPlayDelay: 5000, // 5 segundos
   transitionDuration: 800, // 0.8 segundos 
   swipeThreshold: 50, // 50px mínimo para swipe
   enableAutoPlay: true,

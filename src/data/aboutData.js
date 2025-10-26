@@ -158,7 +158,7 @@ export const teamMembers = [
     name: "Fernando Henriquez",
     position: "CEO & Founder",
     specialty: "Estrategia y Desarrollo",
-    avatar: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150&h=150&fit=crop&crop=face",
+    avatar: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcScw_gdN9SUiNHZdUOmoKVCw1pYUTiqObq8eA&s",
     description: "Líder visionario con amplia experiencia en tecnología gaming y desarrollo de plataformas digitales.",
     social: {
       linkedin: "#",
@@ -170,7 +170,7 @@ export const teamMembers = [
     name: "Fabio Orellana",
     position: "CTO & Co-Founder",
     specialty: "Tecnología e Innovación",
-    avatar: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=150&h=150&fit=crop&crop=face",
+    avatar: "https://image.europafm.com/clipping/cmsimages01/2021/03/17/B3B2F5A4-A031-4DF3-8F45-1012BA327F89/98.jpg?crop=4737,2665,x0,y0&width=1900&height=1069&optimize=low&format=webply",
     description: "Experto en desarrollo de software y arquitectura de sistemas gaming de alta performance.",
     social: {
       linkedin: "#",
