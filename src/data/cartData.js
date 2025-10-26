@@ -226,27 +226,27 @@ export const demoProducts = [
     nombre: 'PlayStation 5 Console',
     precioCLP: 599990,
     stock: 10,
-    imagen: '/images/products/ps5-console.jpg',
+    imagen: 'https://images.unsplash.com/photo-1606813907291-d86efa9b94db?w=600&h=400&fit=crop&crop=center',
     categoria: 'consolas',
-    descripcion: 'Consola PlayStation 5 con lector de discos'
+    descripcion: 'La consola PlayStation 5 más potente de Sony. Experimenta juegos de nueva generación con gráficos 4K, ray tracing, SSD ultra rápido y el revolucionario control DualSense con retroalimentación háptica. Incluye lector de discos Blu-ray 4K.'
   },
   {
     code: 'XBOX-001', 
     nombre: 'Xbox Series X',
     precioCLP: 549990,
     stock: 8,
-    imagen: '/images/products/xbox-series-x.jpg',
+    imagen: 'https://images.unsplash.com/photo-1621259182978-fbf93132d53d?w=600&h=400&fit=crop&crop=center',
     categoria: 'consolas',
-    descripcion: 'Consola Xbox Series X 1TB'
+    descripcion: 'La consola Xbox más potente jamás creada. Disfruta de juegos en 4K hasta 120fps, Quick Resume para cambiar entre múltiples juegos al instante, y acceso a Xbox Game Pass. Con 1TB de almacenamiento SSD y compatibilidad con miles de juegos.'
   },
   {
     code: 'SWITCH-001',
     nombre: 'Nintendo Switch OLED',
     precioCLP: 399990,
     stock: 15,
-    imagen: '/images/products/switch-oled.jpg',
+    imagen: 'https://images.unsplash.com/photo-1635514569146-9a9607ecf303?w=600&h=400&fit=crop&crop=center',
     categoria: 'consolas',
-    descripcion: 'Nintendo Switch OLED Model'
+    descripcion: 'Nintendo Switch OLED Model con pantalla OLED de 7 pulgadas y colores vibrantes. Juega en casa conectado al TV o llévalo contigo en modo portátil. Incluye dock mejorado, 64GB de almacenamiento interno y soporte ajustable integrado.'
   },
   {
     code: 'GAME-001',

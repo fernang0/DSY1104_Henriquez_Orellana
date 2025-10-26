@@ -21,21 +21,6 @@ function Home() {
       <HeroCarousel />
       
       <Container>
-      <Row className="py-5">
-        <Col md={6} className="mb-4">
-          <h1>Bienvenido a LevelUp</h1>
-          <p className="lead">Tu destino gaming definitivo. Encuentra los mejores productos para tu setup gaming.</p>
-          <Button variant="primary" href="/productos">Ver Productos</Button>
-        </Col>
-        <Col md={6}>
-          <img 
-            src="/path-to-your-image.jpg" 
-            alt="Gaming Setup" 
-            className="img-fluid rounded"
-          />
-        </Col>
-      </Row>
-
       <Row className="py-4">
         <Col>
           <h2 className="text-center mb-4">Productos Destacados</h2>
@@ -46,26 +31,50 @@ function Home() {
         {/* Mostrar productos demo del carrito */}
         {demoProducts.slice(0, 3).map((product) => (
           <Col key={product.code} md={4}>
-            <Card className="h-100">
+            <Card className="h-100 shadow-lg border-0" style={{ 
+              background: 'linear-gradient(135deg, #1a1f2e 0%, #2d1b69 50%, #1a1f2e 100%)',
+              border: '2px solid #00d4ff' 
+            }}>
               <Card.Img 
                 variant="top" 
                 src={product.imagen} 
-                style={{ height: '200px', objectFit: 'cover' }}
+                style={{ height: '250px', objectFit: 'cover' }}
                 onError={(e) => {
                   e.target.src = '/images/products/default.jpg';
                 }}
               />
-              <Card.Body className="d-flex flex-column">
-                <Card.Title>{product.nombre}</Card.Title>
-                <Card.Text className="flex-grow-1">
+              <Card.Body className="d-flex flex-column" style={{ 
+                backgroundColor: 'transparent', 
+                color: '#ffffff' 
+              }}>
+                <Card.Title className="text-light fw-bold mb-3" style={{ 
+                  color: '#ffffff !important',
+                  textShadow: '0 2px 4px rgba(0,0,0,0.8)'
+                }}>{product.nombre}</Card.Title>
+                <Card.Text className="flex-grow-1 mb-3 text-light" style={{ 
+                  fontSize: '14px', 
+                  lineHeight: '1.6',
+                  color: '#ffffff !important',
+                  backgroundColor: 'rgba(0, 0, 0, 0.4)',
+                  padding: '12px',
+                  borderRadius: '8px',
+                  border: '1px solid rgba(0, 212, 255, 0.3)',
+                  textShadow: '0 1px 3px rgba(0,0,0,0.8)'
+                }}>
                   {product.descripcion}
                 </Card.Text>
                 <div className="mt-auto">
                   <div className="d-flex justify-content-between align-items-center mb-3">
-                    <strong className="text-primary fs-5">
+                    <strong className="text-primary fs-4" style={{
+                      color: '#00d4ff !important',
+                      textShadow: '0 2px 4px rgba(0,0,0,0.8)'
+                    }}>
                       {formatCLP(product.precioCLP)}
                     </strong>
-                    <small className="text-muted">
+                    <small className="text-success fw-bold" style={{
+                      color: '#00ff88 !important',
+                      textShadow: '0 1px 3px rgba(0,0,0,0.8)'
+                    }}>
                       Stock: {product.stock}
                     </small>
                   </div>
