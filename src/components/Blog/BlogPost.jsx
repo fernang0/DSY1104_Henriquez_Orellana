@@ -15,25 +15,32 @@ const BlogPost = () => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    // Buscar el post por slug
-    const foundPost = blogPosts.find(p => p.slug === slug);
-    
-    if (foundPost) {
-      setPost(foundPost);
+    const loadPost = async () => {
+      // Simular una carga asíncrona
+      await new Promise(resolve => setTimeout(resolve, 100));
       
-      // Encontrar posts relacionados
-      const related = blogPosts
-        .filter(p => 
-          p.id !== foundPost.id && 
-          (p.category === foundPost.category || 
-           p.tags.some(tag => foundPost.tags.includes(tag)))
-        )
-        .slice(0, 3);
+      // Buscar el post por slug
+      const foundPost = blogPosts.find(p => p.slug === slug);
       
-      setRelatedPosts(related);
-    }
-    
-    setLoading(false);
+      if (foundPost) {
+        setPost(foundPost);
+        
+        // Encontrar posts relacionados
+        const related = blogPosts
+          .filter(p => 
+            p.id !== foundPost.id && 
+            (p.category === foundPost.category || 
+             p.tags.some(tag => foundPost.tags.includes(tag)))
+          )
+          .slice(0, 3);
+        
+        setRelatedPosts(related);
+      }
+      
+      setLoading(false);
+    };
+
+    loadPost();
   }, [slug]);
 
   // Formatear fecha
@@ -173,7 +180,7 @@ const BlogPost = () => {
           <Row>
             <Col lg={8} className="mx-auto">
               {/* Breadcrumb */}
-              <nav className={styles.breadcrumb}>
+              <nav className={styles.breadcrumb} role="navigation" aria-label="breadcrumb">
                 <Button
                   variant="link"
                   className={styles.breadcrumbLink}
@@ -209,7 +216,7 @@ const BlogPost = () => {
                   </div>
                 </div>
 
-                <div className={styles.postStats}>
+                <div className={styles.postStats} data-testid="post-stats">
                   <span className={styles.stat}>❤️ {post.likes}</span>
                   <span className={styles.stat}>💬 {post.comments || 0}</span>
                   <span className={styles.stat}>📤 Compartir</span>

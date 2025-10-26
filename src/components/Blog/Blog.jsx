@@ -136,7 +136,7 @@ const Blog = () => {
           <Col lg={8}>
             {/* Posts Destacados */}
             {selectedCategory === 'all' && !searchTerm && (
-              <section className="mb-5">
+              <section className="mb-5" role="region" aria-label="Artículos Destacados">
                 <h2 className="h3 mb-4 text-white">
                   ⭐ Artículos Destacados
                 </h2>
@@ -261,7 +261,7 @@ const PostCard = ({ post, featured = false }) => {
   };
 
   return (
-    <article className={`${styles.postCard} ${featured ? styles.featured : ''}`}>
+    <article className={`${styles.postCard} ${featured ? styles.featured : ''}`} aria-label={post.title}>
       <div className={styles.postImage}>
         <img
           src={post.image}
