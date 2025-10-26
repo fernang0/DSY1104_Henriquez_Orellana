@@ -6,7 +6,7 @@ import '../styles/components/checkout.css';
 
 function Checkout() {
   const navigate = useNavigate();
-  const { cart, formatCLP, getTotalPrice, clearCart } = useCartActions();
+  const { items: cart, formatCLP, totals, clearCart } = useCartActions();
   const [currentStep, setCurrentStep] = useState(1);
   const [formData, setFormData] = useState({
     nombre: '',
@@ -60,7 +60,7 @@ function Checkout() {
     }, 1500);
   };
 
-  const subtotal = getTotalPrice();
+  const subtotal = totals.subtotal;
   const descuentoTransferencia = formData.metodoPago === 'transferencia' ? subtotal * 0.05 : 0;
   const total = subtotal - descuentoTransferencia;
 
