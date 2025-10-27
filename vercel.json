@@ -1,13 +1,13 @@
 {
-  "version": 2,
-  "builds": [
+  "rewrites": [
     {
-      "src": "package.json",
-      "use": "@vercel/node",
-      "config": {
-        "installCommand": "npm install --legacy-peer-deps",
-        "buildCommand": "npm run build"
-      }
+      "source": "/(.*)",
+      "destination": "/index.html"
     }
-  ]
+  ],
+  "buildCommand": "npm run build",
+  "devCommand": "npm run dev",
+  "installCommand": "npm install --legacy-peer-deps",
+  "framework": "vite",
+  "outputDirectory": "dist"
 }
