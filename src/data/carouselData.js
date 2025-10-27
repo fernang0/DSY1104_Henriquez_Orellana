@@ -2,7 +2,7 @@
 export const carouselSlides = [
   {
     id: 1,
-    image: 'images/hero-1.jpg',
+    image: '/images/hero-1.jpg',
     title: 'Tu siguiente partida comienza aquí',
     description: 'Descubre los últimos videojuegos, consolas y accesorios gaming',
     buttonText: 'Explorar Catálogo',
@@ -11,7 +11,7 @@ export const carouselSlides = [
   },
   {
     id: 2,
-    image: 'images/hero-2.jpg',
+    image: '/images/hero-2.jpg',
     title: 'Potencia tu experiencia gaming',
     description: 'Las mejores consolas y accesorios para llevar tu juego al siguiente nivel',
     buttonText: 'Ver Consolas',
@@ -20,7 +20,7 @@ export const carouselSlides = [
   },
   {
     id: 3,
-    image: 'images/hero-3.jpg',
+    image: '/images/hero-3.jpg',
     title: 'Equípate como un pro',
     description: 'Accesorios gaming de alta calidad para maximizar tu rendimiento',
     buttonText: 'Ver Accesorios',
@@ -29,7 +29,7 @@ export const carouselSlides = [
   },
   {
     id: 4,
-    image: 'images/hero-4.jpg',
+    image: '/images/hero-4.jpg',
     title: 'Diversión sin límites',
     description: 'Juegos de mesa y entretenimiento para toda la familia',
     buttonText: 'Ver Juegos',
