@@ -9,11 +9,30 @@ import styles from './Cart.module.css';
  * Basado en el cálculo de totales del cart.js original
  */
 const CartSummary = ({ onClearCart, onClose }) => {
-  const { totals, formatCLP, isEmpty, itemCount } = useCart();
+  const { items, isEmpty, itemCount, total } = useCart();
   const navigate = useNavigate();
 
-  // No mostrar si el carrito está vacío
   if (isEmpty) return null;
+
+  const formatCLP = (amount) => {
+    return new Intl.NumberFormat('es-CL', {
+      style: 'currency',
+      currency: 'CLP',
+      minimumFractionDigits: 0,
+      maximumFractionDigits: 0
+    }).format(amount);
+  };
+
+  // El backend ya calcula el total, aquí solo calculamos subtotales para UI
+  const subtotal = items.reduce((sum, item) => sum + item.subtotal, 0);
+  const taxRate = cartConfig.tax.rate || 0.19;
+  const tax = subtotal * taxRate;
+  const freeShippingThreshold = cartConfig.shipping.freeShippingThreshold || 50000;
+  const shippingCost = cartConfig.shipping.cost || 5000;
+  const shipping = subtotal >= freeShippingThreshold ? 0 : shippingCost;
+  const savings = subtotal >= freeShippingThreshold ? shippingCost : 0;
+  const freeShippingReached = subtotal >= freeShippingThreshold;
+  const freeShippingRemaining = Math.max(0, freeShippingThreshold - subtotal);
 
   const handleCheckout = () => {
     // Cerrar el sidebar del carrito
@@ -33,7 +52,7 @@ const CartSummary = ({ onClearCart, onClose }) => {
             Subtotal ({itemCount} {itemCount === 1 ? 'producto' : 'productos'})
           </span>
           <span className={styles.summaryValue}>
-            {formatCLP(totals.subtotal)}
+            {formatCLP(subtotal)}
           </span>
         </div>
 
@@ -43,24 +62,24 @@ const CartSummary = ({ onClearCart, onClose }) => {
             {cartConfig.tax.name} ({Math.round(cartConfig.tax.rate * 100)}%)
           </span>
           <span className={styles.summaryValue}>
-            {formatCLP(totals.tax)}
+            {formatCLP(tax)}
           </span>
         </div>
 
         {/* Envío */}
         <div className={styles.summaryRow}>
           <span className={styles.summaryLabel}>Envío</span>
-          <span className={`${styles.summaryValue} ${totals.shipping === 0 ? styles.free : ''}`}>
-            {totals.shipping === 0 ? 'GRATIS' : formatCLP(totals.shipping)}
+          <span className={`${styles.summaryValue} ${shipping === 0 ? styles.free : ''}`}>
+            {shipping === 0 ? 'GRATIS' : formatCLP(shipping)}
           </span>
         </div>
 
         {/* Ahorros por envío gratis */}
-        {totals.savings > 0 && (
+        {savings > 0 && (
           <div className={styles.summaryRow}>
             <span className={styles.summaryLabel}>Ahorro en envío</span>
             <span className={`${styles.summaryValue} ${styles.savings}`}>
-              -{formatCLP(totals.savings)}
+              -{formatCLP(savings)}
             </span>
           </div>
         )}
@@ -69,7 +88,7 @@ const CartSummary = ({ onClearCart, onClose }) => {
         <div className={`${styles.summaryRow} ${styles.total}`}>
           <span className={styles.summaryLabel}>Total</span>
           <span className={styles.summaryValue}>
-            {formatCLP(totals.total)}
+            {formatCLP(total)}
           </span>
         </div>
       </div>
@@ -82,7 +101,7 @@ const CartSummary = ({ onClearCart, onClose }) => {
           onClick={handleCheckout}
           type="button"
         >
-          🛒 Proceder al Pago ({formatCLP(totals.total)})
+          🛒 Proceder al Pago ({formatCLP(total)})
         </button>
 
         {/* Botón continuar comprando */}
@@ -107,16 +126,16 @@ const CartSummary = ({ onClearCart, onClose }) => {
       {/* Información adicional */}
       <div className={styles.summaryInfo}>
         {/* Progreso hacia envío gratis */}
-        {!totals.freeShippingReached && totals.freeShippingRemaining > 0 && (
+        {!freeShippingReached && freeShippingRemaining > 0 && (
           <div className={styles.shippingProgress}>
             <small>
-              💡 Agrega {formatCLP(totals.freeShippingRemaining)} más para envío gratuito
+              💡 Agrega {formatCLP(freeShippingRemaining)} más para envío gratuito
             </small>
             <div className={styles.progressBar}>
               <div 
                 className={styles.progressFill}
                 style={{ 
-                  width: `${Math.min(100, (totals.subtotal / cartConfig.shipping.freeShippingThreshold) * 100)}%` 
+                  width: `${Math.min(100, (subtotal / freeShippingThreshold) * 100)}%` 
                 }}
               />
             </div>
@@ -126,7 +145,7 @@ const CartSummary = ({ onClearCart, onClose }) => {
         {/* Información de entrega */}
         <div className={styles.deliveryInfo}>
           <small>
-            🚚 {totals.shipping === 0 ? 'Envío gratuito' : 'Envío estándar'} • 
+            🚚 {shipping === 0 ? 'Envío gratuito' : 'Envío estándar'} • 
             Entrega en 2-3 días hábiles
           </small>
         </div>

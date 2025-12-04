@@ -1,13 +1,17 @@
 import { useState, useEffect } from 'react'
-import { Container, Row, Col, Form } from 'react-bootstrap'
+import { Container, Row, Col } from 'react-bootstrap'
 import { useSearchParams } from 'react-router-dom'
-import { PRODUCTS_LG } from '../data/products'
+import { useProductos } from '../hooks/useProductos'
+import { useCategorias } from '../hooks/useCategorias'
 import Filters from '../components/Products/Filters'
 import ProductCard from '../components/Products/ProductCard'
 import '../styles/components/products.css'
 
 function Products() {
   const [searchParams, setSearchParams] = useSearchParams()
+  const { productos, loading, error, fetchProductos, buscarProductos, fetchProductosPorCategoria } = useProductos()
+  const { categorias, fetchCategorias } = useCategorias()
+  
   const [filters, setFilters] = useState({
     categoria: searchParams.get('cat') || '',
     marca: '',
@@ -17,27 +21,44 @@ function Products() {
   })
   const [searchTerm, setSearchTerm] = useState('')
   const [sortBy, setSortBy] = useState('')
-  const [filteredProducts, setFilteredProducts] = useState(PRODUCTS_LG)
+  const [filteredProducts, setFilteredProducts] = useState([])
   const [displayProducts, setDisplayProducts] = useState([])
   const [page, setPage] = useState(1)
   const productsPerPage = 12
 
-  // Aplicar filtros
+  // Cargar productos y categorías al montar
   useEffect(() => {
-    let result = [...PRODUCTS_LG]
+    const loadInitialData = async () => {
+      await fetchCategorias()
+      const categoriaParam = searchParams.get('cat')
+      
+      if (categoriaParam) {
+        try {
+          await fetchProductosPorCategoria(categoriaParam)
+        } catch (err) {
+          console.error('Error cargando productos por categoría, cargando todos:', err)
+          await fetchProductos()
+        }
+      } else {
+        await fetchProductos()
+      }
+    }
+    
+    loadInitialData()
+  }, [])
 
-    // Filtro por búsqueda
+  // Aplicar filtros locales a los productos obtenidos del backend
+  useEffect(() => {
+    let result = [...productos]
+
+    // Filtro por búsqueda (ya se maneja en el backend con buscarProductos)
     if (searchTerm) {
       const search = searchTerm.toLowerCase()
       result = result.filter(product => 
-        product.nombre.toLowerCase().includes(search) ||
-        product.code.toLowerCase().includes(search)
+        product.nombre?.toLowerCase().includes(search) ||
+        product.sku?.toLowerCase().includes(search) ||
+        product.descripcion?.toLowerCase().includes(search)
       )
-    }
-
-    // Filtro por categoría
-    if (filters.categoria) {
-      result = result.filter(product => product.categoriaId === filters.categoria)
     }
 
     // Filtro por marca
@@ -47,35 +68,62 @@ function Products() {
 
     // Filtro por precio
     if (filters.precioMin) {
-      result = result.filter(product => product.precioCLP >= Number(filters.precioMin))
+      result = result.filter(product => product.precio >= Number(filters.precioMin))
     }
     if (filters.precioMax) {
-      result = result.filter(product => product.precioCLP <= Number(filters.precioMax))
+      result = result.filter(product => product.precio <= Number(filters.precioMax))
     }
 
-    // Filtro por rating
+    // Filtro por rating (solo si existe)
     if (filters.rating) {
-      result = result.filter(product => product.rating >= Number(filters.rating))
+      result = result.filter(product => product.rating && product.rating >= Number(filters.rating))
     }
 
     // Ordenamiento
     if (sortBy) {
       switch (sortBy) {
         case 'price-asc':
-          result.sort((a, b) => a.precioCLP - b.precioCLP)
+          result.sort((a, b) => a.precio - b.precio)
           break
         case 'price-desc':
-          result.sort((a, b) => b.precioCLP - a.precioCLP)
+          result.sort((a, b) => b.precio - a.precio)
           break
         case 'rating-desc':
-          result.sort((a, b) => b.rating - a.rating)
+          result.sort((a, b) => (b.rating || 0) - (a.rating || 0))
+          break
+        case 'name-asc':
+          result.sort((a, b) => a.nombre.localeCompare(b.nombre))
           break
       }
     }
 
     setFilteredProducts(result)
-    setPage(1) // Reset pagination when filters change
-  }, [filters, searchTerm, sortBy])
+    setPage(1)
+  }, [productos, filters, searchTerm, sortBy])
+
+  // Actualizar cuando cambia la categoría
+  useEffect(() => {
+    const updateByCategory = async () => {
+      if (filters.categoria) {
+        setSearchParams({ cat: filters.categoria })
+        try {
+          await fetchProductosPorCategoria(filters.categoria)
+        } catch (err) {
+          console.error('Error al filtrar por categoría:', err)
+          // Continuar mostrando productos actuales
+        }
+      } else {
+        setSearchParams({})
+        await fetchProductos()
+      }
+    }
+    
+    // Solo ejecutar si la categoría realmente cambió
+    const currentCat = searchParams.get('cat')
+    if (currentCat !== filters.categoria) {
+      updateByCategory()
+    }
+  }, [filters.categoria])
 
   // Paginación
   useEffect(() => {
@@ -90,17 +138,32 @@ function Products() {
     }
   }, [filteredProducts, page])
 
-  // Actualizar URL cuando cambia la categoría
-  useEffect(() => {
-    if (filters.categoria) {
-      setSearchParams({ cat: filters.categoria })
-    } else {
-      setSearchParams({})
-    }
-  }, [filters.categoria])
-
   const loadMore = () => {
     setPage(prev => prev + 1)
+  }
+
+  if (loading && productos.length === 0) {
+    return (
+      <div className="products-container">
+        <Container className="text-center py-5">
+          <h2>Cargando productos...</h2>
+        </Container>
+      </div>
+    )
+  }
+
+  if (error) {
+    return (
+      <div className="products-container">
+        <Container className="text-center py-5">
+          <h2>Error al cargar productos</h2>
+          <p>{error}</p>
+          <button className="btn btn-primary" onClick={() => fetchProductos()}>
+            Reintentar
+          </button>
+        </Container>
+      </div>
+    )
   }
 
   return (
@@ -128,7 +191,7 @@ function Products() {
                   Limpiar filtros
                 </button>
               </div>
-              <Filters filters={filters} setFilters={setFilters} />
+              <Filters filters={filters} setFilters={setFilters} categorias={categorias} />
             </div>
           </Col>
           
@@ -161,23 +224,32 @@ function Products() {
               </p>
             </div>
 
-            <Row className="g-4">
-              {displayProducts.map(product => (
-                <Col key={product.code} xs={12} sm={6} lg={4}>
-                  <ProductCard product={product} />
-                </Col>
-              ))}
-            </Row>
-
-            {displayProducts.length < filteredProducts.length && (
-              <div className="text-center mt-4">
-                <button 
-                  className="btn btn-primary btn-lg"
-                  onClick={loadMore}
-                >
-                  Ver más productos
-                </button>
+            {displayProducts.length === 0 ? (
+              <div className="text-center py-5">
+                <h3>No se encontraron productos</h3>
+                <p>Intenta ajustar los filtros de búsqueda</p>
               </div>
+            ) : (
+              <>
+                <Row className="g-4">
+                  {displayProducts.map(product => (
+                    <Col key={product.code} xs={12} sm={6} lg={4}>
+                      <ProductCard product={product} />
+                    </Col>
+                  ))}
+                </Row>
+
+                {displayProducts.length < filteredProducts.length && (
+                  <div className="text-center mt-4">
+                    <button 
+                      className="btn btn-primary btn-lg"
+                      onClick={loadMore}
+                    >
+                      Ver más productos
+                    </button>
+                  </div>
+                )}
+              </>
             )}
           </Col>
         </Row>

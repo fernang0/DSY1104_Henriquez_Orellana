@@ -16,11 +16,16 @@ const CartSidebar = () => {
     toggleSidebar,
     items,
     isEmpty,
-    isLoading,
+    loading,
     error,
-    clearCart,
-    totals
+    vaciarCarrito,
+    itemCount,
+    total
   } = useCart();
+
+  const freeShippingThreshold = 50000;
+  const freeShippingRemaining = Math.max(0, freeShippingThreshold - total);
+  const freeShippingReached = total >= freeShippingThreshold;
 
   // Cerrar con tecla Escape
   useEffect(() => {
@@ -49,11 +54,14 @@ const CartSidebar = () => {
   };
 
   // Manejar confirmación de vaciar carrito
-  const handleClearCart = () => {
+  const handleClearCart = async () => {
     if (window.confirm(cartConfig.messages.clearConfirm)) {
-      const result = clearCart();
-      if (result.success) {
-        console.log('✅ Carrito vaciado exitosamente');
+      try {
+        await vaciarCarrito();
+        console.log('✅ Carrito vaciado');
+      } catch (error) {
+        console.error('Error:', error);
+        alert('Error al vaciar carrito');
       }
     }
   };
@@ -83,7 +91,7 @@ const CartSidebar = () => {
             Mi Carrito
             {!isEmpty && (
               <span style={{ fontSize: '0.875rem', fontWeight: 'normal', marginLeft: '0.5rem' }}>
-                ({totals.itemCount} {totals.itemCount === 1 ? 'producto' : 'productos'})
+                ({itemCount} {itemCount === 1 ? 'producto' : 'productos'})
               </span>
             )}
           </h2>
@@ -100,7 +108,7 @@ const CartSidebar = () => {
         {/* Contenido */}
         <div className={styles.cartContent}>
           {/* Loading state */}
-          {isLoading && (
+          {loading && (
             <div className={styles.cartLoading}>
               <div className={styles.loadingSpinner} />
               <span style={{ marginLeft: '0.5rem' }}>Cargando...</span>
@@ -115,21 +123,21 @@ const CartSidebar = () => {
           )}
 
           {/* Carrito vacío */}
-          {isEmpty && !isLoading && (
+          {isEmpty && !loading && (
             <CartEmpty onClose={() => toggleSidebar(false)} />
           )}
 
           {/* Items del carrito */}
-          {!isEmpty && !isLoading && (
+          {!isEmpty && !loading && (
             <>
               {/* Mensaje de envío gratis */}
-              {totals.freeShippingReached ? (
+              {freeShippingReached ? (
                 <div className={styles.freeShippingMessage}>
                   ¡Felicidades! Tienes envío gratuito 🚚
                 </div>
               ) : (
                 <div className={styles.freeShippingProgress}>
-                  Faltan {totals.freeShippingRemaining?.toLocaleString('es-CL')} CLP para envío gratuito
+                  Faltan ${freeShippingRemaining.toLocaleString('es-CL')} para envío gratuito
                 </div>
               )}
 
@@ -144,7 +152,7 @@ const CartSidebar = () => {
         </div>
 
         {/* Resumen y botones (solo si hay items) */}
-        {!isEmpty && !isLoading && (
+        {!isEmpty && !loading && (
           <CartSummary onClearCart={handleClearCart} onClose={() => toggleSidebar(false)} />
         )}
       </aside>

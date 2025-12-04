@@ -14,8 +14,8 @@ export const useCartActions = () => {
     const results = [];
     
     for (const { product, quantity = 1 } of products) {
-      const result = await cartContext.addToCart(product, quantity);
-      results.push({ product: product.code, ...result });
+      const result = await cartContext.addItem(product.id || product.code, quantity);
+      results.push({ product: product.code || product.id, ...result });
     }
     
     return results;
@@ -38,22 +38,22 @@ export const useCartActions = () => {
       return { success: false, error: `Producto ${productCode} no encontrado` };
     }
     
-    return await cartContext.addToCart(product, quantity);
+    return await cartContext.addItem(product.id || productCode, quantity);
   }, [cartContext, getDemoProduct]);
 
   // Función para calcular descuentos
   const calculateDiscount = useCallback((discountPercent) => {
-    const totals = cartContext.totals;
-    const discountAmount = Math.round(totals.subtotal * (discountPercent / 100));
-    const newTotal = totals.total - discountAmount;
+    const total = cartContext.getCartTotal();
+    const discountAmount = Math.round(total * (discountPercent / 100));
+    const newTotal = total - discountAmount;
     
     return {
-      originalTotal: totals.total,
+      originalTotal: total,
       discountAmount,
       newTotal: Math.max(0, newTotal),
       discountPercent
     };
-  }, [cartContext.totals]);
+  }, [cartContext]);
 
   // Función para verificar disponibilidad de productos
   const checkCartStock = useCallback(() => {
@@ -92,19 +92,30 @@ export const useCartActions = () => {
     }).slice(0, 3); // Máximo 3 recomendaciones
   }, [cartContext.items]);
 
+  // Función para formatear precios
+  const formatCLP = (precio) => {
+    return new Intl.NumberFormat('es-CL', {
+      style: 'currency',
+      currency: 'CLP'
+    }).format(precio);
+  };
+
   // Función para exportar carrito (para compartir, guardar, etc.)
   const exportCart = useCallback(() => {
+    const itemCount = cartContext.getCartItemsCount();
+    const total = cartContext.getCartTotal();
+    
     const cartData = {
       items: cartContext.items,
-      totals: cartContext.totals,
+      total: total,
       timestamp: new Date().toISOString(),
-      itemCount: cartContext.itemCount
+      itemCount: itemCount
     };
     
     return {
       json: JSON.stringify(cartData, null, 2),
       data: cartData,
-      summary: `${cartContext.itemCount} productos - Total: ${cartContext.formatCLP(cartContext.totals.total)}`
+      summary: `${itemCount} productos - Total: ${formatCLP(total)}`
     };
   }, [cartContext]);
 
@@ -124,11 +135,14 @@ export const useCartActions = () => {
       }
       
       // Limpiar carrito actual
-      await cartContext.clearCart();
+      const clearResult = await cartContext.clearCart();
+      if (!clearResult.success) {
+        throw new Error('No se pudo limpiar el carrito');
+      }
       
       // Agregar productos del carrito importado
       const results = await addMultipleToCart(
-        parsedData.items.map(item => ({ product: item, quantity: item.quantity }))
+        parsedData.items.map(item => ({ product: item, quantity: item.cantidad || item.quantity }))
       );
       
       const successCount = results.filter(r => r.success).length;
@@ -160,7 +174,7 @@ export const useCartActions = () => {
     
     const results = [];
     for (const item of outOfStockItems) {
-      const result = await cartContext.removeFromCart(item.code);
+      const result = await cartContext.removeItem(item.productoId);
       results.push(result);
     }
     
@@ -179,6 +193,9 @@ export const useCartActions = () => {
     return calculateDiscount(20); // 20% de descuento para estudiantes
   }, [calculateDiscount]);
 
+  const itemCount = cartContext.getCartItemsCount();
+  const total = cartContext.getCartTotal();
+
   return {
     // Re-exportar contexto completo
     ...cartContext,
@@ -195,6 +212,7 @@ export const useCartActions = () => {
     importCart,
     removeOutOfStockItems,
     applyStudentDiscount,
+    formatCLP,
     
     // Datos de productos demo
     demoProducts,
@@ -205,17 +223,22 @@ export const useCartActions = () => {
     // Estados computados adicionales
     hasStockIssues: checkCartStock().hasIssues,
     recommendations: getRecommendations(),
-    categories: [...new Set(cartContext.items.map(item => item.categoria))],
+    categories: [...new Set(cartContext.items.map(item => item.categoria || item.categoriaNombre))],
+    itemCount,
+    
+    // Totals object para compatibilidad
+    totals: {
+      subtotal: total,
+      total: total,
+      savings: 0,
+      freeShippingReached: total >= 50000
+    },
     
     // Métrica de valor del carrito
     cartMetrics: {
-      averageItemPrice: cartContext.items.length > 0 
-        ? cartContext.totals.subtotal / cartContext.itemCount 
-        : 0,
-      totalSavings: cartContext.totals.savings,
-      freeShippingProgress: cartContext.totals.freeShippingReached 
-        ? 100 
-        : Math.min(100, (cartContext.totals.subtotal / 50000) * 100)
+      averageItemPrice: itemCount > 0 ? total / itemCount : 0,
+      totalSavings: 0,
+      freeShippingProgress: Math.min(100, (total / 50000) * 100)
     }
   };
 };

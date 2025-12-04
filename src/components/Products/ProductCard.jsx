@@ -1,23 +1,17 @@
 import { useState } from 'react'
 import { Card, Button } from 'react-bootstrap'
 import { Link } from 'react-router-dom'
-import { formatPrice, CATEGORIES } from '../../data/products'
-import { useCartActions } from '../../hooks/useCartActions'
+import AddToCartButton from '../cart/AddToCartButton'
 
 function ProductCard({ product }) {
   const [showDetails, setShowDetails] = useState(false);
-  const { addToCart, formatCLP } = useCartActions();
   
-  // Manejar adición al carrito
-  const handleAddToCart = async (e) => {
-    e.preventDefault();
-    const result = await addToCart(product, 1);
-    if (result.success) {
-      alert(`${product.nombre} agregado al carrito`);
-    } else {
-      alert(`Error: ${result.error}`);
-    }
-  };
+  const formatCLP = (precio) => {
+    return new Intl.NumberFormat('es-CL', {
+      style: 'currency',
+      currency: 'CLP'
+    }).format(precio)
+  }
   
   const renderRating = (rating) => {
     const stars = '⭐'.repeat(Math.floor(rating))
@@ -56,17 +50,14 @@ function ProductCard({ product }) {
       <Card.Body>
         <Card.Title>{product.nombre}</Card.Title>
         <div className="product-meta">
-          <span className="product-code">{product.code}</span>
-          <span className="product-rating">{renderRating(product.rating)}</span>
+          <span className="product-code">{product.sku}</span>
+          {product.rating && (
+            <span className="product-rating">{renderRating(product.rating)}</span>
+          )}
         </div>
         <Card.Text className="product-description">{product.descripcion}</Card.Text>
-        <div className="specs-list">
-          {product.specs.map((spec, index) => (
-            <span key={index} className="spec-tag">{spec}</span>
-          ))}
-        </div>
         <div className="product-price-container">
-          <div className="product-price">{formatPrice(product.precioCLP)}</div>
+          <div className="product-price">{formatCLP(product.precio)}</div>
           <div className="stock-info">
             <span className={`text-${product.stock > 10 ? 'success' : 'warning'}`}>
               Stock: {product.stock}
@@ -74,18 +65,15 @@ function ProductCard({ product }) {
           </div>
         </div>
           <div className="d-flex gap-2">
-            <Button 
-              variant="primary" 
+            <AddToCartButton 
+              producto={product} 
+              cantidad={1}
               className="flex-grow-1"
-              disabled={product.stock === 0}
-              onClick={handleAddToCart}
-            >
-              {product.stock === 0 ? 'Sin Stock' : '🛒 Agregar al carrito'}
-            </Button>
+            />
             <Button 
               variant="outline-secondary"
               as={Link}
-              to={`/productos/${product.code}`}
+              to={`/productos/${product.id}`}
             >
               Ver Detalles
             </Button>
@@ -98,15 +86,8 @@ function ProductCard({ product }) {
                 <strong>Marca:</strong> {product.marca}
               </small>
               <small className="d-block mb-2">
-                <strong>Categoría:</strong> {CATEGORIES[product.categoriaId]}
+                <strong>Categoría:</strong> {product.categoriaNombre}
               </small>
-              <div className="tags mt-2">
-                {product.tags.map((tag, index) => (
-                  <span key={index} className="badge bg-secondary me-1">
-                    {tag}
-                  </span>
-                ))}
-              </div>
             </div>
           )}
       </Card.Body>

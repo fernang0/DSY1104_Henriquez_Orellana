@@ -1,16 +1,16 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
+import { useAuth } from '../../context/AuthContext';
 import { 
-  authConfig, 
   validationRules, 
   authMessages, 
-  registerFormFields,
-  validReferralCodes 
+  registerFormFields
 } from '../../data/authData';
 import styles from './Auth.module.css';
 
 const Register = () => {
   const navigate = useNavigate();
+  const { register, isAuthenticated } = useAuth();
   const [formData, setFormData] = useState({
     firstName: '',
     lastName: '',
@@ -30,11 +30,10 @@ const Register = () => {
 
   // Verificar si ya está logueado
   useEffect(() => {
-    const token = localStorage.getItem('authToken');
-    if (token) {
+    if (isAuthenticated()) {
       navigate('/', { replace: true });
     }
-  }, [navigate]);
+  }, [navigate, isAuthenticated]);
 
   // Validación de campo individual
   const validateField = (name, value) => {
@@ -182,49 +181,7 @@ const Register = () => {
     }
   };
 
-  // Simular registro
-  const performRegistration = async (userData) => {
-    try {
-      await new Promise(resolve => setTimeout(resolve, 2000));
 
-      // Verificar si el email ya existe (simulación)
-      const existingUsers = JSON.parse(localStorage.getItem('registeredUsers') || '[]');
-      const emailExists = existingUsers.some(user => user.email === userData.email);
-
-      if (emailExists) {
-        return { success: false, message: authMessages.register.emailExists };
-      }
-
-      // Crear nuevo usuario
-      const newUser = {
-        id: `user_${Date.now()}`,
-        firstName: userData.firstName,
-        lastName: userData.lastName,
-        name: `${userData.firstName} ${userData.lastName}`,
-        email: userData.email,
-        birthDate: userData.birthDate,
-        phone: userData.phone,
-        referralCode: userData.referralCode,
-        newsletter: userData.newsletter,
-        role: 'Usuario',
-        avatar: '🆕',
-        level: 1,
-        points: userData.referralCode ? authConfig.validation.referralCode.bonus : 0,
-        isStudent: userData.email.includes('duoc.cl'),
-        discount: userData.email.includes('duoc.cl') ? 20 : 0,
-        permissions: ['user'],
-        registrationDate: new Date().toISOString()
-      };
-
-      // Guardar usuario
-      existingUsers.push(newUser);
-      localStorage.setItem('registeredUsers', JSON.stringify(existingUsers));
-
-      return { success: true, user: newUser };
-    } catch (error) {
-      return { success: false, message: 'Error del servidor' };
-    }
-  };
 
   // Validar formulario completo
   const validateForm = () => {
@@ -258,27 +215,28 @@ const Register = () => {
     setErrors({});
 
     try {
-      const result = await performRegistration(formData);
+      const registerData = {
+        nombre: `${formData.firstName} ${formData.lastName}`,
+        email: formData.email,
+        password: formData.password,
+        telefono: formData.phone || null,
+        fechaNacimiento: formData.birthDate || null
+      };
 
-      if (result.success) {
-        setMessage({ 
-          type: 'success', 
-          text: `¡Registro exitoso! Bienvenido ${result.user.name}. Redirigiendo...` 
-        });
+      await register(registerData);
+      
+      setMessage({ 
+        type: 'success', 
+        text: '¡Registro exitoso! Redirigiendo al login...' 
+      });
 
-        setTimeout(() => {
-          navigate('/login', { replace: true });
-        }, 2000);
-      } else {
-        setMessage({ 
-          type: 'error', 
-          text: result.message 
-        });
-      }
+      setTimeout(() => {
+        navigate('/login', { replace: true });
+      }, 2000);
     } catch (error) {
       setMessage({ 
         type: 'error', 
-        text: 'Error del servidor. Intenta nuevamente.' 
+        text: error.message || 'Error al registrar. Intenta nuevamente.' 
       });
     } finally {
       setIsLoading(false);

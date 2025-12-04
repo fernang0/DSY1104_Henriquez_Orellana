@@ -7,7 +7,14 @@ import styles from './Cart.module.css';
  * Basado en el botón del carrito original con contador
  */
 const CartButton = ({ className = '', showText = false }) => {
-  const { toggleSidebar, itemCount, isLoading, formatCLP, totals } = useCart();
+  const { toggleSidebar, itemCount, total, loading } = useCart();
+
+  const formatCLP = (precio) => {
+    return new Intl.NumberFormat('es-CL', {
+      style: 'currency',
+      currency: 'CLP'
+    }).format(precio);
+  };
 
   const handleClick = () => {
     toggleSidebar(true);
@@ -17,7 +24,7 @@ const CartButton = ({ className = '', showText = false }) => {
     <button
       className={`${styles.cartToggle} ${className}`}
       onClick={handleClick}
-      disabled={isLoading}
+      disabled={loading}
       aria-label={`Abrir carrito, ${itemCount} producto${itemCount !== 1 ? 's' : ''}`}
       type="button"
     >
@@ -45,12 +52,7 @@ const CartButton = ({ className = '', showText = false }) => {
         ) : (
           <div>
             <div>{itemCount} {itemCount === 1 ? 'producto' : 'productos'}</div>
-            <div><strong>Total: {formatCLP(totals.total)}</strong></div>
-            {totals.freeShippingReached && (
-              <div style={{ color: 'var(--cart-success)', fontSize: '0.75rem' }}>
-                ✓ Envío gratis incluido
-              </div>
-            )}
+            <div><strong>Total: {formatCLP(total)}</strong></div>
           </div>
         )}
       </div>

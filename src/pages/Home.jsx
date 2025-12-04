@@ -1,17 +1,30 @@
 import { Container, Row, Col, Card, Button } from 'react-bootstrap'
 import HeroCarousel from '../components/HeroCarousel'
-import { useCartActions } from '../hooks/useCartActions'
+import { useCart } from '../context/CartContext'
 
 function Home() {
-  const { demoProducts, addToCart, formatCLP } = useCartActions();
+  const { agregarItem } = useCart();
 
-  // Manejar adición al carrito
+  const formatCLP = (precio) => {
+    return new Intl.NumberFormat('es-CL', {
+      style: 'currency',
+      currency: 'CLP'
+    }).format(precio);
+  };
+
+  const demoProducts = [
+    { id: 1, nombre: 'Mouse Gamer RGB', precio: 29990, imagen: '/images/products/default.jpg', descripcion: 'Mouse gaming con iluminación RGB' },
+    { id: 2, nombre: 'Teclado Mecánico', precio: 89990, imagen: '/images/products/default.jpg', descripcion: 'Teclado mecánico switches blue' },
+    { id: 3, nombre: 'Audífonos Gaming', precio: 49990, imagen: '/images/products/default.jpg', descripcion: 'Audífonos con sonido 7.1' }
+  ];
+
   const handleAddToCart = async (product) => {
-    const result = await addToCart(product, 1);
-    if (result.success) {
-      alert(result.message);
-    } else {
-      alert(`Error: ${result.error}`);
+    try {
+      await agregarItem(product.id, 1);
+      alert(`${product.nombre} agregado al carrito`);
+    } catch (error) {
+      console.error('Error:', error);
+      alert(error.message);
     }
   };
 

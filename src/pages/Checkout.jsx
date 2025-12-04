@@ -1,26 +1,43 @@
-import React, { useState } from 'react';
-import { Container, Row, Col, Form, Button, Card, Alert } from 'react-bootstrap';
+import React, { useState, useEffect } from 'react';
+import { Container, Row, Col, Form, Button, Card, Alert, Spinner } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
-import { useCartActions } from '../hooks/useCartActions';
+import { useCart } from '../context/CartContext';
+import { usePedidos } from '../hooks/usePedidos';
+import { usePagos } from '../hooks/usePagos';
+import { useAuth } from '../context/AuthContext';
 import '../styles/components/checkout.css';
 
 function Checkout() {
   const navigate = useNavigate();
-  const { items: cart, formatCLP, totals, clearCart } = useCartActions();
+  const { items, carrito, getCartTotal, getCartItemsCount, clearCart } = useCart();
+  const { crearPedidoDesdeCarrito, loading: pedidoLoading } = usePedidos();
+  const { iniciarPago, loading: pagoLoading } = usePagos();
+  const { user } = useAuth();
   const [currentStep, setCurrentStep] = useState(1);
   const [formData, setFormData] = useState({
     nombre: '',
     apellido: '',
     rut: '',
-    email: '',
+    email: user?.email || '',
     telefono: '',
     direccion: '',
     ciudad: '',
     region: '',
     codigoPostal: '',
-    metodoPago: 'transferencia',
+    metodoPago: 'webpay',
     formaEntrega: 'domicilio'
   });
+
+  useEffect(() => {
+    if (user) {
+      setFormData(prev => ({
+        ...prev,
+        email: user.email,
+        nombre: user.nombre?.split(' ')[0] || '',
+        apellido: user.nombre?.split(' ').slice(1).join(' ') || ''
+      }));
+    }
+  }, [user]);
 
   const steps = [
     { number: 1, title: 'Tus datos', icon: '📝' },
@@ -51,20 +68,43 @@ function Checkout() {
     }
   };
 
-  const handlePayment = () => {
-    // Simular procesamiento de pago
-    setTimeout(() => {
-      clearCart();
-      alert('¡Pago procesado exitosamente! Gracias por tu compra gaming.');
-      navigate('/');
-    }, 1500);
+  const handlePayment = async () => {
+    try {
+      // 1. Crear pedido desde carrito
+      const pedido = await crearPedidoDesdeCarrito({
+        direccionEntrega: `${formData.direccion}, ${formData.ciudad}, ${formData.region}`,
+        metodoPago: formData.metodoPago
+      });
+
+      if (!pedido || !pedido.id) {
+        throw new Error('No se pudo crear el pedido');
+      }
+
+      // 2. Si es Webpay, iniciar flujo de pago con Transbank
+      if (formData.metodoPago === 'webpay') {
+        await iniciarPago(pedido.id);
+        // iniciarPago redirige automáticamente a Transbank
+      } else {
+        // Pago contra entrega o transferencia
+        alert('¡Pedido creado exitosamente! Se ha enviado un correo con los detalles.');
+        await clearCart();
+        navigate('/mis-pedidos');
+      }
+    } catch (error) {
+      alert(`Error al procesar el pedido: ${error.message}`);
+    }
   };
 
-  const subtotal = totals.subtotal;
-  const descuentoTransferencia = formData.metodoPago === 'transferencia' ? subtotal * 0.05 : 0;
-  const total = subtotal - descuentoTransferencia;
+  const formatCLP = (precio) => {
+    return new Intl.NumberFormat('es-CL', {
+      style: 'currency',
+      currency: 'CLP'
+    }).format(precio);
+  };
 
-  if (cart.length === 0) {
+  const total = getCartTotal();
+
+  if (!items || items.length === 0) {
     return (
       <Container className="py-5 text-center">
         <div className="checkout-empty">
@@ -77,6 +117,8 @@ function Checkout() {
       </Container>
     );
   }
+
+  const isLoading = pedidoLoading || pagoLoading;
 
   return (
     <div className="checkout-page">
@@ -277,9 +319,8 @@ function Checkout() {
                         <div className="option-content">
                           <div className="option-icon">💰</div>
                           <div className="option-details">
-                            <h5>Pago con transferencias</h5>
+                            <h5>Transferencia Bancaria</h5>
                             <p>Transferencia y Banco Estado</p>
-                            <span className="discount-badge">5% descuento</span>
                           </div>
                           <div className="option-price">{formatCLP(total)}</div>
                         </div>
@@ -292,10 +333,24 @@ function Checkout() {
                         <div className="option-content">
                           <div className="option-icon">💳</div>
                           <div className="option-details">
-                            <h5>Otros medios de pago</h5>
-                            <p>Webpay/Onepay</p>
+                            <h5>Webpay Plus (Transbank)</h5>
+                            <p>Débito, Crédito, Prepago</p>
                           </div>
-                          <div className="option-price">{formatCLP(subtotal)}</div>
+                          <div className="option-price">{formatCLP(total)}</div>
+                        </div>
+                      </div>
+
+                      <div 
+                        className={`payment-option ${formData.metodoPago === 'contraentrega' ? 'selected' : ''}`}
+                        onClick={() => setFormData(prev => ({ ...prev, metodoPago: 'contraentrega' }))}
+                      >
+                        <div className="option-content">
+                          <div className="option-icon">🚚</div>
+                          <div className="option-details">
+                            <h5>Pago Contra Entrega</h5>
+                            <p>Paga al recibir tu pedido</p>
+                          </div>
+                          <div className="option-price">{formatCLP(total)}</div>
                         </div>
                       </div>
                     </div>
@@ -331,20 +386,17 @@ function Checkout() {
           <Col lg={4}>
             <Card className="order-summary-card sticky-top">
               <Card.Header className="bg-primary text-white">
-                <h5 className="mb-0">🛒 Resumen ({cart.length} producto{cart.length !== 1 ? 's' : ''})</h5>
+                <h5 className="mb-0">🛒 Resumen ({items.length} producto{items.length !== 1 ? 's' : ''})</h5>
               </Card.Header>
               <Card.Body>
-                {cart.map((item) => (
-                  <div key={item.code} className="cart-item-summary">
-                    <div className="item-image">
-                      <img src={item.imagen} alt={item.nombre} />
-                    </div>
+                {items.map((item) => (
+                  <div key={item.productoId} className="cart-item-summary">
                     <div className="item-details">
-                      <h6>{item.nombre}</h6>
-                      <p className="text-muted">Cantidad: {item.quantity}</p>
+                      <h6>{item.productoNombre}</h6>
+                      <p className="text-muted">Cantidad: {item.cantidad}</p>
                     </div>
                     <div className="item-price">
-                      {formatCLP(item.precioCLP * item.quantity)}
+                      {formatCLP(item.precioUnitario * item.cantidad)}
                     </div>
                   </div>
                 ))}
@@ -352,18 +404,6 @@ function Checkout() {
                 <hr />
                 
                 <div className="price-breakdown">
-                  <div className="price-row">
-                    <span>Subtotal:</span>
-                    <span>{formatCLP(subtotal)}</span>
-                  </div>
-                  
-                  {formData.metodoPago === 'transferencia' && (
-                    <div className="price-row discount">
-                      <span>Descuento transferencia (5%):</span>
-                      <span>-{formatCLP(descuentoTransferencia)}</span>
-                    </div>
-                  )}
-                  
                   <div className="price-row total">
                     <strong>
                       <span>TOTAL:</span>
@@ -378,11 +418,12 @@ function Checkout() {
 
         {/* Navigation buttons */}
         <div className="checkout-navigation mt-4">
-          <Button variant="outline-primary" onClick={handleBack}>
+          <Button variant="outline-primary" onClick={handleBack} disabled={isLoading}>
             ← {currentStep === 1 ? 'Volver' : 'Atrás'}
           </Button>
           <Button 
-            variant="primary" 
+            variant="primary"
+            disabled={isLoading} 
             size="lg" 
             onClick={handleContinue}
             className="ms-3"

@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { authConfig, demoAccounts, validationRules, authMessages } from '../../data/authData';
+import { useAuth } from '../../context/AuthContext';
+import { validationRules, authMessages } from '../../data/authData';
 import styles from './Auth.module.css';
 
 const Login = () => {
   const navigate = useNavigate();
+  const { login, isAuthenticated } = useAuth();
   const [formData, setFormData] = useState({
     email: '',
     password: '',
@@ -17,11 +19,10 @@ const Login = () => {
 
   // Verificar si ya está logueado
   useEffect(() => {
-    const token = localStorage.getItem('authToken');
-    if (token) {
+    if (isAuthenticated()) {
       navigate('/', { replace: true });
     }
-  }, [navigate]);
+  }, [navigate, isAuthenticated]);
 
   // Validación de campo
   const validateField = (name, value) => {
@@ -72,53 +73,7 @@ const Login = () => {
     }
   };
 
-  // Auto-completar con cuenta demo
-  const handleDemoLogin = (account) => {
-    setFormData({
-      email: account.email,
-      password: account.password,
-      remember: false
-    });
-    setErrors({});
-    setMessage({ type: '', text: '' });
-  };
 
-  // Simular login
-  const performLogin = async (email, password) => {
-    // Buscar en cuentas demo
-    const account = demoAccounts.find(
-      acc => acc.email === email && acc.password === password
-    );
-
-    if (account) {
-      const userData = {
-        id: account.id,
-        email: account.email,
-        name: account.name,
-        role: account.role,
-        avatar: account.avatar,
-        level: account.level,
-        points: account.points,
-        isStudent: account.isStudent,
-        discount: account.discount,
-        permissions: account.permissions,
-        loginTime: new Date().toISOString()
-      };
-
-      // Guardar en localStorage
-      const token = `token_${account.id}_${Date.now()}`;
-      localStorage.setItem('authToken', token);
-      localStorage.setItem('userData', JSON.stringify(userData));
-      
-      if (formData.remember) {
-        localStorage.setItem('rememberMe', 'true');
-      }
-
-      return { success: true, user: userData };
-    }
-
-    return { success: false, message: authMessages.login.invalidCredentials };
-  };
 
   // Validar formulario
   const validateForm = () => {
@@ -149,30 +104,20 @@ const Login = () => {
     setErrors({});
 
     try {
-      // Simular delay de red
-      await new Promise(resolve => setTimeout(resolve, 1500));
+      await login(formData.email, formData.password);
+      
+      setMessage({ 
+        type: 'success', 
+        text: authMessages.login.success
+      });
 
-      const result = await performLogin(formData.email, formData.password);
-
-      if (result.success) {
-        setMessage({ 
-          type: 'success', 
-          text: `¡Bienvenido ${result.user.name}! ${authMessages.login.success}` 
-        });
-
-        setTimeout(() => {
-          navigate('/', { replace: true });
-        }, 1000);
-      } else {
-        setMessage({ 
-          type: 'error', 
-          text: result.message 
-        });
-      }
+      setTimeout(() => {
+        navigate('/', { replace: true });
+      }, 1000);
     } catch (error) {
       setMessage({ 
         type: 'error', 
-        text: 'Error del servidor. Intenta nuevamente.' 
+        text: error.message || 'Error al iniciar sesión. Verifica tus credenciales.' 
       });
     } finally {
       setIsLoading(false);
@@ -318,29 +263,7 @@ const Login = () => {
           </p>
         </div>
 
-        {/* Cuentas demo */}
-        <div className={styles.demoSection}>
-          <h3 className={styles.demoTitle}>Cuentas de prueba</h3>
-          <p className={styles.demoInfo}>Para probar el sistema puedes usar:</p>
-          <div className={styles.demoAccounts}>
-            {demoAccounts.map((account) => (
-              <button
-                key={account.id}
-                type="button"
-                className={styles.demoButton}
-                onClick={() => handleDemoLogin(account)}
-                disabled={isLoading}
-              >
-                <span>{account.avatar}</span>
-                <div>
-                  <strong>{account.role} Demo</strong>
-                  <br />
-                  <small>{account.email}</small>
-                </div>
-              </button>
-            ))}
-          </div>
-        </div>
+
       </div>
     </div>
   );

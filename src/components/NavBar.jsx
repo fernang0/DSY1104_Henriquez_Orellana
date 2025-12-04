@@ -2,45 +2,16 @@ import React, { useState, useEffect } from 'react';
 import { Container, Nav, Navbar } from 'react-bootstrap';
 import { Link, useNavigate } from 'react-router-dom';
 import { CartButton } from './Cart/index.js';
+import { useAuth } from '../context/AuthContext';
 
 function NavBar() {
   const navigate = useNavigate();
-  const [user, setUser] = useState(null);
+  const { user, logout, isAuthenticated, isAdmin } = useAuth();
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
-
-  // Verificar estado de autenticación
-  useEffect(() => {
-    const checkAuthStatus = () => {
-      const token = localStorage.getItem('authToken');
-      const userData = localStorage.getItem('userData');
-      
-      if (token && userData) {
-        try {
-          setUser(JSON.parse(userData));
-        } catch (error) {
-          localStorage.removeItem('authToken');
-          localStorage.removeItem('userData');
-          setUser(null);
-        }
-      }
-    };
-
-    checkAuthStatus();
-    
-    // Escuchar cambios en localStorage
-    window.addEventListener('storage', checkAuthStatus);
-    
-    return () => {
-      window.removeEventListener('storage', checkAuthStatus);
-    };
-  }, []);
 
   // Función para cerrar sesión
   const handleLogout = () => {
-    localStorage.removeItem('authToken');
-    localStorage.removeItem('userData');
-    localStorage.removeItem('rememberMe');
-    setUser(null);
+    logout();
     setIsDropdownOpen(false);
     navigate('/', { replace: true });
   };
@@ -83,7 +54,7 @@ function NavBar() {
             {/* Botón del carrito */}
             <CartButton className="me-3" />
             
-            {user ? (
+            {isAuthenticated() && user ? (
               // Usuario logueado - mostrar menú de usuario
               <div className="dropdown">
                 <button 
@@ -94,19 +65,18 @@ function NavBar() {
                   data-testid="user-menu"
                   onClick={handleMenuClick}
                 >
-                  <span className="me-2">{user.avatar}</span>
-                  {user.name}
-                  {user.isStudent && <span className="ms-1 badge bg-warning">20%</span>}
+                  <span className="me-2">👤</span>
+                  {user.nombre}
                 </button>
 
                 <div className={`dropdown-menu dropdown-menu-dark ${isDropdownOpen ? 'show' : ''}`}>
                   <div className="dropdown-header">
-                    <strong>{user.name}</strong>
+                    <strong>{user.nombre}</strong>
                     <br />
                     <small className="text-muted">{user.email}</small>
                     <br />
                     <small className="text-info">
-                      Nivel {user.level} • {user.points} puntos
+                      Rol: {user.rol}
                     </small>
                   </div>
                   
@@ -116,15 +86,11 @@ function NavBar() {
                     👤 Mi Perfil
                   </Link>
                   
-                  <Link to="/mis-juegos" className="dropdown-item">
-                    🎮 Mis Juegos
+                  <Link to="/mis-pedidos" className="dropdown-item">
+                    📦 Mis Pedidos
                   </Link>
                   
-                  <Link to="/puntos" className="dropdown-item">
-                    🏆 Mis Puntos ({user.points})
-                  </Link>
-                  
-                  {user.permissions?.includes('admin') && (
+                  {isAdmin() && (
                     <>
                       <div className="dropdown-divider"></div>
                       <Link to="/admin" className="dropdown-item">

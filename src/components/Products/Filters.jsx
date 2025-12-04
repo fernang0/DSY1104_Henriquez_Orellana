@@ -1,7 +1,7 @@
-import { CATEGORIES } from '../../data/products'
+import { useMemo } from 'react'
 import { getUniqueBrands } from '../../data/products'
 
-function Filters({ filters, setFilters }) {
+function Filters({ filters, setFilters, categorias = [] }) {
   const handleFilterChange = (e) => {
     const { name, value } = e.target
     setFilters(prev => ({
@@ -41,8 +41,8 @@ function Filters({ filters, setFilters }) {
             onChange={handleFilterChange}
           >
             <option value="">Todas las categorías</option>
-            {Object.entries(CATEGORIES).map(([key, value]) => (
-              <option key={key} value={key}>{value}</option>
+            {categorias.map(categoria => (
+              <option key={categoria.id} value={categoria.id}>{categoria.nombre}</option>
             ))}
           </select>
         </div>

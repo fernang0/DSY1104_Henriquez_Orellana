@@ -9,6 +9,12 @@ import { Login, Register } from './components/Auth'
 import Products from './pages/Products'
 import ProductDetail from './pages/ProductDetail'
 import Checkout from './pages/Checkout'
+import MisPedidos from './pages/MisPedidos'
+import Perfil from './pages/Perfil'
+import Admin from './pages/Admin'
+import PagoResultado from './pages/PagoResultado'
+import ProtectedRoute from './components/ProtectedRoute'
+import AdminRoute from './components/AdminRoute'
 
 export const router = createBrowserRouter([
   {
@@ -45,7 +51,43 @@ export const router = createBrowserRouter([
       },
       {
         path: 'checkout',
-        element: <Checkout />
+        element: (
+          <ProtectedRoute>
+            <Checkout />
+          </ProtectedRoute>
+        )
+      },
+      {
+        path: 'perfil',
+        element: (
+          <ProtectedRoute>
+            <Perfil />
+          </ProtectedRoute>
+        )
+      },
+      {
+        path: 'mis-pedidos',
+        element: (
+          <ProtectedRoute>
+            <MisPedidos />
+          </ProtectedRoute>
+        )
+      },
+      {
+        path: 'admin',
+        element: (
+          <AdminRoute>
+            <Admin />
+          </AdminRoute>
+        )
+      },
+      {
+        path: 'pago-resultado',
+        element: (
+          <ProtectedRoute>
+            <PagoResultado />
+          </ProtectedRoute>
+        )
       }
     ]
   },

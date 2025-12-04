@@ -8,15 +8,14 @@ import styles from './Cart.module.css';
  * Basado en el mensaje de carrito vacío del original
  */
 const CartEmpty = ({ onClose }) => {
-  const { addToCart } = useCart();
+  const { agregarItem } = useCart();
 
-  // Manejar adición de producto demo
   const handleAddDemo = async (product) => {
-    const result = await addToCart(product, 1);
-    if (result.success) {
-      console.log('✅ Producto demo agregado:', result.message);
-    } else {
-      console.error('❌ Error agregando producto demo:', result.error);
+    try {
+      await agregarItem(product.id, 1);
+      console.log('✅ Producto agregado');
+    } catch (error) {
+      console.error('❌ Error:', error);
     }
   };
 

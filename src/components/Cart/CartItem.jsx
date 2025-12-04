@@ -8,82 +8,93 @@ import styles from './Cart.module.css';
  * Basado en la estructura original del cart.js
  */
 const CartItem = ({ item }) => {
-  const { updateQuantity, removeFromCart, formatCLP } = useCart();
+  const { actualizarItem, eliminarItem } = useCart();
   const [isUpdating, setIsUpdating] = useState(false);
+  const [tempQuantity, setTempQuantity] = useState(item.cantidad);
 
-  // Manejar cambio de cantidad con botones
+  const formatCLP = (amount) => {
+    return new Intl.NumberFormat('es-CL', {
+      style: 'currency',
+      currency: 'CLP',
+      minimumFractionDigits: 0,
+      maximumFractionDigits: 0
+    }).format(amount);
+  };
+
+  // Debounce para actualizar cantidad
+  const [debounceTimer, setDebounceTimer] = useState(null);
+
   const handleQuantityChange = async (newQuantity) => {
-    if (newQuantity === item.quantity || newQuantity < 1) return;
+    if (newQuantity < 1) return;
     
-    setIsUpdating(true);
+    setTempQuantity(newQuantity);
     
-    try {
-      const result = await updateQuantity(item.code, newQuantity);
-      if (result.success) {
-        console.log('✅ Cantidad actualizada:', result.message);
-      } else {
-        console.error('❌ Error actualizando cantidad:', result.error);
-      }
-    } catch (error) {
-      console.error('❌ Error actualizando cantidad:', error);
-    } finally {
-      setIsUpdating(false);
-    }
-  };
-
-  // Manejar input directo de cantidad
-  const handleQuantityInput = (e) => {
-    const newQuantity = parseInt(e.target.value);
-    if (!isNaN(newQuantity) && newQuantity > 0) {
-      handleQuantityChange(newQuantity);
-    }
-  };
-
-  // Manejar eliminación del item
-  const handleRemove = async () => {
-    if (window.confirm(`¿Eliminar ${item.nombre} del carrito?`)) {
-      setIsUpdating(true);
-      
-      try {
-        const result = await removeFromCart(item.code);
-        if (result.success) {
-          console.log('✅ Item eliminado:', result.message);
-        } else {
-          console.error('❌ Error eliminando item:', result.error);
+    // Cancelar timer anterior
+    if (debounceTimer) clearTimeout(debounceTimer);
+    
+    // Nuevo timer de 500ms
+    const timer = setTimeout(async () => {
+      if (newQuantity !== item.cantidad) {
+        setIsUpdating(true);
+        try {
+          await actualizarItem(item.id, newQuantity);
+        } catch (error) {
+          console.error('Error:', error);
+          alert(error.message);
+          setTempQuantity(item.cantidad); // Revertir
+        } finally {
+          setIsUpdating(false);
         }
+      }
+    }, 500);
+    
+    setDebounceTimer(timer);
+  };
+
+  const handleQuantityInput = (e) => {
+    const value = parseInt(e.target.value);
+    if (!isNaN(value) && value > 0) {
+      handleQuantityChange(value);
+    }
+  };
+
+  const handleRemove = async () => {
+    if (window.confirm(`¿Eliminar ${item.productoNombre} del carrito?`)) {
+      setIsUpdating(true);
+      try {
+        await eliminarItem(item.id);
       } catch (error) {
-        console.error('❌ Error eliminando item:', error);
+        console.error('Error:', error);
+        alert(error.message);
       } finally {
         setIsUpdating(false);
       }
     }
   };
 
-  // Calcular subtotal del item
-  const subtotal = item.precioCLP * item.quantity;
+  // El backend envía: productoNombre, productoCode, productoImagen
+  const nombreProducto = item.productoNombre || 'Producto sin nombre';
+  const codigoProducto = item.productoCode || 'N/A';
+  const imagenProducto = item.productoImagen || '/images/products/default.jpg';
+  const precioUnitario = item.precioUnitario || 0;
+  const subtotal = item.subtotal || 0;
+  const cantidad = tempQuantity;
 
   return (
-    <div className={`${styles.cartItem} ${isUpdating ? styles.updating : ''}`} data-code={item.code}>
-      {/* Imagen del producto */}
+    <div className={`${styles.cartItem} ${isUpdating ? styles.updating : ''}`} data-id={item.id}>
       <div className={styles.itemImage}>
         <img
-          src={item.imagen || '/images/products/default.jpg'}
-          alt={item.nombre}
+          src={imagenProducto}
+          alt={nombreProducto}
           loading="lazy"
-          onError={(e) => {
-            e.target.src = '/images/products/default.jpg';
-          }}
+          onError={(e) => { e.target.src = '/images/products/default.jpg'; }}
         />
       </div>
 
-      {/* Detalles del producto */}
       <div className={styles.itemDetails}>
-        <h4 className={styles.itemName}>{item.nombre}</h4>
-        <p className={styles.itemCode}>Código: {item.code}</p>
-        <p className={styles.itemPrice}>{formatCLP(item.precioCLP)}</p>
-        {item.stock && (
-          <p className={styles.itemStock}>Stock: {item.stock}</p>
-        )}
+        <h4 className={styles.itemName}>{nombreProducto}</h4>
+        <p className={styles.itemCode}>Código: {codigoProducto}</p>
+        <p className={styles.itemPrice}>{formatCLP(precioUnitario)}</p>
       </div>
 
       {/* Controles del item */}
@@ -92,9 +103,9 @@ const CartItem = ({ item }) => {
         <div className={styles.quantityControls}>
           <button
             className={styles.quantityBtn}
-            onClick={() => handleQuantityChange(item.quantity - 1)}
-            disabled={item.quantity <= 1 || isUpdating}
-            aria-label={`Disminuir cantidad de ${item.nombre}`}
+            onClick={() => handleQuantityChange(cantidad - 1)}
+            disabled={cantidad <= 1 || isUpdating}
+            aria-label={`Disminuir cantidad de ${nombreProducto}`}
             type="button"
           >
             −
@@ -103,30 +114,25 @@ const CartItem = ({ item }) => {
           <input
             type="number"
             className={styles.quantityInput}
-            value={item.quantity}
+            value={cantidad}
             onChange={handleQuantityInput}
             onBlur={(e) => {
-              // Validar y corregir el valor al perder el foco
               const value = parseInt(e.target.value);
               if (isNaN(value) || value < 1) {
-                e.target.value = item.quantity;
+                e.target.value = cantidad;
               }
             }}
             min="1"
-            max={item.stock || cartConfig.validation.maxQuantity}
+            max={cartConfig.validation.maxQuantity}
             disabled={isUpdating}
-            aria-label={`Cantidad de ${item.nombre}`}
+            aria-label={`Cantidad de ${nombreProducto}`}
           />
           
           <button
             className={styles.quantityBtn}
-            onClick={() => handleQuantityChange(item.quantity + 1)}
-            disabled={
-              isUpdating || 
-              (item.stock && item.quantity >= item.stock) ||
-              item.quantity >= cartConfig.validation.maxQuantity
-            }
-            aria-label={`Aumentar cantidad de ${item.nombre}`}
+            onClick={() => handleQuantityChange(cantidad + 1)}
+            disabled={isUpdating || cantidad >= cartConfig.validation.maxQuantity}
+            aria-label={`Aumentar cantidad de ${nombreProducto}`}
             type="button"
           >
             +
@@ -143,7 +149,7 @@ const CartItem = ({ item }) => {
           className={styles.removeBtn}
           onClick={handleRemove}
           disabled={isUpdating}
-          aria-label={`Eliminar ${item.nombre} del carrito`}
+          aria-label={`Eliminar ${nombreProducto} del carrito`}
           type="button"
           title="Eliminar producto"
         >
