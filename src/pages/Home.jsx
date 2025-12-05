@@ -43,7 +43,7 @@ function Home() {
       <Row className="g-4">
         {/* Mostrar productos demo del carrito */}
         {demoProducts.slice(0, 3).map((product) => (
-          <Col key={product.code} md={4}>
+          <Col key={product.id} md={4}>
             <Card className="h-100 shadow-lg border-0" style={{ 
               background: 'linear-gradient(135deg, #1a1f2e 0%, #2d1b69 50%, #1a1f2e 100%)',
               border: '2px solid #00d4ff' 
@@ -82,14 +82,8 @@ function Home() {
                       color: '#00d4ff !important',
                       textShadow: '0 2px 4px rgba(0,0,0,0.8)'
                     }}>
-                      {formatCLP(product.precioCLP)}
+                      {formatCLP(product.precio)}
                     </strong>
-                    <small className="text-success fw-bold" style={{
-                      color: '#00ff88 !important',
-                      textShadow: '0 1px 3px rgba(0,0,0,0.8)'
-                    }}>
-                      Stock: {product.stock}
-                    </small>
                   </div>
                   <div className="d-grid gap-2 d-md-flex">
                     <Button 

@@ -13,6 +13,7 @@ import MisPedidos from './pages/MisPedidos'
 import Perfil from './pages/Perfil'
 import Admin from './pages/Admin'
 import PagoResultado from './pages/PagoResultado'
+import PaymentReturn from './pages/PaymentReturn'
 import ProtectedRoute from './components/ProtectedRoute'
 import AdminRoute from './components/AdminRoute'
 
@@ -86,6 +87,14 @@ export const router = createBrowserRouter([
         element: (
           <ProtectedRoute>
             <PagoResultado />
+          </ProtectedRoute>
+        )
+      },
+      {
+        path: 'pago/retorno',
+        element: (
+          <ProtectedRoute>
+            <PaymentReturn />
           </ProtectedRoute>
         )
       }

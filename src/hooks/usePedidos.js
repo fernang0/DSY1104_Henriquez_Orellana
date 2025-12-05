@@ -41,13 +41,13 @@ export const usePedidos = () => {
     setLoading(true);
     setError(null);
     try {
-      const response = await api.post('/pedidos/desde-carrito', { direccionEnvio });
-      return { success: true, data: response.data };
+      const response = await api.post('/pedidos', { direccionEnvio });
+      return response.data;
     } catch (err) {
       const errorMsg = err.response?.data?.message || 'Error al crear pedido';
       setError(errorMsg);
       console.error('Error creando pedido:', err);
-      return { success: false, error: errorMsg };
+      throw new Error(errorMsg);
     } finally {
       setLoading(false);
     }

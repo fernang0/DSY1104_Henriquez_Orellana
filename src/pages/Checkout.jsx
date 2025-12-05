@@ -9,7 +9,7 @@ import '../styles/components/checkout.css';
 
 function Checkout() {
   const navigate = useNavigate();
-  const { items, carrito, getCartTotal, getCartItemsCount, clearCart } = useCart();
+  const { items, carrito, total, itemCount, vaciarCarrito } = useCart();
   const { crearPedidoDesdeCarrito, loading: pedidoLoading } = usePedidos();
   const { iniciarPago, loading: pagoLoading } = usePagos();
   const { user } = useAuth();
@@ -70,27 +70,42 @@ function Checkout() {
 
   const handlePayment = async () => {
     try {
+      // Validación de datos
+      if (!formData.nombre || !formData.apellido || !formData.direccion || !formData.ciudad) {
+        alert('Por favor completa todos los campos obligatorios');
+        return;
+      }
+
       // 1. Crear pedido desde carrito
-      const pedido = await crearPedidoDesdeCarrito({
-        direccionEntrega: `${formData.direccion}, ${formData.ciudad}, ${formData.region}`,
-        metodoPago: formData.metodoPago
-      });
+      const direccionCompleta = `${formData.direccion}, ${formData.ciudad}, ${formData.region}`;
+      console.log('Creando pedido con dirección:', direccionCompleta);
+      const pedido = await crearPedidoDesdeCarrito(direccionCompleta);
 
       if (!pedido || !pedido.id) {
         throw new Error('No se pudo crear el pedido');
       }
 
+      console.log('Pedido creado:', pedido);
+
       // 2. Si es Webpay, iniciar flujo de pago con Transbank
       if (formData.metodoPago === 'webpay') {
-        await iniciarPago(pedido.id);
-        // iniciarPago redirige automáticamente a Transbank
+        console.log('Iniciando pago Webpay para pedido:', pedido.id);
+        const resultado = await iniciarPago(pedido.id);
+        
+        if (!resultado.success) {
+          throw new Error(resultado.error || 'Error al iniciar el pago');
+        }
+        
+        // El hook iniciarPago ya hace la redirección automática a Transbank
+        console.log('Redirigiendo a Transbank...');
       } else {
         // Pago contra entrega o transferencia
         alert('¡Pedido creado exitosamente! Se ha enviado un correo con los detalles.');
-        await clearCart();
+        await vaciarCarrito();
         navigate('/mis-pedidos');
       }
     } catch (error) {
+      console.error('Error en handlePayment:', error);
       alert(`Error al procesar el pedido: ${error.message}`);
     }
   };
@@ -101,8 +116,6 @@ function Checkout() {
       currency: 'CLP'
     }).format(precio);
   };
-
-  const total = getCartTotal();
 
   if (!items || items.length === 0) {
     return (
@@ -418,17 +431,28 @@ function Checkout() {
 
         {/* Navigation buttons */}
         <div className="checkout-navigation mt-4">
-          <Button variant="outline-primary" onClick={handleBack} disabled={isLoading}>
+          <Button 
+            variant="outline-primary" 
+            onClick={handleBack} 
+            disabled={pedidoLoading || pagoLoading}
+          >
             ← {currentStep === 1 ? 'Volver' : 'Atrás'}
           </Button>
           <Button 
             variant="primary"
-            disabled={isLoading} 
+            disabled={pedidoLoading || pagoLoading} 
             size="lg" 
             onClick={handleContinue}
             className="ms-3"
           >
-            {currentStep === 4 ? '💳 Pagar' : 'Continuar →'}
+            {pedidoLoading || pagoLoading ? (
+              <>
+                <Spinner animation="border" size="sm" className="me-2" />
+                Procesando...
+              </>
+            ) : (
+              currentStep === 4 ? '💳 Pagar con Transbank' : 'Continuar →'
+            )}
           </Button>
         </div>
       </Container>

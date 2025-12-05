@@ -8,10 +8,13 @@ import api from './api';
 export const pedidoService = {
   /**
    * Crea un pedido desde el carrito activo
-   * IMPORTANTE: Esto cambia el carrito a estado COMPRADO
+   * IMPORTANTE: Backend vacía el carrito automáticamente
+   * Endpoint: POST /api/v1/pedidos
+   * Body: { "direccionEnvio": "string" }
    */
   createFromCart: async (direccionEnvio) => {
-    const response = await api.post('/pedidos/desde-carrito', { direccionEnvio });
+    console.log('Enviando direccion:', direccionEnvio);
+    const response = await api.post('/pedidos', { direccionEnvio });
     return response.data;
   },
 
