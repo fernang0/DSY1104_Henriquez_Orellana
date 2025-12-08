@@ -1,6 +1,9 @@
 import axios from 'axios';
 
-const API_BASE_URL = 'http://ec2-44-200-28-175.compute-1.amazonaws.com:8080/api/v1';
+// En producción usa el proxy de Vercel, en desarrollo usa AWS directo
+const API_BASE_URL = import.meta.env.MODE === 'production' 
+  ? '/api/v1' 
+  : 'http://ec2-44-200-28-175.compute-1.amazonaws.com:8080/api/v1';
 
 const api = axios.create({
   baseURL: API_BASE_URL,
