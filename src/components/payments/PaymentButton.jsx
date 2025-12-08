@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Button, Spinner, Alert } from 'react-bootstrap';
+import { API_BASE_URL } from '../../services/api';
 
 /**
  * Ejemplo de botón de pago con Transbank
@@ -21,7 +22,7 @@ const PaymentButton = ({ pedidoId, disabled = false }) => {
       console.log('Iniciando pago para pedido:', pedidoId);
 
       // POST a /pagos/iniciar
-      const response = await fetch('http://localhost:8080/api/v1/pagos/iniciar', {
+      const response = await fetch(`${API_BASE_URL}/pagos/iniciar`, {
         method: 'POST',
         headers: {
           'Authorization': `Bearer ${localStorage.getItem('token')}`,
